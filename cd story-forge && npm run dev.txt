@@ -1,0 +1,2 @@
+cd story-forge && npm run dev
+
