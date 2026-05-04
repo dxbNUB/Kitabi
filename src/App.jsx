@@ -24,6 +24,7 @@ import Dashboard from './pages/Dashboard';
 import MyChapters from './pages/MyChapters';
 import MyBooks from './pages/MyBooks';
 import RequireAuth from './components/RequireAuth';
+import AuthCallback from './components/AuthCallback';
 import { useSession } from './store/session';
 
 function ChapterRoute() {
@@ -78,6 +79,7 @@ function AnimatedRoutes() {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/"                element={<Landing />} />
+        <Route path="/auth/callback"   element={<AuthCallback />} />
         <Route path="/how-it-works"    element={<HowItWorks />} />
         <Route path="/pricing"         element={<Pricing />} />
         <Route path="/about"           element={<About />} />

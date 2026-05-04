@@ -54,8 +54,11 @@ export function AuthProvider({ children }) {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        // Return the user to the page they signed in from.
-        redirectTo: window.location.origin + window.location.pathname,
+        // All OAuth flows land on /auth/callback. The route's component reads
+        // the URL hash (Supabase JS auto-handles it), waits for the session,
+        // then routes to /dashboard. This works on localhost, ideaflow-pearl.vercel.app,
+        // kitabi.ink, and any future domain because window.location.origin is dynamic.
+        redirectTo: window.location.origin + '/auth/callback',
       },
     });
     if (error) console.error('[auth] google sign-in failed:', error.message);
