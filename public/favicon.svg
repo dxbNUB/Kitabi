@@ -1,6 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" aria-label="Kitabi app icon">
   <rect width="256" height="256" rx="56" ry="56" fill="#111111"/>
-  <text x="128" y="186" text-anchor="middle"
-        font-family="'Reem Kufi','Amiri','Tahoma','Segoe UI',serif"
-        font-size="200" font-weight="600" fill="#C8964D" direction="rtl">ك</text>
+  <g fill="#C8964D">
+    <!-- Triangular peak (upper-left wedge) -->
+    <path d="M 70 130 L 134 70 L 168 108 L 168 130 Z"/>
+    <!-- Inner cut to create the chevron/inverted-V opening -->
+    <path d="M 100 124 L 134 92 L 154 116 L 134 130 L 102 130 Z" fill="#111111"/>
+    <!-- Horizontal middle stroke -->
+    <rect x="70" y="132" width="138" height="22"/>
+    <!-- Right J-hook descender -->
+    <path d="M 188 132 L 222 132 L 222 200 L 70 200 L 70 180 L 202 180 L 202 132 Z"/>
+  </g>
 </svg>
