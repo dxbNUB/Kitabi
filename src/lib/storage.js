@@ -70,8 +70,8 @@ export async function updateChat(id, { title, genre, mode, messages, context }) 
 }
 
 /**
- * List all chats for the current user, newest first.
- * Returns an empty array if signed out.
+ * List all ACTIVE chats for the current user, newest first.
+ * Excludes soft-deleted chats (deleted_at IS NOT NULL).
  */
 export async function listChats() {
   if (!supabase) return [];
@@ -82,6 +82,7 @@ export async function listChats() {
     .from('chats')
     .select('id, title, genre, mode, created_at, updated_at, messages')
     .eq('user_id', user.id)
+    .is('deleted_at', null)
     .order('updated_at', { ascending: false });
 
   if (error) {
@@ -172,8 +173,9 @@ export async function updateChapterEdit(id, editedHtml) {
 }
 
 /**
- * List all chapters for the current user, newest first.
+ * List all ACTIVE chapters for the current user, newest first.
  * Includes all versions of any rewritten chapter.
+ * Excludes soft-deleted chapters (deleted_at IS NOT NULL).
  */
 export async function listChapters() {
   if (!supabase) return [];
@@ -184,6 +186,7 @@ export async function listChapters() {
     .from('chapters')
     .select('id, chat_id, title, word_count, genre, version_number, parent_chapter_id, created_at')
     .eq('user_id', user.id)
+    .is('deleted_at', null)
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -209,6 +212,140 @@ export async function loadChapter(id) {
     return null;
   }
   return data;
+}
+
+// ─── Soft delete + Recently Deleted (Trash) ───────────────────────
+//
+// Pattern: every chat/chapter has a nullable `deleted_at` timestamp.
+// "Delete" = set deleted_at = now(). Item disappears from active lists
+// but stays in the DB for 90 days, listable via listDeletedItems().
+// Restore = null out deleted_at. Permanent delete = actual DELETE row.
+// After 90 days an item is functionally invisible (filter cuts it from
+// the trash query) — we don't auto-purge from the DB yet, that can be
+// a scheduled job later.
+
+const TRASH_RETENTION_DAYS = 90;
+
+/** Move a chat to Recently Deleted. */
+export async function softDeleteChat(id) {
+  if (!supabase || !id) return false;
+  const { error } = await supabase
+    .from('chats')
+    .update({ deleted_at: new Date().toISOString() })
+    .eq('id', id);
+  if (error) {
+    console.error('[storage] softDeleteChat failed:', error.message);
+    return false;
+  }
+  return true;
+}
+
+/** Move a chapter to Recently Deleted. */
+export async function softDeleteChapter(id) {
+  if (!supabase || !id) return false;
+  const { error } = await supabase
+    .from('chapters')
+    .update({ deleted_at: new Date().toISOString() })
+    .eq('id', id);
+  if (error) {
+    console.error('[storage] softDeleteChapter failed:', error.message);
+    return false;
+  }
+  return true;
+}
+
+/** Restore a chat from Recently Deleted. */
+export async function restoreChat(id) {
+  if (!supabase || !id) return false;
+  const { error } = await supabase
+    .from('chats')
+    .update({ deleted_at: null })
+    .eq('id', id);
+  if (error) {
+    console.error('[storage] restoreChat failed:', error.message);
+    return false;
+  }
+  return true;
+}
+
+/** Restore a chapter from Recently Deleted. */
+export async function restoreChapter(id) {
+  if (!supabase || !id) return false;
+  const { error } = await supabase
+    .from('chapters')
+    .update({ deleted_at: null })
+    .eq('id', id);
+  if (error) {
+    console.error('[storage] restoreChapter failed:', error.message);
+    return false;
+  }
+  return true;
+}
+
+/** Permanently delete a chat — bypasses the 90-day trash, gone immediately. */
+export async function permanentDeleteChat(id) {
+  if (!supabase || !id) return false;
+  const { error } = await supabase.from('chats').delete().eq('id', id);
+  if (error) {
+    console.error('[storage] permanentDeleteChat failed:', error.message);
+    return false;
+  }
+  return true;
+}
+
+/** Permanently delete a chapter — bypasses the 90-day trash, gone immediately. */
+export async function permanentDeleteChapter(id) {
+  if (!supabase || !id) return false;
+  const { error } = await supabase.from('chapters').delete().eq('id', id);
+  if (error) {
+    console.error('[storage] permanentDeleteChapter failed:', error.message);
+    return false;
+  }
+  return true;
+}
+
+/**
+ * List soft-deleted chats and chapters within the 90-day retention window.
+ * Returns { chats, chapters } each newest-deleted first.
+ */
+export async function listDeletedItems() {
+  if (!supabase) return { chats: [], chapters: [] };
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { chats: [], chapters: [] };
+
+  const cutoff = new Date(Date.now() - TRASH_RETENTION_DAYS * 24 * 60 * 60 * 1000).toISOString();
+
+  const [chatsRes, chaptersRes] = await Promise.all([
+    supabase
+      .from('chats')
+      .select('id, title, genre, mode, deleted_at, updated_at, messages')
+      .eq('user_id', user.id)
+      .not('deleted_at', 'is', null)
+      .gte('deleted_at', cutoff)
+      .order('deleted_at', { ascending: false }),
+    supabase
+      .from('chapters')
+      .select('id, chat_id, title, word_count, genre, version_number, parent_chapter_id, deleted_at, created_at')
+      .eq('user_id', user.id)
+      .not('deleted_at', 'is', null)
+      .gte('deleted_at', cutoff)
+      .order('deleted_at', { ascending: false }),
+  ]);
+
+  if (chatsRes.error)    console.error('[storage] listDeletedItems chats:',    chatsRes.error.message);
+  if (chaptersRes.error) console.error('[storage] listDeletedItems chapters:', chaptersRes.error.message);
+
+  return {
+    chats:    chatsRes.data    || [],
+    chapters: chaptersRes.data || [],
+  };
+}
+
+/** Days remaining before a deleted item auto-purges. Returns 0 if already past. */
+export function daysUntilPurge(deletedAt) {
+  if (!deletedAt) return 0;
+  const elapsed = (Date.now() - new Date(deletedAt).getTime()) / (24 * 60 * 60 * 1000);
+  return Math.max(0, Math.ceil(TRASH_RETENTION_DAYS - elapsed));
 }
 
 // ─── Helpers ───────────────────────────────────────────────────────

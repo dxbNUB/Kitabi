@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import PageLayout from '../components/PageLayout';
-import { listChats, loadChat } from '../lib/storage';
+import { listChats, loadChat, softDeleteChat } from '../lib/storage';
+import { toast } from '../lib/toast';
 import { useSession } from '../store/session';
 import { useSEO } from '../lib/seo';
 
@@ -34,6 +35,18 @@ export default function MyChats() {
         setChats([]);
       });
   }, []);
+
+  const handleDelete = async (chatId, e) => {
+    e.stopPropagation();   // don't trigger handleResume on the parent button
+    if (!window.confirm('Move this chat to Recently Deleted? You can restore it within 90 days.')) return;
+    const ok = await softDeleteChat(chatId);
+    if (ok) {
+      setChats((prev) => (prev || []).filter((c) => c.id !== chatId));
+      toast.success('Moved to Recently Deleted');
+    } else {
+      toast.error('Could not delete. Try again.');
+    }
+  };
 
   const handleResume = async (chatId) => {
     setLoadingId(chatId);
@@ -101,37 +114,51 @@ export default function MyChats() {
                 const lastUser = (chat.messages || []).filter((m) => m.role === 'user').slice(-1)[0];
                 const messageCount = (chat.messages || []).length;
                 return (
-                  <motion.button
+                  <motion.div
                     key={chat.id}
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, delay: idx * 0.04 }}
                     whileHover={{ y: -2 }}
-                    onClick={() => handleResume(chat.id)}
-                    disabled={loadingId === chat.id}
-                    className="text-left p-5 bg-white border border-gray-200 hover:border-[#C8964D] hover:shadow-md rounded-xl transition-all disabled:opacity-60"
+                    className="relative group p-5 bg-white border border-gray-200 hover:border-[#C8964D] hover:shadow-md rounded-xl transition-all"
                   >
-                    <div className="flex items-baseline justify-between gap-2 mb-2">
-                      <span className="text-[10px] uppercase tracking-[0.18em] text-[#C8964D] font-semibold truncate">
-                        {chat.genre || 'Conversation'}
-                      </span>
-                      <span className="text-[10px] text-gray-400 whitespace-nowrap">
-                        {new Date(chat.updated_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
-                      </span>
-                    </div>
-                    <h3 className="font-serif text-lg text-[#1A1A1A] mb-2 line-clamp-2">
-                      {chat.title || 'Untitled chat'}
-                    </h3>
-                    {lastUser?.content && (
-                      <p className="text-xs text-gray-600 mb-3 line-clamp-2 italic">
-                        "{lastUser.content.slice(0, 140)}{lastUser.content.length > 140 ? '…' : ''}"
+                    {/* Delete (trash) button — fades in on hover so it doesn't compete with the card click target */}
+                    <button
+                      onClick={(e) => handleDelete(chat.id, e)}
+                      title="Move to Recently Deleted"
+                      aria-label="Delete chat"
+                      className="absolute top-3 right-3 w-7 h-7 rounded-md flex items-center justify-center text-gray-400 hover:text-red-600 hover:bg-red-50 opacity-0 group-hover:opacity-100 focus:opacity-100 transition"
+                    >
+                      <span aria-hidden="true">🗑</span>
+                    </button>
+
+                    <button
+                      onClick={() => handleResume(chat.id)}
+                      disabled={loadingId === chat.id}
+                      className="text-left w-full disabled:opacity-60"
+                    >
+                      <div className="flex items-baseline justify-between gap-2 mb-2 pr-8">
+                        <span className="text-[10px] uppercase tracking-[0.18em] text-[#C8964D] font-semibold truncate">
+                          {chat.genre || 'Conversation'}
+                        </span>
+                        <span className="text-[10px] text-gray-400 whitespace-nowrap">
+                          {new Date(chat.updated_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                        </span>
+                      </div>
+                      <h3 className="font-serif text-lg text-[#1A1A1A] mb-2 line-clamp-2">
+                        {chat.title || 'Untitled chat'}
+                      </h3>
+                      {lastUser?.content && (
+                        <p className="text-xs text-gray-600 mb-3 line-clamp-2 italic">
+                          "{lastUser.content.slice(0, 140)}{lastUser.content.length > 140 ? '…' : ''}"
+                        </p>
+                      )}
+                      <p className="text-[11px] text-gray-500">
+                        {messageCount} {messageCount === 1 ? 'message' : 'messages'}
+                        {loadingId === chat.id && ' · Loading…'}
                       </p>
-                    )}
-                    <p className="text-[11px] text-gray-500">
-                      {messageCount} {messageCount === 1 ? 'message' : 'messages'}
-                      {loadingId === chat.id && ' · Loading…'}
-                    </p>
-                  </motion.button>
+                    </button>
+                  </motion.div>
                 );
               })}
             </div>

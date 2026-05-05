@@ -24,6 +24,7 @@ import Dashboard from './pages/Dashboard';
 import MyChapters from './pages/MyChapters';
 import MyChats from './pages/MyChats';
 import MyBooks from './pages/MyBooks';
+import RecentlyDeleted from './pages/RecentlyDeleted';
 import RequireAuth from './components/RequireAuth';
 import AuthCallback from './components/AuthCallback';
 import { useSession } from './store/session';
@@ -105,6 +106,7 @@ function AnimatedRoutes() {
         <Route path="/my-chapters"     element={<RequireAuth><MyChapters /></RequireAuth>} />
         <Route path="/my-chats"        element={<RequireAuth><MyChats /></RequireAuth>} />
         <Route path="/my-books"        element={<RequireAuth><MyBooks /></RequireAuth>} />
+        <Route path="/recently-deleted" element={<RequireAuth><RecentlyDeleted /></RequireAuth>} />
         <Route path="*"                element={<NotFound />} />
       </Routes>
     </AnimatePresence>

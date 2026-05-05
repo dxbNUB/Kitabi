@@ -21,9 +21,10 @@ const NAV = [
   {
     id: 'library', label: 'My Library', color: 'from-blue-500 to-blue-700', requiresAuth: true,
     children: [
-      { id: 'chats',    label: 'My Chats',    href: '/my-chats'    },
-      { id: 'chapters', label: 'My Chapters', href: '/my-chapters' },
-      { id: 'books',    label: 'My Books',    href: '/my-books'    },
+      { id: 'chats',    label: 'My Chats',          href: '/my-chats'         },
+      { id: 'chapters', label: 'My Chapters',       href: '/my-chapters'      },
+      { id: 'books',    label: 'My Books',          href: '/my-books'         },
+      { id: 'trash',    label: 'Recently Deleted',  href: '/recently-deleted' },
     ],
   },
   {

@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import PageLayout from '../components/PageLayout';
 import { useSession } from '../store/session';
-import { listChapters, loadChapter } from '../lib/storage';
+import { listChapters, loadChapter, softDeleteChapter } from '../lib/storage';
+import { toast } from '../lib/toast';
 import { useSEO } from '../lib/seo';
 
 /**
@@ -39,6 +40,18 @@ export default function MyChapters() {
         setChapters([]);
       });
   }, []);
+
+  const handleDelete = async (id, e) => {
+    e.stopPropagation();
+    if (!window.confirm('Move this chapter to Recently Deleted? You can restore it within 90 days.')) return;
+    const ok = await softDeleteChapter(id);
+    if (ok) {
+      setChapters((prev) => (prev || []).filter((c) => c.id !== id));
+      toast.success('Moved to Recently Deleted');
+    } else {
+      toast.error('Could not delete. Try again.');
+    }
+  };
 
   const handleOpen = async (id) => {
     setOpeningId(id);
@@ -165,9 +178,20 @@ export default function MyChapters() {
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="border border-gray-200 rounded-2xl bg-white hover:border-[#C8964D]/40 hover:shadow-md transition-all p-6 sm:p-8"
+                    className="relative group border border-gray-200 rounded-2xl bg-white hover:border-[#C8964D]/40 hover:shadow-md transition-all p-6 sm:p-8"
                   >
-                    <div className="flex items-baseline gap-3 mb-3 flex-wrap">
+                    {/* Delete (trash) — fades in on hover. Acts on the LATEST version
+                        (the visually-prominent one). Older versions remain in trash separately. */}
+                    <button
+                      onClick={(e) => handleDelete(latest.id, e)}
+                      title="Move to Recently Deleted"
+                      aria-label="Delete chapter"
+                      className="absolute top-3 right-3 w-8 h-8 rounded-md flex items-center justify-center text-gray-400 hover:text-red-600 hover:bg-red-50 opacity-0 group-hover:opacity-100 focus:opacity-100 transition"
+                    >
+                      <span aria-hidden="true">🗑</span>
+                    </button>
+
+                    <div className="flex items-baseline gap-3 mb-3 flex-wrap pr-10">
                       <span className="text-[10px] uppercase tracking-[0.2em] text-[#C8964D] font-semibold">
                         {latest.genre || 'Fiction'}
                       </span>
