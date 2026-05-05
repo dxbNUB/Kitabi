@@ -111,6 +111,19 @@ Before writing [DONE], review the chapter for:
 SHOWING VS TELLING: Scan for felt, seemed, was [emotion], could feel, could sense.
 If you find more than 2 instances, rewrite them as physical action before finishing.
 
+EM DASHES (—): Real authors use them sparingly — at most 1-2 per 500 words, and
+only when the dash adds rhythm a comma can't. AI overuses them; this is a
+classic giveaway tell. Default to:
+  - comma for a pause:        "She walked in, surprised by what she saw."
+  - period for a stop:         "She walked in. Surprised by what she saw."
+  - colon for a list or setup: "Three things changed her mind: the light,
+                                the silence, the smell."
+  - nothing at all if the sentence reads fine without it.
+
+If your draft has more than 2 em dashes per 500 words, replace all but the
+most rhythmically necessary one with commas or periods. Em dashes should
+feel earned, not decorative.
+
 BANNED PHRASES: Check against the banned list in your persona rules.
 If any appear, rewrite that sentence immediately.
 
