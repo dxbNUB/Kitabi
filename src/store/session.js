@@ -24,6 +24,13 @@ export const useSession = create(
       chapterGenerated: null,     // raw markdown from Claude
       chapterEditedHtml: null,    // user's edits (rich HTML from TipTap)
 
+      // Persistence: row IDs of the chat/chapter rows currently being
+      // mirrored to Supabase. Set by Chat.jsx on first message + first
+      // generation, cleared on reset(). Survives navigation via the
+      // sessionStorage Zustand persist below.
+      currentChatId: null,
+      currentChapterId: null,
+
       setMode:  (mode)  => set({ mode }),
       setGenre: (genre) => set({ genre }),
       setPhase: (phase) => set({ phase }),
@@ -45,6 +52,9 @@ export const useSession = create(
 
       setChapterGenerated: (text) =>
         set({ chapterGenerated: text, chapterEditedHtml: null, phase: 'chapter' }),
+
+      setCurrentChatId:    (id) => set({ currentChatId:    id }),
+      setCurrentChapterId: (id) => set({ currentChapterId: id }),
 
       setChapterEditedHtml: (html) =>
         set({ chapterEditedHtml: html }),
@@ -77,6 +87,7 @@ export const useSession = create(
         characters: [], plotPoints: [], userStyleNotes: [],
         adviceGiven: [], messageHistory: [],
         generationsUsed: 0, chapterGenerated: null, chapterEditedHtml: null,
+        currentChatId: null, currentChapterId: null,
       }),
     }),
     {

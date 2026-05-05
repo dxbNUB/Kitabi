@@ -22,6 +22,7 @@ import Editor from './pages/Editor';
 import NotFound from './pages/NotFound';
 import Dashboard from './pages/Dashboard';
 import MyChapters from './pages/MyChapters';
+import MyChats from './pages/MyChats';
 import MyBooks from './pages/MyBooks';
 import RequireAuth from './components/RequireAuth';
 import AuthCallback from './components/AuthCallback';
@@ -102,6 +103,7 @@ function AnimatedRoutes() {
         <Route path="/editor"          element={<RequireAuth><Editor /></RequireAuth>} />
         <Route path="/dashboard"       element={<RequireAuth><Dashboard /></RequireAuth>} />
         <Route path="/my-chapters"     element={<RequireAuth><MyChapters /></RequireAuth>} />
+        <Route path="/my-chats"        element={<RequireAuth><MyChats /></RequireAuth>} />
         <Route path="/my-books"        element={<RequireAuth><MyBooks /></RequireAuth>} />
         <Route path="*"                element={<NotFound />} />
       </Routes>

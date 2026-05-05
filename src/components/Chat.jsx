@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useSession } from '../store/session';
@@ -13,6 +13,7 @@ import { ChatLoading, GenerationLoading } from './LoadingState';
 import GenerationError from './GenerationError';
 import UpgradeModal from './UpgradeModal';
 import WaitlistPrompt from './WaitlistPrompt';
+import { createChat, updateChat, saveChapter, debounceSave } from '../lib/storage';
 
 export default function Chat() {
   const navigate    = useNavigate();
@@ -21,6 +22,7 @@ export default function Chat() {
     genre, mode, messageHistory, addMessage, setPhase,
     setChapterGenerated, incrementGenerations, canGenerate, phase,
     getContextSummary, reset,
+    currentChatId, setCurrentChatId, setCurrentChapterId,
   } = session;
 
   const [input, setInput]         = useState('');
@@ -76,6 +78,45 @@ export default function Chat() {
   }, []);
 
   useEffect(() => { refreshUsage(); }, [refreshUsage]);
+
+  // BUG-AUTOSAVE: persist the chat to Supabase on every message change.
+  // Was: chats lived in sessionStorage and were lost on tab close.
+  // Now: every turn upserts to public.chats (debounced 1.5s to avoid
+  // spamming the network). First message creates the row; subsequent
+  // messages update it. The row id is stored in the session so it
+  // survives navigation.
+  const debouncedChatSave = useMemo(
+    () => debounceSave(async (chatIdRef, payload) => {
+      if (!isMountedRef.current) return;
+      if (chatIdRef.current) {
+        await updateChat(chatIdRef.current, payload);
+      } else {
+        const newId = await createChat(payload);
+        if (newId && isMountedRef.current) {
+          chatIdRef.current = newId;
+          setCurrentChatId(newId);
+        }
+      }
+    }, 1500),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
+  // Mirror currentChatId into a ref so the debounced closure sees the
+  // latest value without rebuilding the function on every change.
+  const chatIdRef = useRef(currentChatId);
+  useEffect(() => { chatIdRef.current = currentChatId; }, [currentChatId]);
+
+  useEffect(() => {
+    if (messageHistory.length === 0) return;
+    debouncedChatSave(chatIdRef, {
+      title:    session.project?.premise?.slice(0, 80) || `Chat — ${genre || 'general'}`,
+      genre,
+      mode,
+      messages: messageHistory,
+      context:  getContextSummary(),
+    });
+  }, [messageHistory, genre, mode, session.project?.premise, getContextSummary, debouncedChatSave]);
 
   // Block accidental tab close while generating (browser-native confirm)
   useEffect(() => {
@@ -263,6 +304,20 @@ export default function Chat() {
         // (these write to Zustand stores, not React state — safe after unmount)
         setChapterGenerated(generatedRef.current);
         const milestone = useProgress.getState().recordChapter(wc);
+
+        // BUG-AUTOSAVE: persist this chapter to Supabase. Always INSERT,
+        // never overwrite — rewrites preserve the previous chapter as a
+        // separate row (sortable by created_at). Fire-and-forget; the
+        // navigation below shouldn't wait on the network.
+        saveChapter({
+          chatId:    chatIdRef.current,
+          title:     session.project?.title || 'Chapter 1',
+          content:   generatedRef.current,
+          wordCount: wc,
+          genre,
+        }).then((id) => {
+          if (id && isMountedRef.current) setCurrentChapterId(id);
+        });
 
         if (!isMountedRef.current) return;   // BUG-H1: don't navigate if unmounted
 
