@@ -27,27 +27,6 @@ const SOLUTION = [
   { title: 'Two things, done well',        desc: 'Write and analyze. No bloat, no abandoned features. The whole product is what it claims to be.' },
 ];
 
-const TEAM = [
-  {
-    initials: 'CEO',
-    name: 'CEO & Founder',
-    role: 'Technical Lead',
-    bio: 'Built AI systems for 5 years. Obsessed with democratizing expertise.',
-  },
-  {
-    initials: 'LA',
-    name: 'Literary Advisor',
-    role: 'Published Author & Editor',
-    bio: 'Edited 50+ books. Ensures literary quality never takes a backseat.',
-  },
-  {
-    initials: 'DL',
-    name: 'Design Lead',
-    role: 'Product Designer',
-    bio: 'Believes software should disappear. You should feel like you are writing.',
-  },
-];
-
 export default function About() {
   return (
     <PageLayout>
@@ -168,42 +147,6 @@ export default function About() {
                 </p>
                 <h3 className="font-serif text-xl sm:text-2xl mb-3 text-[#1A1A1A]">{item.title}</h3>
                 <p className="text-gray-600 leading-relaxed text-sm sm:text-base">{item.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
-        {/* TEAM */}
-        <section className="mx-6 sm:mx-12 lg:mx-24 my-20 px-6 sm:px-12 py-16 lg:py-24 bg-gradient-to-br from-[#FFF7EB] via-white to-[#FFE4B8]/40 rounded-3xl border border-[#C8964D]/20">
-          <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="font-serif text-3xl sm:text-4xl lg:text-5xl font-medium mb-12 text-[#1A1A1A] text-center"
-          >
-            Built by people who love books
-          </motion.h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {TEAM.map((member, idx) => (
-              <motion.div
-                key={member.name}
-                initial={{ opacity: 0, scale: 0.85 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: idx * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -6 }}
-                className="text-center p-8 bg-white rounded-2xl border border-gray-200 hover:border-[#C8964D] hover:shadow-xl transition-all"
-              >
-                <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-[#FFF7EB] border border-[#C8964D]/30 flex items-center justify-center">
-                  <span className="font-display text-xl font-medium text-[#C8964D] tracking-wider">
-                    {member.initials}
-                  </span>
-                </div>
-                <h3 className="font-serif text-xl text-[#1A1A1A] mb-1">{member.name}</h3>
-                <p className="text-[#C8964D] font-medium mb-3 text-xs uppercase tracking-[0.12em]">{member.role}</p>
-                <p className="text-gray-600 text-sm leading-relaxed">{member.bio}</p>
               </motion.div>
             ))}
           </div>

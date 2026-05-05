@@ -79,7 +79,7 @@ export default function UsageStats({ refreshKey = 0 }) {
       </div>
 
       <p className="text-[11px] text-gray-500">
-        Each chapter: up to {wordsPerChapter.toLocaleString()} words
+        Each chapter: 1,500–2,500 words
       </p>
 
       {/* Approaching-limit upsell */}

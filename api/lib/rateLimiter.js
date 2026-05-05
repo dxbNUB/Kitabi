@@ -39,8 +39,8 @@ export const RATE_LIMITS = {
 // When auth lands, swap to per-tier values from the user document.
 export const MONTHLY_CAPS = {
   chapters:        parseInt(process.env.RL_GENERATE_PER_MONTH || '3', 10),
-  wordsPerChapter: parseInt(process.env.RL_WORDS_PER_CHAPTER  || '1500', 10),
-  wordsPerMonth:   parseInt(process.env.RL_WORDS_PER_MONTH    || '4500', 10),
+  wordsPerChapter: parseInt(process.env.RL_WORDS_PER_CHAPTER  || '2500', 10),
+  wordsPerMonth:   parseInt(process.env.RL_WORDS_PER_MONTH    || '7500', 10),
 };
 
 // Demo / unlimited mode — set VITE_KITABI_UNLIMITED=true in .env.local to
