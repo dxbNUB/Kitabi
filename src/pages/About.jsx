@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import PageLayout from '../components/PageLayout';
+import { useSEO } from '../lib/seo';
 
 const STATS = [
   { number: '500',  unit: 'years', desc: 'Writers gatekept the printed word' },
@@ -28,6 +29,12 @@ const SOLUTION = [
 ];
 
 export default function About() {
+  useSEO({
+    title: 'About Kitabi — AI Writing Assistant Built for Novelists',
+    description: 'Kitabi is an AI writing assistant trained on 10,000 bestsellers. Built to help writers turn ideas into finished books — chapter by chapter — without the gatekeeping of traditional publishing or the bloat of self-publishing.',
+    canonical: 'https://kitabi.ink/about',
+    image: 'https://kitabi.ink/og-image.svg',
+  });
   return (
     <PageLayout>
       <div className="bg-white">

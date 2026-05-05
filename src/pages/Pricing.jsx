@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import PageLayout from '../components/PageLayout';
+import { useSEO } from '../lib/seo';
 
 const TIERS = [
   {
@@ -52,6 +53,13 @@ const FAQ = [
 ];
 
 export default function Pricing() {
+  useSEO({
+    title: 'Pricing — Free & Author Plans | Kitabi AI Writer',
+    description: 'Kitabi pricing: Free Starter (3 chapters/month, 1,500–2,500 words each) and Author plan ($25/month, 25 chapters/month, unlimited downloads, AI rewrite tools). AI writing assistant for novelists.',
+    canonical: 'https://kitabi.ink/pricing',
+    image: 'https://kitabi.ink/og-image.svg',
+  });
+
   return (
     <PageLayout>
       <div className="bg-white">

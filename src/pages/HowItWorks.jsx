@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import PageLayout from '../components/PageLayout';
+import { useSEO } from '../lib/seo';
 
 const STEPS = [
   {
@@ -165,6 +166,13 @@ const PROMISES = [
 ];
 
 export default function HowItWorks() {
+  useSEO({
+    title: 'How Kitabi Works — AI Writing Assistant for Novel Writing | Kitabi',
+    description: "How Kitabi's AI writing assistant generates publication-quality book chapters. Genre-aware AI book writer that produces 1,500–2,500 words per chapter. Trained on 10,000 bestsellers.",
+    canonical: 'https://kitabi.ink/how-it-works',
+    image: 'https://kitabi.ink/og-image.svg',
+  });
+
   return (
     <PageLayout>
       <div className="bg-white">

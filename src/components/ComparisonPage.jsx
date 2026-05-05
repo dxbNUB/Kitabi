@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { analytics } from '../lib/analytics';
 import PageLayout from './PageLayout';
+import { useSEO } from '../lib/seo';
 
 const COMPARISONS = [
   {
@@ -82,6 +83,13 @@ I'm not asking you to write Virginia Hall. I'm asking what your woman's version 
 export default function ComparisonPage() {
   const navigate   = useNavigate();
   const [tab, setTab] = useState(0);
+
+  useSEO({
+    title: 'Kitabi vs ChatGPT — AI Writing Assistant Comparison for Novelists',
+    description: 'Side-by-side comparison: Kitabi (specialized AI writing assistant for novels) vs ChatGPT (general-purpose chatbot). Real outputs across thriller, fantasy, sci-fi, historical, and business writing.',
+    canonical: 'https://kitabi.ink/compare',
+    image: 'https://kitabi.ink/og-image.svg',
+  });
 
   useEffect(() => {
     analytics.comparisonViewed();

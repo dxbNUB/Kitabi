@@ -8,6 +8,7 @@ import { analytics, funnelTimer } from '../lib/analytics';
 import { toast } from '../lib/toast';
 import { hasCompletedOnboarding } from '../lib/personalization';
 import { useProgress } from '../store/progress';
+import { useSEO } from '../lib/seo';
 import GenreSelector from './GenreSelector';
 import ModeToggle from './ModeToggle';
 import Sidebar from './Sidebar';
@@ -19,6 +20,13 @@ export default function Landing() {
   const { user, signInWithGoogle } = useAuth();
   const { setPhase, setGenre, updateProject, genre } = useSession();
   const [idea, setIdea] = useState('');
+
+  useSEO({
+    title: 'Kitabi — AI Writing Assistant That Helps You Finish Your Book',
+    description: 'AI writing assistant for novelists and authors. Turn your idea into a publication-quality book — chapter by chapter. Genre-aware AI book writer trained on 10,000 bestsellers. Free to start.',
+    canonical: 'https://kitabi.ink/',
+    image: 'https://kitabi.ink/og-image.svg',
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();

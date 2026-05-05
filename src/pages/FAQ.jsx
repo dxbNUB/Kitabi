@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import PageLayout from '../components/PageLayout';
+import { useSEO, useJsonLd } from '../lib/seo';
 
 const SECTIONS = [
   {
@@ -46,6 +47,27 @@ const SECTIONS = [
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(null);
+
+  useSEO({
+    title: 'FAQ — Kitabi AI Writer Questions Answered',
+    description: 'Common questions about Kitabi: how AI book writing works, supported genres, pricing, privacy, formats, refunds, and more.',
+    canonical: 'https://kitabi.ink/faq',
+    image: 'https://kitabi.ink/og-image.svg',
+  });
+
+  // FAQPage JSON-LD — eligible for Google's rich-result Q&A snippets in search.
+  const faqJsonLd = useMemo(() => ({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: SECTIONS.flatMap((section) =>
+      section.items.map(({ q, a }) => ({
+        '@type': 'Question',
+        name: q,
+        acceptedAnswer: { '@type': 'Answer', text: a },
+      }))
+    ),
+  }), []);
+  useJsonLd(faqJsonLd);
 
   return (
     <PageLayout>

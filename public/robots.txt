@@ -1,0 +1,8 @@
+# Allow all crawlers full access to public marketing pages.
+# Block /api/* — those are serverless functions, not content.
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Tell crawlers where to find the full URL list.
+Sitemap: https://kitabi.ink/sitemap.xml
