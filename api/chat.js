@@ -5,7 +5,7 @@ import { checkCap, recordSpend } from './lib/spendCap.js';
 import { getRequestUser } from './lib/auth.js';
 
 const MODEL = 'claude-sonnet-4-6';
-const MAX_TOKENS = 1024;
+const MAX_TOKENS = 400;   // hard ceiling for chat brevity (~280 words)
 
 // Hard input limits — anything past these is rejected before we hit Anthropic.
 const MAX_MESSAGE_CHARS  = 8000;
@@ -82,7 +82,25 @@ export default async function handler(req, res) {
     genre || null,
     mode || 'nonwriter',
     buildContextSummary(sessionContext || {})
-  );
+  ) + `
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CHAT BREVITY (this endpoint only — NOT for chapter generation)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Keep replies SHORT. Default to 1-3 sentences. A tight short paragraph max
+when you actually need to make a craft point. Real coaches don't lecture in
+chat — they ask one sharp question, give one specific note, and stop.
+
+DO: "What does she lose if she's right?"
+DON'T: a 4-paragraph analysis of the question.
+
+DO: "Cut 'suddenly' — it's a tell, not a show. Try the action."
+DON'T: a paragraph about adverbs in literary fiction first.
+
+If the user is mid-flow and just confirming something, a single sentence
+(or even a word) is fine. No preamble like "Great question!" or "I love
+that direction." Just the next move.`;
 
   // ─── Layer: Spend cap pre-flight ────────────────────────────────────
   // Admins bypass spend cap too. Rough token estimate: 4 chars ≈ 1 token.
