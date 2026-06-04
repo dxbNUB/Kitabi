@@ -14,6 +14,7 @@ import GenerationError from './GenerationError';
 import UpgradeModal from './UpgradeModal';
 import WaitlistPrompt from './WaitlistPrompt';
 import { createChat, updateChat, saveChapter, debounceSave } from '../lib/storage';
+import { useAuth } from '../lib/auth';
 
 export default function Chat() {
   const navigate    = useNavigate();
@@ -38,10 +39,11 @@ export default function Chat() {
   const lastGenerateArgs = useRef(null);   // remember args so retry can replay them
 
   // BUG-H2: server-side monthly chapter cap. Source of truth for "can the user
-  // still generate this month" — replaces the session-local 1-chapter gate
-  // (which lets a user refresh and bypass).
+  // still generate this month" — replaces the session-local 1-chapter gate.
+  // Admins skip the gate entirely (server also bypasses for them).
+  const { isAdmin } = useAuth();
   const monthlyChapters = usage?.monthly?.chapters;
-  const atMonthlyLimit  = !!monthlyChapters && monthlyChapters.used >= monthlyChapters.max;
+  const atMonthlyLimit  = !isAdmin && !!monthlyChapters && monthlyChapters.used >= monthlyChapters.max;
 
   const bottomRef    = useRef(null);
   const inputRef     = useRef(null);
