@@ -1,4 +1,5 @@
 import { ApiError, fromResponse, fromThrown, combineSignal } from './errors.js';
+import { supabase } from './supabase';
 
 const TIMEOUTS = {
   chat:     30_000,
@@ -7,12 +8,28 @@ const TIMEOUTS = {
   rewrite:  60_000,
 };
 
+/**
+ * Inject the current Supabase session token so the server can identify
+ * the user (and bypass rate limits for admins). Returns empty headers
+ * for anonymous callers; the server falls back to IP-based limits.
+ */
+async function authHeaders() {
+  if (!supabase) return {};
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session?.access_token) return {};
+    return { Authorization: `Bearer ${session.access_token}` };
+  } catch {
+    return {};
+  }
+}
+
 export async function sendChatMessage({ messages, genre, mode, sessionContext, signal: externalSignal, onDelta, onDone, onError }) {
   const { signal, cleanup } = combineSignal(externalSignal, TIMEOUTS.chat);
   try {
     const res = await fetch('/api/chat', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...(await authHeaders()) },
       body: JSON.stringify({ messages, genre, mode, sessionContext }),
       signal,
     });
@@ -34,7 +51,7 @@ export async function generateChapter({ genre, mode, sessionContext, conversatio
   try {
     const res = await fetch('/api/generate', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...(await authHeaders()) },
       body: JSON.stringify({ genre, mode, sessionContext, conversationSummary, language, bookType }),
       signal,
     });
@@ -56,7 +73,7 @@ export async function analyzeChapter({ chapterText, genre, signal: externalSigna
   try {
     const res = await fetch('/api/analyze', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...(await authHeaders()) },
       body: JSON.stringify({ chapterText, genre }),
       signal,
     });
@@ -110,7 +127,7 @@ export async function aiRewrite({ text, mode, genre, signal: externalSignal }) {
   try {
     const res = await fetch('/api/rewrite', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...(await authHeaders()) },
       body: JSON.stringify({ text, mode, genre }),
       signal,
     });

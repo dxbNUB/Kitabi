@@ -9,6 +9,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { check, increment, detectAbuse, getClientIp, hashBody } from './lib/rateLimiter.js';
 import { checkCap, recordSpend } from './lib/spendCap.js';
+import { getRequestUser } from './lib/auth.js';
 
 const MODEL = 'claude-sonnet-4-6';
 const MAX_TOKENS = 1500;
@@ -53,12 +54,15 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const ip = getClientIp(req);
+  const requester = await getRequestUser(req);
 
-  const abuse = detectAbuse(ip, hashBody(req.body));
-  if (abuse.suspicious) return send429(res, abuse);
+  if (!requester.isAdmin) {
+    const abuse = detectAbuse(ip, hashBody(req.body));
+    if (abuse.suspicious) return send429(res, abuse);
 
-  const rl = check(ip, 'analyze');
-  if (!rl.allowed) return send429(res, rl);
+    const rl = check(ip, 'analyze');
+    if (!rl.allowed) return send429(res, rl);
+  }
 
   const { text, mode = 'rewrite', genre } = req.body || {};
   if (!text || typeof text !== 'string' || text.trim().length < MIN_TEXT) {
@@ -75,9 +79,11 @@ export default async function handler(req, res) {
 ${genre ? `\nGenre context: ${genre}.` : ''}
 Never use literary jargon. Never explain your edits. Output is the prose only.`;
 
-  const cap = checkCap(MODEL, Math.ceil((systemPrompt.length + text.length) / 4), MAX_TOKENS);
-  if (!cap.allowed) {
-    return send429(res, { reason: 'spend_cap_reached', retryAfter: 3600 });
+  if (!requester.isAdmin) {
+    const cap = checkCap(MODEL, Math.ceil((systemPrompt.length + text.length) / 4), MAX_TOKENS);
+    if (!cap.allowed) {
+      return send429(res, { reason: 'spend_cap_reached', retryAfter: 3600 });
+    }
   }
 
   try {
@@ -89,8 +95,10 @@ Never use literary jargon. Never explain your edits. Output is the prose only.`;
     });
 
     const out = response.content?.[0]?.text?.trim() || '';
-    increment(ip, 'analyze');
-    recordSpend(MODEL, response.usage?.input_tokens || 0, response.usage?.output_tokens || 0);
+    if (!requester.isAdmin) {
+      increment(ip, 'analyze');
+      recordSpend(MODEL, response.usage?.input_tokens || 0, response.usage?.output_tokens || 0);
+    }
 
     return res.status(200).json({ text: out });
   } catch (err) {

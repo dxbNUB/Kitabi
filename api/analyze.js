@@ -2,6 +2,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { ANALYZE_SYSTEM_PROMPT } from '../src/prompts/index.js';
 import { check, increment, detectAbuse, getClientIp, hashBody } from './lib/rateLimiter.js';
 import { checkCap, recordSpend } from './lib/spendCap.js';
+import { getRequestUser } from './lib/auth.js';
 
 const MODEL = 'claude-opus-4-7';
 const MAX_TOKENS = 3000;
@@ -40,14 +41,16 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const ip = getClientIp(req);
+  const requester = await getRequestUser(req);
 
-  // ─── Abuse + rate limit ─────────────────────────────────────────────
-  const bodyHash = hashBody(req.body);
-  const abuse = detectAbuse(ip, bodyHash);
-  if (abuse.suspicious) return send429(res, abuse);
+  if (!requester.isAdmin) {
+    const bodyHash = hashBody(req.body);
+    const abuse = detectAbuse(ip, bodyHash);
+    if (abuse.suspicious) return send429(res, abuse);
 
-  const rl = check(ip, 'analyze');
-  if (!rl.allowed) return send429(res, rl);
+    const rl = check(ip, 'analyze');
+    if (!rl.allowed) return send429(res, rl);
+  }
 
   // ─── Input validation ───────────────────────────────────────────────
   const { chapterText, genre } = req.body || {};
@@ -63,11 +66,13 @@ export default async function handler(req, res) {
   const genreNote = genre ? `\nGenre: ${genre}\n` : '';
   const userMessage = `${genreNote}\nPlease analyze this chapter:\n\n---\n${trimmed}\n---`;
 
-  // ─── Spend cap ──────────────────────────────────────────────────────
-  const estInputTokens  = Math.ceil((ANALYZE_SYSTEM_PROMPT.length + userMessage.length) / 4);
-  const cap = checkCap(MODEL, estInputTokens, MAX_TOKENS);
-  if (!cap.allowed) {
-    return send429(res, { reason: 'spend_cap_reached', period: 'month', retryAfter: 3600 });
+  // ─── Spend cap (admin bypass) ───────────────────────────────────────
+  if (!requester.isAdmin) {
+    const estInputTokens  = Math.ceil((ANALYZE_SYSTEM_PROMPT.length + userMessage.length) / 4);
+    const cap = checkCap(MODEL, estInputTokens, MAX_TOKENS);
+    if (!cap.allowed) {
+      return send429(res, { reason: 'spend_cap_reached', period: 'month', retryAfter: 3600 });
+    }
   }
 
   try {
@@ -96,8 +101,10 @@ export default async function handler(req, res) {
       }
     }
 
-    increment(ip, 'analyze');
-    recordSpend(MODEL, inTokens, outTokens);
+    if (!requester.isAdmin) {
+      increment(ip, 'analyze');
+      recordSpend(MODEL, inTokens, outTokens);
+    }
 
     res.write('data: [DONE]\n\n');
     res.end();

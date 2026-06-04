@@ -2,6 +2,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { assembleSystemPrompt, buildContextSummary } from '../src/prompts/index.js';
 import { check, increment, detectAbuse, getClientIp, hashBody } from './lib/rateLimiter.js';
 import { checkCap, recordSpend } from './lib/spendCap.js';
+import { getRequestUser } from './lib/auth.js';
 
 const MODEL = 'claude-sonnet-4-6';
 const MAX_TOKENS = 1024;
@@ -41,15 +42,17 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const ip = getClientIp(req);
+  const requester = await getRequestUser(req);
 
-  // ─── Layer: Abuse detection (before counting) ───────────────────────
-  const bodyHash = hashBody(req.body);
-  const abuse = detectAbuse(ip, bodyHash);
-  if (abuse.suspicious) return send429(res, abuse);
+  // Admins bypass abuse detection + rate limits entirely.
+  if (!requester.isAdmin) {
+    const bodyHash = hashBody(req.body);
+    const abuse = detectAbuse(ip, bodyHash);
+    if (abuse.suspicious) return send429(res, abuse);
 
-  // ─── Layer: Rate limit ──────────────────────────────────────────────
-  const rl = check(ip, 'chat');
-  if (!rl.allowed) return send429(res, rl);
+    const rl = check(ip, 'chat');
+    if (!rl.allowed) return send429(res, rl);
+  }
 
   // ─── Layer: Input validation ────────────────────────────────────────
   const { messages, genre, mode, sessionContext } = req.body || {};
@@ -82,12 +85,13 @@ export default async function handler(req, res) {
   );
 
   // ─── Layer: Spend cap pre-flight ────────────────────────────────────
-  // Rough token estimate: 4 chars ≈ 1 token. Underestimating input is fine
-  // because we'll record actual usage after the response.
-  const estInputTokens  = Math.ceil((systemPrompt.length + sanitized.reduce((n, m) => n + m.content.length, 0)) / 4);
-  const cap = checkCap(MODEL, estInputTokens, MAX_TOKENS);
-  if (!cap.allowed) {
-    return send429(res, { reason: 'spend_cap_reached', period: 'month', retryAfter: 3600 });
+  // Admins bypass spend cap too. Rough token estimate: 4 chars ≈ 1 token.
+  if (!requester.isAdmin) {
+    const estInputTokens  = Math.ceil((systemPrompt.length + sanitized.reduce((n, m) => n + m.content.length, 0)) / 4);
+    const cap = checkCap(MODEL, estInputTokens, MAX_TOKENS);
+    if (!cap.allowed) {
+      return send429(res, { reason: 'spend_cap_reached', period: 'month', retryAfter: 3600 });
+    }
   }
 
   // ─── Stream ─────────────────────────────────────────────────────────
@@ -117,8 +121,10 @@ export default async function handler(req, res) {
       }
     }
 
-    increment(ip, 'chat');
-    recordSpend(MODEL, inTokens, outTokens);
+    if (!requester.isAdmin) {
+      increment(ip, 'chat');
+      recordSpend(MODEL, inTokens, outTokens);
+    }
 
     res.write('data: [DONE]\n\n');
     res.end();

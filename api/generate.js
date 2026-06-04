@@ -9,6 +9,7 @@ import {
   checkMonthlyChapterCap, recordChapter,
 } from './lib/rateLimiter.js';
 import { checkCap, recordSpend } from './lib/spendCap.js';
+import { getRequestUser } from './lib/auth.js';
 import { languageInstructions, bookTypeInstructions, getBookTypeWordTarget } from './lib/preferences.js';
 
 const MODEL = 'claude-opus-4-7';
@@ -52,21 +53,22 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const ip = getClientIp(req);
+  const requester = await getRequestUser(req);
 
-  // ─── Abuse detection ────────────────────────────────────────────────
-  const bodyHash = hashBody(req.body);
-  const abuse = detectAbuse(ip, bodyHash);
-  if (abuse.suspicious) return send429(res, abuse);
+  // Admins bypass abuse / rate-limit / monthly cap. Everyone else
+  // goes through the full gate sequence.
+  if (!requester.isAdmin) {
+    const bodyHash = hashBody(req.body);
+    const abuse = detectAbuse(ip, bodyHash);
+    if (abuse.suspicious) return send429(res, abuse);
 
-  // ─── Rate limit (rolling minute/hour/day windows) ─────────────────────
-  const rl = check(ip, 'generate');
-  if (!rl.allowed) return send429(res, rl);
+    const rl = check(ip, 'generate');
+    if (!rl.allowed) return send429(res, rl);
 
-  // ─── Monthly cap (calendar month, the actual free-tier promise) ──────
-  const monthly = checkMonthlyChapterCap(ip);
-  if (!monthly.allowed) {
-    // Surface as 'limit_reached' to keep the existing client waitlist trigger
-    return send429(res, { ...monthly, reason: 'month_limit_exceeded' });
+    const monthly = checkMonthlyChapterCap(ip);
+    if (!monthly.allowed) {
+      return send429(res, { ...monthly, reason: 'month_limit_exceeded' });
+    }
   }
 
   // ─── Input validation ───────────────────────────────────────────────
@@ -125,11 +127,13 @@ ${conversationSummary || 'Generate based on session context above.'}
 
 Write Chapter 1 now. Target approximately ${wordTarget} words (matches the chosen book type). Make the opening hook impossible to put down.`;
 
-  // ─── Spend cap pre-flight ───────────────────────────────────────────
-  const estInputTokens  = Math.ceil((systemPrompt.length + generationMessage.length) / 4);
-  const cap = checkCap(MODEL, estInputTokens, MAX_TOKENS);
-  if (!cap.allowed) {
-    return send429(res, { reason: 'spend_cap_reached', period: 'month', retryAfter: 3600 });
+  // ─── Spend cap pre-flight (admin bypass) ────────────────────────────
+  if (!requester.isAdmin) {
+    const estInputTokens  = Math.ceil((systemPrompt.length + generationMessage.length) / 4);
+    const cap = checkCap(MODEL, estInputTokens, MAX_TOKENS);
+    if (!cap.allowed) {
+      return send429(res, { reason: 'spend_cap_reached', period: 'month', retryAfter: 3600 });
+    }
   }
 
   // ─── Stream + count usage ───────────────────────────────────────────
@@ -139,8 +143,8 @@ Write Chapter 1 now. Target approximately ${wordTarget} words (matches the chose
     res.setHeader('Connection', 'keep-alive');
     res.write(`data: ${JSON.stringify({ type: 'start' })}\n\n`);
 
-    // Reserve the slot up-front; refund on error.
-    increment(ip, 'generate');
+    // Reserve the slot up-front; refund on error. (Admins not counted.)
+    if (!requester.isAdmin) increment(ip, 'generate');
 
     const stream = client.messages.stream({
       model: MODEL,
@@ -166,14 +170,16 @@ Write Chapter 1 now. Target approximately ${wordTarget} words (matches the chose
     }
 
     const wordCount = outputText.trim().split(/\s+/).filter(Boolean).length;
-    recordChapter(ip, wordCount);
-    recordSpend(MODEL, inTokens, outTokens);
+    if (!requester.isAdmin) {
+      recordChapter(ip, wordCount);
+      recordSpend(MODEL, inTokens, outTokens);
+    }
 
     res.write(`data: ${JSON.stringify({ type: 'done', wordCount })}\n\n`);
     res.end();
   } catch (err) {
     console.error('Generate error:', err.message);
-    refund(ip, 'generate');  // give the slot back so user isn't penalized for our failure
+    if (!requester.isAdmin) refund(ip, 'generate');  // give the slot back so user isn't penalized for our failure
     if (!res.headersSent) {
       res.status(500).json({ error: 'Chapter generation failed. Your free attempt has been refunded.' });
     } else {
