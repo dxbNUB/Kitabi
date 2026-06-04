@@ -58,11 +58,12 @@ export default async function handler(req, res) {
   if (!chapterText || typeof chapterText !== 'string' || chapterText.trim().length < MIN_CHAPTER_CHARS) {
     return res.status(400).json({ error: `Chapter text is required (minimum ${MIN_CHAPTER_CHARS} characters).` });
   }
-  if (chapterText.length > MAX_CHAPTER_CHARS * 2) {
+  if (!requester.isAdmin && chapterText.length > MAX_CHAPTER_CHARS * 2) {
     return res.status(400).json({ error: `Chapter text too long (max ${MAX_CHAPTER_CHARS * 2} characters).` });
   }
 
-  const trimmed = chapterText.slice(0, MAX_CHAPTER_CHARS);
+  // Admins get the full text; everyone else is capped.
+  const trimmed = requester.isAdmin ? chapterText : chapterText.slice(0, MAX_CHAPTER_CHARS);
   const genreNote = genre ? `\nGenre: ${genre}\n` : '';
   const userMessage = `${genreNote}\nPlease analyze this chapter:\n\n---\n${trimmed}\n---`;
 

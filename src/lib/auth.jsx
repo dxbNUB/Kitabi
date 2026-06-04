@@ -13,6 +13,8 @@ import { supabase } from './supabase';
 const AuthContext = createContext({
   user:    null,
   loading: true,
+  role:    null,
+  isAdmin: false,
   signInWithGoogle: async () => {},
   signOut:          async () => {},
 });
@@ -20,24 +22,46 @@ const AuthContext = createContext({
 export function AuthProvider({ children }) {
   const [user,    setUser]    = useState(null);
   const [loading, setLoading] = useState(true);
+  const [role,    setRole]    = useState(null);
 
   useEffect(() => {
     if (!supabase) {
-      // Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY at build time —
-      // app keeps working in anonymous mode, sign-in is a no-op.
       setLoading(false);
       return;
     }
 
     let cancelled = false;
-    supabase.auth.getSession().then(({ data: { session } }) => {
+
+    // Fetch role from public.users for the signed-in user.
+    // Used to grant admin bypass on client-side paywalls.
+    const fetchRole = async (u) => {
+      if (!u) { setRole(null); return; }
+      try {
+        const { data } = await supabase
+          .from('users')
+          .select('role')
+          .eq('id', u.id)
+          .single();
+        if (!cancelled) setRole(data?.role || 'user');
+      } catch {
+        if (!cancelled) setRole('user');
+      }
+    };
+
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (cancelled) return;
-      setUser(session?.user ?? null);
-      setLoading(false);
+      const u = session?.user ?? null;
+      setUser(u);
+      await fetchRole(u);
+      if (!cancelled) setLoading(false);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, session) => setUser(session?.user ?? null)
+      async (_event, session) => {
+        const u = session?.user ?? null;
+        setUser(u);
+        await fetchRole(u);
+      }
     );
 
     return () => {
@@ -71,7 +95,9 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signInWithGoogle, signOut }}>
+    <AuthContext.Provider
+      value={{ user, loading, role, isAdmin: role === 'admin', signInWithGoogle, signOut }}
+    >
       {children}
     </AuthContext.Provider>
   );

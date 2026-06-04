@@ -68,7 +68,7 @@ export default async function handler(req, res) {
   if (!text || typeof text !== 'string' || text.trim().length < MIN_TEXT) {
     return res.status(400).json({ error: 'Selection too short.' });
   }
-  if (text.length > MAX_TEXT) {
+  if (!requester.isAdmin && text.length > MAX_TEXT) {
     return res.status(400).json({ error: 'Selection too long. Pick a shorter passage.' });
   }
   if (!MODE_PROMPTS[mode]) {

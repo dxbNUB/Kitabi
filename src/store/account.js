@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { useAuth } from '../lib/auth';
 
 /**
  * Account / billing tier — drives paywall gating across the app.
@@ -32,12 +33,14 @@ export const useAccount = create(
  */
 export function useTier() {
   const tier = useAccount((s) => s.tier);
+  const { isAdmin } = useAuth();
   const unlimited = import.meta.env.VITE_KITABI_UNLIMITED === 'true';
 
   return {
     tier,
     unlimited,
-    isStarter:           !unlimited && tier === 'starter',
-    canUseAuthorFeats:    unlimited || tier !== 'starter',
+    isAdmin,
+    isStarter:           !unlimited && !isAdmin && tier === 'starter',
+    canUseAuthorFeats:    unlimited || isAdmin || tier !== 'starter',
   };
 }
