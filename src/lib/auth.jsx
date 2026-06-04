@@ -24,44 +24,23 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [role,    setRole]    = useState(null);
 
+  // Auth session hydration. Resolves `loading` immediately once Supabase
+  // tells us whether there's a session — does NOT wait on the role fetch.
   useEffect(() => {
     if (!supabase) {
       setLoading(false);
       return;
     }
-
     let cancelled = false;
 
-    // Fetch role from public.users for the signed-in user.
-    // Used to grant admin bypass on client-side paywalls.
-    const fetchRole = async (u) => {
-      if (!u) { setRole(null); return; }
-      try {
-        const { data } = await supabase
-          .from('users')
-          .select('role')
-          .eq('id', u.id)
-          .single();
-        if (!cancelled) setRole(data?.role || 'user');
-      } catch {
-        if (!cancelled) setRole('user');
-      }
-    };
-
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
       if (cancelled) return;
-      const u = session?.user ?? null;
-      setUser(u);
-      await fetchRole(u);
-      if (!cancelled) setLoading(false);
+      setUser(session?.user ?? null);
+      setLoading(false);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
-        const u = session?.user ?? null;
-        setUser(u);
-        await fetchRole(u);
-      }
+      (_event, session) => setUser(session?.user ?? null)
     );
 
     return () => {
@@ -69,6 +48,29 @@ export function AuthProvider({ children }) {
       subscription.unsubscribe();
     };
   }, []);
+
+  // Role fetch — runs separately whenever `user` changes. A slow or stuck
+  // role query CANNOT block the app from rendering anymore.
+  useEffect(() => {
+    if (!user || !supabase) {
+      setRole(null);
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data } = await supabase
+          .from('users')
+          .select('role')
+          .eq('id', user.id)
+          .single();
+        if (!cancelled) setRole(data?.role || 'user');
+      } catch {
+        if (!cancelled) setRole('user');
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [user]);
 
   const signInWithGoogle = async () => {
     if (!supabase) {
