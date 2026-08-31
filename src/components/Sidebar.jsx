@@ -269,7 +269,7 @@ function SidebarBody({ pathname, onItemClick }) {
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.99 }}
           onClick={() => { navigate(ctaHref); onItemClick?.(); }}
-          className="w-full bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night font-semibold
+          className="w-full btn-gold font-semibold
                      py-3 rounded-md transition-colors text-sm tracking-[0.02em]"
         >
           {ctaLabel}

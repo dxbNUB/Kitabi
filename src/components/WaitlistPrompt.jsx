@@ -97,8 +97,7 @@ export default function WaitlistPrompt({ variant = 0 }) {
         <button
           type="submit"
           disabled={status === 'loading'}
-          className="px-5 py-2.5 bg-kitabi-gold text-kitabi-night font-semibold text-sm rounded-md
-                     hover:bg-kitabi-gold-deep hover:text-kitabi-paper transition-colors disabled:opacity-60"
+          className="px-5 py-2.5 btn-gold font-semibold text-sm rounded-md disabled:opacity-60"
         >
           {status === 'loading' ? '...' : 'Notify Me →'}
         </button>

@@ -134,7 +134,7 @@ export default function MyChapters() {
                 <div className="flex flex-wrap gap-3">
                   <button
                     onClick={() => navigate('/chapter')}
-                    className="px-5 py-2.5 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md text-sm transition-colors"
+                    className="px-5 py-2.5 btn-gold font-semibold rounded-md text-sm transition-colors"
                   >
                     Open chapter →
                   </button>
@@ -162,7 +162,7 @@ export default function MyChapters() {
               </p>
               <button
                 onClick={() => navigate('/')}
-                className="px-6 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md transition-colors"
+                className="px-6 py-3 btn-gold font-semibold rounded-md transition-colors"
               >
                 Write Chapter 1 →
               </button>
@@ -219,7 +219,7 @@ export default function MyChapters() {
                           disabled={openingId === v.id}
                           className={`px-4 py-2 rounded-md text-xs font-medium transition-colors disabled:opacity-60 ${
                             idx === versions.length - 1
-                              ? 'bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper'
+                              ? 'btn-gold'
                               : 'border border-seam hover:border-gilt text-kitabi-ivory'
                           }`}
                         >

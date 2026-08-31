@@ -48,7 +48,7 @@ export default function GenerationError({ error, onRetry, onCancel }) {
           {error.retryable && (
             <button
               onClick={onRetry}
-              className="px-6 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md transition-colors"
+              className="px-6 py-3 btn-gold font-semibold rounded-md transition-colors"
             >
               Try again
             </button>
@@ -56,7 +56,7 @@ export default function GenerationError({ error, onRetry, onCancel }) {
           {error.upgradeUrl && (
             <button
               onClick={() => navigate(error.upgradeUrl)}
-              className="px-6 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md transition-colors"
+              className="px-6 py-3 btn-gold font-semibold rounded-md transition-colors"
             >
               See plans
             </button>

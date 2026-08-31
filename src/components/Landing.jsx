@@ -69,15 +69,25 @@ export default function Landing() {
       <Sidebar />
 
       <div className="flex-1 lg:ml-80 mt-14 lg:mt-0 flex flex-col min-w-0 relative">
-        {/* Lamplight — one soft pool of warmth behind the sheet. */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 h-[720px]"
-          style={{
-            background:
-              'radial-gradient(ellipse 640px 460px at 50% 340px, rgba(201,162,92,0.10) 0%, rgba(201,162,92,0.04) 40%, transparent 70%)',
-          }}
-        />
+        {/* Lamplight — a pool of warmth behind the sheet, plus two slowly
+            drifting ambient glows that keep the room feeling lit and alive. */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div
+            className="absolute inset-x-0 top-0 h-[760px]"
+            style={{
+              background:
+                'radial-gradient(ellipse 680px 480px at 50% 340px, rgba(212,168,91,0.16) 0%, rgba(212,168,91,0.06) 42%, transparent 70%)',
+            }}
+          />
+          <div
+            className="ambient ambient-a w-[420px] h-[420px] -top-24 right-[8%]"
+            style={{ background: 'rgba(212,168,91,0.10)' }}
+          />
+          <div
+            className="ambient ambient-b w-[360px] h-[360px] top-[52%] -left-24"
+            style={{ background: 'rgba(166,124,59,0.08)' }}
+          />
+        </div>
 
         {/* ─── HERO ─────────────────────────────────────────────────────── */}
         <main
@@ -103,7 +113,7 @@ export default function Landing() {
           >
             Turn your idea
             <br />
-            into a <em className="text-kitabi-gold italic">book</em>.
+            into a <em className="foil italic">book</em>.
           </motion.h1>
 
           <motion.p
@@ -160,7 +170,7 @@ export default function Landing() {
               <button
                 type="submit"
                 aria-label={user ? 'Start writing Chapter 1' : 'Save idea and continue with Google'}
-                className="px-6 py-2.5 bg-kitabi-gold-deep hover:bg-[#8F6A31] text-kitabi-paper font-semibold
+                className="px-6 py-2.5 btn-gold font-semibold
                            text-sm sm:text-base rounded-md transition-colors
                            flex items-center gap-2"
               >

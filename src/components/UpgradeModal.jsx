@@ -73,7 +73,7 @@ export default function UpgradeModal({
             <div className="space-y-2">
               <button
                 onClick={() => { onClose?.(); navigate('/pricing'); }}
-                className="w-full px-6 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper rounded-md
+                className="w-full px-6 py-3 btn-gold rounded-md
                            font-semibold transition-colors"
               >
                 {cta}

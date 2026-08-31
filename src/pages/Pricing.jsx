@@ -79,7 +79,7 @@ export default function Pricing() {
             transition={{ duration: 0.6 }}
             className="font-display text-5xl sm:text-6xl lg:text-7xl font-medium mb-6 text-kitabi-ivory leading-[1.05]"
           >
-            Simple <em className="italic text-kitabi-gold">pricing</em>.
+            Simple <em className="foil italic">pricing</em>.
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -138,7 +138,7 @@ export default function Pricing() {
                   to="/"
                   className={`block w-full py-3 rounded-md font-semibold text-center transition-colors
                     ${tier.popular
-                      ? 'bg-kitabi-gold text-kitabi-night hover:bg-kitabi-gold-deep hover:text-kitabi-paper'
+                      ? 'btn-gold'
                       : 'border border-seam text-kitabi-ivory hover:border-gilt hover:text-kitabi-gold'}
                   `}
                 >
@@ -226,9 +226,7 @@ export default function Pricing() {
             </p>
             <Link
               to="/"
-              className="inline-block bg-kitabi-gold text-kitabi-night px-12 py-4
-                         rounded-md font-semibold text-base sm:text-lg hover:bg-kitabi-gold-deep hover:text-kitabi-paper
-                         transition-colors"
+              className="inline-block btn-gold px-12 py-4 rounded-md font-semibold text-base sm:text-lg"
             >
               Start free →
             </Link>

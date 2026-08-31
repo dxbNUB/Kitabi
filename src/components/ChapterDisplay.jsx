@@ -359,8 +359,7 @@ export default function ChapterDisplay({ onRegenerate, onContinue, onNewStory })
           <button
             onClick={() => navigate('/editor')}
             aria-label="Edit chapter in the editor"
-            className="col-span-2 sm:col-span-1 px-2 sm:px-4 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep
-                       text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md transition-colors
+            className="col-span-2 sm:col-span-1 px-2 sm:px-4 py-3 btn-gold font-semibold rounded-md
                        text-xs sm:text-sm flex items-center justify-center gap-1.5"
           >
             <span aria-hidden="true">✎</span>

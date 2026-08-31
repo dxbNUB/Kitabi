@@ -28,9 +28,9 @@ export default function GenreSelector({ variant = 'pills', onSelect }) {
               key={g.id}
               onClick={() => handleSelect(g.id)}
               aria-pressed={active}
-              className={`px-4 py-1.5 rounded-full text-sm border transition-colors ${
+              className={`px-4 py-1.5 rounded-full text-sm border transition-all duration-200 hover:-translate-y-0.5 ${
                 active
-                  ? 'border-kitabi-gold bg-[rgba(201,162,92,0.12)] text-kitabi-gold font-medium'
+                  ? 'border-kitabi-gold bg-[rgba(212,168,91,0.14)] text-kitabi-gold font-medium shadow-[0_4px_16px_-6px_rgba(212,168,91,0.4)]'
                   : 'border-seam text-kitabi-stone hover:border-gilt hover:text-kitabi-ivory bg-transparent'
               }`}
             >

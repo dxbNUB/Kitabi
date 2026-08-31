@@ -157,7 +157,7 @@ export default function Welcome() {
         >
           <button
             onClick={() => navigate('/chat')}
-            className="px-10 py-3.5 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold
+            className="px-10 py-3.5 btn-gold font-semibold
                        text-base sm:text-lg rounded-md transition-colors"
           >
             Start writing Chapter 1 →

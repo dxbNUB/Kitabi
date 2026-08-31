@@ -38,16 +38,17 @@ export default {
         kitabi: {
           // Dark ground: warm espresso-black, never pure black
           night:        '#16120C',
-          'night-soft': '#1E1812',
-          'night-raise': '#262017',
+          'night-soft': '#211A11',
+          'night-raise': '#2B2216',
           // Text on dark
-          ivory:  '#EDE4D3',
-          stone:  '#A79B85',
-          faded:  '#6E6350',
-          // Gilt accent
-          gold:        '#C9A25C',
+          ivory:  '#F2E9D7',
+          stone:  '#B0A48C',
+          faded:  '#7A6E58',
+          // Gilt accent — brighter, with fire
+          gold:        '#D4A85B',
+          'gold-bright': '#EBCA8A',
           'gold-deep': '#A67C3B',
-          'gold-soft': 'rgba(201, 162, 92, 0.65)',
+          'gold-soft': 'rgba(212, 168, 91, 0.65)',
           // Paper surfaces (the bright objects on the desk)
           paper:  '#FDFAF5',
           // Legacy keys — still referenced by older classes

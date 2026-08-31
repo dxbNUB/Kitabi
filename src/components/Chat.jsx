@@ -497,7 +497,7 @@ export default function Chat() {
                       title="Monthly chapter limit reached — upgrade to continue"
                       className="flex-1 py-2.5 rounded-md font-semibold text-sm transition-colors
                                  flex items-center justify-center gap-2
-                                 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper"
+                                 btn-gold"
                     >
                       <span aria-hidden="true">✦</span>
                       Upgrade to keep writing →
@@ -511,7 +511,7 @@ export default function Chat() {
                       className={`flex-1 py-2.5 rounded-md font-semibold text-sm transition-colors
                                   flex items-center justify-center gap-2
                         ${ready
-                          ? 'bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper'
+                          ? 'btn-gold'
                           : 'bg-[rgba(237,228,211,0.06)] text-kitabi-faded cursor-not-allowed'}`}
                     >
                       <span aria-hidden="true">✦</span>
@@ -574,7 +574,7 @@ export default function Chat() {
                 onClick={handleSend}
                 disabled={aiLoading || !input.trim()}
                 aria-label="Send message"
-                className="px-5 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-medium rounded-lg
+                className="px-5 py-3 btn-gold font-medium rounded-lg
                            transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <span aria-hidden="true">→</span>

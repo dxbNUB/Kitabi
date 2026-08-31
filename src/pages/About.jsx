@@ -45,7 +45,7 @@ export default function About() {
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                'radial-gradient(ellipse 700px 500px at 70% 30%, rgba(201,162,92,0.07) 0%, transparent 65%)',
+                'radial-gradient(ellipse 700px 500px at 70% 30%, rgba(212,168,91,0.12) 0%, transparent 65%)',
             }}
           />
 
@@ -64,7 +64,7 @@ export default function About() {
               transition={{ duration: 0.6 }}
               className="font-display text-5xl sm:text-6xl lg:text-7xl font-medium mb-7 text-kitabi-ivory leading-[1.05]"
             >
-              We're changing how <em className="italic text-kitabi-gold">books</em> get written.
+              We're changing how <em className="foil italic">books</em> get written.
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -181,9 +181,7 @@ export default function About() {
             </p>
             <Link
               to="/"
-              className="inline-block bg-kitabi-gold text-kitabi-night px-12 py-4
-                         rounded-md font-semibold text-base sm:text-lg hover:bg-kitabi-gold-deep hover:text-kitabi-paper
-                         transition-colors"
+              className="inline-block btn-gold px-12 py-4 rounded-md font-semibold text-base sm:text-lg"
             >
               Start writing →
             </Link>

@@ -88,7 +88,7 @@ export default function FAQ() {
             transition={{ duration: 0.6 }}
             className="font-display text-5xl sm:text-6xl lg:text-7xl font-medium mb-7 text-kitabi-ivory leading-[1.05]"
           >
-            Got <em className="italic text-kitabi-gold">questions</em>?
+            Got <em className="foil italic">questions</em>?
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -215,9 +215,7 @@ export default function FAQ() {
             </h2>
             <Link
               to="/"
-              className="inline-block bg-kitabi-gold text-kitabi-night px-12 py-4
-                         rounded-md font-semibold text-base sm:text-lg hover:bg-kitabi-gold-deep hover:text-kitabi-paper
-                         transition-colors"
+              className="inline-block btn-gold px-12 py-4 rounded-md font-semibold text-base sm:text-lg"
             >
               Begin writing →
             </Link>

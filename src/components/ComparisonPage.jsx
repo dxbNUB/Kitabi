@@ -108,7 +108,7 @@ export default function ComparisonPage() {
         </button>
 
         <h1 className="font-display text-3xl sm:text-5xl text-kitabi-ivory mb-2 leading-tight">
-          Generic AI vs. <em className="text-kitabi-gold italic">Kitabi</em>
+          Generic AI vs. <em className="foil italic">Kitabi</em>
         </h1>
         <p className="text-kitabi-stone mb-8">Same prompt. Very different conversation.</p>
 
@@ -169,7 +169,7 @@ export default function ComparisonPage() {
         <div className="text-center mt-10">
           <button
             onClick={() => navigate('/')}
-            className="px-8 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md
+            className="px-8 py-3 btn-gold font-semibold rounded-md
                        transition-colors"
           >
             Begin writing →

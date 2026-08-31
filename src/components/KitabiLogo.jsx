@@ -19,6 +19,7 @@ export default function KitabiLogo({ variant = 'default', as: Tag = 'a', href = 
       <span
         className={`font-display font-medium text-kitabi-gold tracking-[0.09em]
           ${isMini ? 'text-[22px]' : 'text-[26px]'}`}
+        style={{ textShadow: '0 0 28px rgba(212,168,91,0.45)' }}
       >
         kitabi
       </span>

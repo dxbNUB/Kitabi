@@ -269,7 +269,7 @@ export default function Editor() {
               />
               <button
                 onClick={handleFindReplace}
-                className="px-4 py-1.5 bg-kitabi-gold text-kitabi-night rounded text-sm font-medium hover:bg-kitabi-gold-deep hover:text-kitabi-paper transition-colors"
+                className="px-4 py-1.5 btn-gold rounded text-sm font-medium"
               >
                 Replace All
               </button>
@@ -367,7 +367,7 @@ function ExportMenu({ onTxt, onDocx, onPdf }) {
     <div className="relative" onMouseLeave={() => setOpen(false)}>
       <button
         onClick={() => setOpen((v) => !v)}
-        className="px-3 py-1.5 text-sm bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper rounded-md font-medium transition-colors flex items-center gap-1.5"
+        className="px-3 py-1.5 text-sm btn-gold rounded-md font-medium transition-colors flex items-center gap-1.5"
       >
         Export <span className="text-[10px] opacity-80" aria-hidden="true">▾</span>
       </button>

@@ -119,7 +119,7 @@ export default function RecentlyDeleted() {
               </p>
               <button
                 onClick={() => navigate('/my-chapters')}
-                className="px-6 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md transition-colors"
+                className="px-6 py-3 btn-gold font-semibold rounded-md transition-colors"
               >
                 Back to My Chapters →
               </button>
@@ -159,7 +159,7 @@ export default function RecentlyDeleted() {
                             <button
                               onClick={() => handleRestoreChat(c.id)}
                               disabled={busyId === c.id}
-                              className="flex-1 px-3 py-2 text-xs font-medium bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper rounded-md transition-colors disabled:opacity-60"
+                              className="flex-1 px-3 py-2 text-xs font-medium btn-gold rounded-md transition-colors disabled:opacity-60"
                             >
                               Restore
                             </button>
@@ -214,7 +214,7 @@ export default function RecentlyDeleted() {
                             <button
                               onClick={() => handleRestoreChapter(c.id)}
                               disabled={busyId === c.id}
-                              className="flex-1 px-3 py-2 text-xs font-medium bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper rounded-md transition-colors disabled:opacity-60"
+                              className="flex-1 px-3 py-2 text-xs font-medium btn-gold rounded-md transition-colors disabled:opacity-60"
                             >
                               Restore
                             </button>

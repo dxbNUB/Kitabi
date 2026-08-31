@@ -103,7 +103,7 @@ export default function MyChats() {
               </p>
               <button
                 onClick={() => navigate('/')}
-                className="px-6 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md transition-colors"
+                className="px-6 py-3 btn-gold font-semibold rounded-md transition-colors"
               >
                 Start your first chat →
               </button>

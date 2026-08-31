@@ -39,10 +39,10 @@ export default function Dashboard() {
           </p>
           <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium text-kitabi-ivory leading-[1.05] mb-5 text-balance">
             {chaptersWritten === 0
-              ? <>Your book is <em className="italic text-kitabi-gold">waiting</em>.</>
+              ? <>Your book is <em className="foil italic">waiting</em>.</>
               : currentStreak >= 2
-                ? <><em className="italic text-kitabi-gold">{currentStreak}</em> days in a row.</>
-                : <>Pick up where you <em className="italic text-kitabi-gold">left off</em>.</>}
+                ? <><em className="foil italic">{currentStreak}</em> days in a row.</>
+                : <>Pick up where you <em className="foil italic">left off</em>.</>}
           </h1>
           <p className="text-base sm:text-lg text-kitabi-stone max-w-xl">
             {motivation}
@@ -90,7 +90,7 @@ export default function Dashboard() {
                 <div className="flex flex-wrap gap-3">
                   <button
                     onClick={() => navigate(chapterGenerated ? '/chapter' : '/chat')}
-                    className="px-7 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md transition-colors"
+                    className="px-7 py-3 btn-gold font-semibold rounded-md transition-colors"
                   >
                     {chapterGenerated ? 'Open chapter →' : 'Continue writing →'}
                   </button>
@@ -112,7 +112,7 @@ export default function Dashboard() {
                 </p>
                 <button
                   onClick={() => navigate('/')}
-                  className="px-7 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md transition-colors"
+                  className="px-7 py-3 btn-gold font-semibold rounded-md transition-colors"
                 >
                   Begin writing →
                 </button>

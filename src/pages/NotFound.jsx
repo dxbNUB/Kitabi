@@ -24,7 +24,7 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button
             onClick={() => navigate('/')}
-            className="px-7 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold
+            className="px-7 py-3 btn-gold font-semibold
                        rounded-md transition-colors"
           >
             <span aria-hidden="true">←</span> Back to home

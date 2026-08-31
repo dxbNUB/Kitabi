@@ -163,7 +163,7 @@ export default function ReportAbuse() {
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="px-6 py-2.5 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md
+              className="px-6 py-2.5 btn-gold font-semibold rounded-md
                          transition-colors disabled:opacity-60"
             >
               {status === 'loading' ? 'Sending…' : 'Submit report'}

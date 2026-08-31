@@ -183,7 +183,7 @@ export default function HowItWorks() {
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                'radial-gradient(ellipse 700px 500px at 30% 40%, rgba(201,162,92,0.07) 0%, transparent 65%)',
+                'radial-gradient(ellipse 700px 500px at 30% 40%, rgba(212,168,91,0.12) 0%, transparent 65%)',
             }}
           />
           <div className="relative z-10">
@@ -201,7 +201,7 @@ export default function HowItWorks() {
               transition={{ duration: 0.6 }}
               className="font-display text-5xl sm:text-6xl lg:text-7xl font-medium mb-6 text-kitabi-ivory leading-[1.05]"
             >
-              How it <em className="italic text-kitabi-gold">works</em>.
+              How it <em className="foil italic">works</em>.
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -323,9 +323,7 @@ export default function HowItWorks() {
             </p>
             <Link
               to="/"
-              className="inline-block bg-kitabi-gold text-kitabi-night px-12 py-4
-                         rounded-md font-semibold text-base sm:text-lg hover:bg-kitabi-gold-deep hover:text-kitabi-paper
-                         transition-colors"
+              className="inline-block btn-gold px-12 py-4 rounded-md font-semibold text-base sm:text-lg"
             >
               Begin writing →
             </Link>
