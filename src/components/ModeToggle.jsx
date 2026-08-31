@@ -1,6 +1,7 @@
 import { useSession } from '../store/session';
 import { analytics } from '../lib/analytics';
 
+// Lives inside the paper sheet on Landing — styled for a light surface.
 export default function ModeToggle() {
   const { mode, setMode } = useSession();
 
@@ -17,15 +18,15 @@ export default function ModeToggle() {
   return (
     <div className="flex flex-col gap-1.5" role="group" aria-label="Writer experience level">
       <div className="flex items-center gap-2 text-sm">
-        <span className="text-gray-500 hidden sm:inline">I'm a:</span>
-        <div className="flex rounded-lg overflow-hidden border border-gray-300 bg-white">
+        <span className="text-[#8A7F6A] hidden sm:inline">I'm a:</span>
+        <div className="flex rounded-md overflow-hidden border border-[rgba(44,36,22,0.2)]">
           <button
             onClick={() => toggle('nonwriter')}
             aria-pressed={mode === 'nonwriter'}
             className={`px-3 sm:px-4 py-1.5 text-xs sm:text-sm transition-colors ${
               mode === 'nonwriter'
-                ? 'bg-[#C8964D] text-white font-medium'
-                : 'bg-transparent text-gray-600 hover:text-[#1A1A1A] hover:bg-gray-50'
+                ? 'bg-kitabi-gold-deep text-kitabi-paper font-medium'
+                : 'bg-transparent text-[#6E6350] hover:text-[#2C2416] hover:bg-[rgba(44,36,22,0.05)]'
             }`}
           >
             New Writer
@@ -35,15 +36,15 @@ export default function ModeToggle() {
             aria-pressed={mode === 'writer'}
             className={`px-3 sm:px-4 py-1.5 text-xs sm:text-sm transition-colors ${
               mode === 'writer'
-                ? 'bg-[#C8964D] text-white font-medium'
-                : 'bg-transparent text-gray-600 hover:text-[#1A1A1A] hover:bg-gray-50'
+                ? 'bg-kitabi-gold-deep text-kitabi-paper font-medium'
+                : 'bg-transparent text-[#6E6350] hover:text-[#2C2416] hover:bg-[rgba(44,36,22,0.05)]'
             }`}
           >
             Experienced
           </button>
         </div>
       </div>
-      <p className="text-[11px] text-gray-500 italic" key={mode}>
+      <p className="text-[11px] text-[#8A7F6A] italic" key={mode}>
         {description}
       </p>
     </div>

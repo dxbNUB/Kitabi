@@ -357,29 +357,29 @@ export default function Chat() {
 
   return (
     <>
-      <div className="flex bg-white text-[#1A1A1A] h-[100dvh]">
+      <div className="flex bg-kitabi-night text-kitabi-ivory h-[100dvh]">
         {/* Chat area */}
         <div className="flex flex-col flex-1 min-w-0 h-full">
           {/* Header */}
-          <div className="flex-shrink-0 flex items-center justify-between gap-3 px-4 sm:px-6 py-3 border-b border-gray-200 bg-white overflow-visible">
+          <div className="flex-shrink-0 flex items-center justify-between gap-3 px-4 sm:px-6 py-3 border-b border-seam bg-kitabi-night-soft overflow-visible">
             <button
               onClick={() => navigate('/')}
-              className="font-display text-[#C8964D] text-xl tracking-[0.09em] font-medium flex-shrink-0 whitespace-nowrap"
+              className="font-display text-kitabi-gold text-xl tracking-[0.09em] font-medium flex-shrink-0 whitespace-nowrap"
               aria-label="Kitabi — go to home"
             >
               kitabi
             </button>
             <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
               {genre && (
-                <span className="hidden sm:inline-block whitespace-nowrap text-[11px] text-gray-600 uppercase tracking-wider px-2.5 py-1 border border-gray-200 rounded-full bg-gray-50">
+                <span className="hidden sm:inline-block whitespace-nowrap text-[11px] text-kitabi-stone uppercase tracking-wider px-2.5 py-1 border border-seam rounded-full bg-[rgba(237,228,211,0.03)]">
                   {genre}
                 </span>
               )}
               <button
                 onClick={handleNewStory}
-                className="flex-shrink-0 whitespace-nowrap text-xs text-gray-700 hover:text-[#C8964D] transition
-                           flex items-center gap-1.5 px-3 py-1.5 border border-gray-300
-                           hover:border-[#C8964D] rounded-full bg-white"
+                className="flex-shrink-0 whitespace-nowrap text-xs text-kitabi-stone hover:text-kitabi-gold transition
+                           flex items-center gap-1.5 px-3 py-1.5 border border-seam
+                           hover:border-gilt rounded-full bg-transparent"
                 title="Start a fresh book"
                 aria-label="Start a new book (clears current conversation)"
               >
@@ -389,9 +389,9 @@ export default function Chat() {
               </button>
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="lg:hidden flex-shrink-0 text-xs text-gray-700 hover:text-[#C8964D] transition
-                           flex items-center px-3 py-1.5 border border-gray-300 hover:border-[#C8964D]
-                           rounded-full bg-white"
+                className="lg:hidden flex-shrink-0 text-xs text-kitabi-stone hover:text-kitabi-gold transition
+                           flex items-center px-3 py-1.5 border border-seam hover:border-gilt
+                           rounded-full bg-transparent"
                 aria-label="Open progress sidebar"
               >
                 <span aria-hidden="true">☰</span>
@@ -426,7 +426,7 @@ export default function Chat() {
           <>
           {/* Messages — large pb keeps last msg comfortably above the Generate CTA / input */}
           <div
-            className="flex-1 min-h-0 overflow-y-auto px-3 sm:px-6 pt-6 pb-20 space-y-4 bg-[#FAFAF7]"
+            className="flex-1 min-h-0 overflow-y-auto px-3 sm:px-6 pt-6 pb-20 space-y-4 bg-kitabi-night"
             role="log"
             aria-live="polite"
             aria-label="Conversation with Kitabi"
@@ -445,14 +445,14 @@ export default function Chat() {
                   >
                     {msg.role === 'assistant' ? (
                       <div
-                        className="max-w-[85%] rounded-2xl rounded-tl-sm px-5 py-4 bg-white border border-gray-200
-                                   text-[#1A1A1A] font-serif leading-[1.7] chat-prose shadow-sm"
+                        className="max-w-[85%] rounded-2xl rounded-tl-sm px-5 py-4 bg-kitabi-night-raise border border-seam
+                                   text-kitabi-ivory font-serif leading-[1.7] chat-prose"
                         style={{ fontSize: '1rem' }}
                         dangerouslySetInnerHTML={{ __html: markdownToHtml(msg.content) }}
                       />
                     ) : (
-                      <div className="max-w-[85%] rounded-2xl rounded-tr-sm px-5 py-3 bg-[#C8964D] text-white
-                                      whitespace-pre-wrap shadow-sm">
+                      <div className="max-w-[85%] rounded-2xl rounded-tr-sm px-5 py-3 bg-[rgba(201,162,92,0.14)] border border-gilt text-kitabi-ivory
+                                      whitespace-pre-wrap">
                         {msg.content}
                       </div>
                     )}
@@ -462,7 +462,7 @@ export default function Chat() {
 
               {aiLoading && !streamingMsg && (
                 <div className="flex justify-start">
-                  <div className="rounded-2xl rounded-tl-sm px-5 py-4 bg-white border border-gray-200 shadow-sm">
+                  <div className="rounded-2xl rounded-tl-sm px-5 py-4 bg-kitabi-night-raise border border-seam">
                     <ChatLoading />
                   </div>
                 </div>
@@ -489,15 +489,15 @@ export default function Chat() {
               : (canGenerate() ? '1 free per session' : 'Free chapter used');
 
             return (
-              <div className="flex-shrink-0 px-4 sm:px-6 pt-2 pb-1 bg-white border-t border-gray-200">
+              <div className="flex-shrink-0 px-4 sm:px-6 pt-2 pb-1 bg-kitabi-night-soft border-t border-seam">
                 <div className="max-w-2xl mx-auto flex items-center gap-3">
                   {atMonthlyLimit ? (
                     <button
                       onClick={() => setShowUpgrade(true)}
                       title="Monthly chapter limit reached — upgrade to continue"
-                      className="flex-1 py-2.5 rounded-lg font-semibold text-sm shadow-sm transition
+                      className="flex-1 py-2.5 rounded-md font-semibold text-sm transition-colors
                                  flex items-center justify-center gap-2
-                                 bg-[#C8964D] hover:bg-[#b88340] text-white"
+                                 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper"
                     >
                       <span aria-hidden="true">✦</span>
                       Upgrade to keep writing →
@@ -508,11 +508,11 @@ export default function Chat() {
                       disabled={!ready || generating || aiLoading}
                       aria-disabled={!ready}
                       title={ready ? 'Generate Chapter 1' : `Answer ${remaining} more question${remaining === 1 ? '' : 's'} first`}
-                      className={`flex-1 py-2.5 rounded-lg font-semibold text-sm shadow-sm transition
+                      className={`flex-1 py-2.5 rounded-md font-semibold text-sm transition-colors
                                   flex items-center justify-center gap-2
                         ${ready
-                          ? 'bg-[#C8964D] hover:bg-[#b88340] text-white'
-                          : 'bg-gray-100 text-gray-500 cursor-not-allowed'}`}
+                          ? 'bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper'
+                          : 'bg-[rgba(237,228,211,0.06)] text-kitabi-faded cursor-not-allowed'}`}
                     >
                       <span aria-hidden="true">✦</span>
                       {ready
@@ -520,7 +520,7 @@ export default function Chat() {
                         : `Answer ${remaining} more question${remaining === 1 ? '' : 's'}`}
                     </button>
                   )}
-                  <p className={`hidden sm:block text-[11px] whitespace-nowrap ${atMonthlyLimit ? 'text-red-600 font-medium' : 'text-gray-500'}`}>
+                  <p className={`hidden sm:block text-[11px] whitespace-nowrap ${atMonthlyLimit ? 'text-red-400 font-medium' : 'text-kitabi-faded'}`}>
                     {sideText}
                   </p>
                 </div>
@@ -531,7 +531,7 @@ export default function Chat() {
           {/* Input bar */}
           <form
             onSubmit={(e) => { e.preventDefault(); handleSend(); }}
-            className="flex-shrink-0 bg-white px-4 sm:px-6 py-3 border-t border-gray-200
+            className="flex-shrink-0 bg-kitabi-night-soft px-4 sm:px-6 py-3 border-t border-seam
                        pb-[max(env(safe-area-inset-bottom),0.75rem)]"
             aria-label="Reply to Kitabi"
           >
@@ -550,9 +550,9 @@ export default function Chat() {
                   placeholder="Your answer..."
                   aria-label="Type your reply (up to 1000 characters), then press Enter or click send"
                   rows={1}
-                  className="w-full resize-none bg-white border border-gray-300 rounded-xl px-4 py-3 pr-14
-                             text-[#1A1A1A] placeholder:text-gray-400 focus:border-[#C8964D]
-                             transition scrollbar-hide shadow-sm"
+                  className="w-full resize-none bg-[rgba(237,228,211,0.04)] border border-seam rounded-lg px-4 py-3 pr-14
+                             text-kitabi-ivory focus:border-gilt
+                             transition-colors scrollbar-hide"
                   style={{ maxHeight: '140px', overflowY: 'auto' }}
                   onInput={e => {
                     e.target.style.height = 'auto';
@@ -562,7 +562,7 @@ export default function Chat() {
                 {input.length > 700 && (
                   <span
                     className={`absolute bottom-2 right-3 text-[10px] font-medium pointer-events-none
-                      ${input.length > 900 ? 'text-red-600' : 'text-amber-600'}`}
+                      ${input.length > 900 ? 'text-red-400' : 'text-kitabi-gold'}`}
                     aria-live="polite"
                   >
                     {input.length} / 1000
@@ -574,8 +574,8 @@ export default function Chat() {
                 onClick={handleSend}
                 disabled={aiLoading || !input.trim()}
                 aria-label="Send message"
-                className="px-5 py-3 bg-[#C8964D] hover:bg-[#b88340] text-white font-medium rounded-xl
-                           transition disabled:opacity-40 disabled:cursor-not-allowed shadow-sm"
+                className="px-5 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-medium rounded-lg
+                           transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <span aria-hidden="true">→</span>
               </button>
@@ -589,13 +589,13 @@ export default function Chat() {
             Always visible on lg+, slides in from the right on smaller viewports. */}
         {sidebarOpen && (
           <div
-            className="lg:hidden fixed inset-0 z-30 bg-black/30 backdrop-blur-sm"
+            className="lg:hidden fixed inset-0 z-30 bg-black/50 backdrop-blur-sm"
             onClick={() => setSidebarOpen(false)}
             aria-hidden="true"
           />
         )}
         <aside
-          className={`flex flex-col w-72 h-full border-l border-gray-200 bg-[#FBF7EE] p-6 gap-5 overflow-y-auto
+          className={`flex flex-col w-72 h-full border-l border-seam bg-kitabi-night-soft p-6 gap-5 overflow-y-auto
             transition-transform duration-300
             lg:relative lg:translate-x-0
             fixed top-0 right-0 z-40
@@ -604,7 +604,7 @@ export default function Chat() {
         >
           <button
             onClick={() => setSidebarOpen(false)}
-            className="lg:hidden self-end text-gray-500 hover:text-[#1A1A1A] -mt-2 -mr-2 px-2 py-1 text-lg"
+            className="lg:hidden self-end text-kitabi-faded hover:text-kitabi-ivory -mt-2 -mr-2 px-2 py-1 text-lg"
             aria-label="Close sidebar"
           >
             <span aria-hidden="true">✕</span>
@@ -612,23 +612,23 @@ export default function Chat() {
 
           {/* Progress block */}
           <div>
-            <h3 className="text-[11px] text-gray-500 uppercase tracking-[0.18em] mb-4">Progress</h3>
+            <h3 className="text-[11px] text-kitabi-faded uppercase tracking-[0.18em] mb-4">Progress</h3>
             <dl className="space-y-3">
               <div>
-                <dt className="text-[11px] text-gray-500 mb-0.5">Genre</dt>
-                <dd className="text-sm text-[#1A1A1A] font-medium capitalize">
-                  {genre || <span className="text-gray-400 italic font-normal">Not yet selected</span>}
+                <dt className="text-[11px] text-kitabi-faded mb-0.5">Genre</dt>
+                <dd className="text-sm text-kitabi-ivory font-medium capitalize">
+                  {genre || <span className="text-kitabi-faded italic font-normal">Not yet selected</span>}
                 </dd>
               </div>
               <div>
-                <dt className="text-[11px] text-gray-500 mb-0.5">Writer Mode</dt>
-                <dd className="text-sm text-[#1A1A1A] font-medium">
+                <dt className="text-[11px] text-kitabi-faded mb-0.5">Writer Mode</dt>
+                <dd className="text-sm text-kitabi-ivory font-medium">
                   {mode === 'writer' ? 'Experienced' : 'New Writer'}
                 </dd>
               </div>
               <div>
-                <dt className="text-[11px] text-gray-500 mb-0.5">Messages</dt>
-                <dd className="text-sm text-[#1A1A1A] font-medium">
+                <dt className="text-[11px] text-kitabi-faded mb-0.5">Messages</dt>
+                <dd className="text-sm text-kitabi-ivory font-medium">
                   {messageHistory.length}
                 </dd>
               </div>
@@ -640,21 +640,21 @@ export default function Chat() {
 
           {/* Premise — collapsed by default, click to expand */}
           {session.project?.premise && (
-            <details className="group border-t border-gray-200 pt-5">
+            <details className="group border-t border-seam pt-5">
               <summary className="list-none cursor-pointer">
-                <h3 className="text-[11px] text-gray-500 uppercase tracking-[0.18em] mb-2 flex items-center justify-between">
+                <h3 className="text-[11px] text-kitabi-faded uppercase tracking-[0.18em] mb-2 flex items-center justify-between">
                   Your Idea
-                  <span className="text-gray-400 group-open:rotate-180 transition-transform text-base" aria-hidden="true">▾</span>
+                  <span className="text-kitabi-faded group-open:rotate-180 transition-transform text-base" aria-hidden="true">▾</span>
                 </h3>
                 <p
-                  className="text-sm text-[#1A1A1A] leading-relaxed font-serif group-open:hidden
+                  className="text-sm text-kitabi-ivory leading-relaxed font-serif group-open:hidden
                              [display:-webkit-box] [-webkit-line-clamp:3] [-webkit-box-orient:vertical] overflow-hidden"
                   title={session.project.premise}
                 >
                   {session.project.premise}
                 </p>
               </summary>
-              <p className="text-sm text-[#1A1A1A] leading-relaxed font-serif">
+              <p className="text-sm text-kitabi-ivory leading-relaxed font-serif">
                 {session.project.premise}
               </p>
             </details>
@@ -662,11 +662,11 @@ export default function Chat() {
 
           {/* Characters (if extracted from conversation) */}
           {session.characters?.length > 0 && (
-            <div className="border-t border-gray-200 pt-5">
-              <h3 className="text-[11px] text-gray-500 uppercase tracking-[0.18em] mb-3">Characters</h3>
+            <div className="border-t border-seam pt-5">
+              <h3 className="text-[11px] text-kitabi-faded uppercase tracking-[0.18em] mb-3">Characters</h3>
               {session.characters.map((c, i) => (
-                <p key={i} className="text-sm text-[#1A1A1A] mb-1">
-                  <span className="font-medium">{c.name}</span> <span className="text-gray-500">— {c.role}</span>
+                <p key={i} className="text-sm text-kitabi-ivory mb-1">
+                  <span className="font-medium">{c.name}</span> <span className="text-kitabi-stone">— {c.role}</span>
                 </p>
               ))}
             </div>

@@ -66,7 +66,7 @@ export default function Navbar({ surface = 'cream', onCta }) {
             text-[12px] sm:text-[13px] font-medium tracking-[0.04em] sm:tracking-[0.06em]
             border border-kitabi-saffron transition-colors duration-200
             ${scrolled
-              ? 'bg-kitabi-saffron text-kitabi-ink hover:bg-[#b88340]'
+              ? 'bg-kitabi-gold text-kitabi-night hover:bg-kitabi-gold-deep hover:text-kitabi-paper'
               : 'text-kitabi-saffron hover:bg-kitabi-saffron hover:text-kitabi-ink'}
           `}
           style={{ borderRadius: 0 }}

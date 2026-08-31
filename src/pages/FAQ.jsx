@@ -71,22 +71,30 @@ export default function FAQ() {
 
   return (
     <PageLayout>
-      <div className="bg-white">
+      <div className="bg-kitabi-night">
         {/* HERO */}
-        <section className="min-h-[60vh] flex flex-col justify-center px-6 sm:px-12 lg:px-24 py-20">
+        <section className="min-h-[50vh] flex flex-col justify-center px-6 sm:px-12 lg:px-24 py-20">
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="eyebrow mb-5"
+          >
+            Answers
+          </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="font-serif text-5xl sm:text-6xl lg:text-7xl font-medium mb-7 text-[#1A1A1A] leading-[1.05]"
+            className="font-display text-5xl sm:text-6xl lg:text-7xl font-medium mb-7 text-kitabi-ivory leading-[1.05]"
           >
-            Got <span className="italic text-[#C8964D]">questions</span>?
+            Got <em className="italic text-kitabi-gold">questions</em>?
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-xl sm:text-2xl lg:text-3xl text-gray-600 max-w-2xl"
+            className="text-xl sm:text-2xl text-kitabi-stone max-w-2xl"
           >
             We've answered them all. And if you don't see yours, just ask.
           </motion.p>
@@ -104,10 +112,10 @@ export default function FAQ() {
               className="mb-16 lg:mb-24"
             >
               <div className="flex items-center gap-4 mb-8">
-                <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-medium text-[#1A1A1A]">
+                <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-medium text-kitabi-ivory">
                   {section.category}
                 </h2>
-                <div className="flex-1 h-px bg-gray-200" aria-hidden="true" />
+                <div className="flex-1 h-px bg-[rgba(237,228,211,0.09)]" aria-hidden="true" />
               </div>
 
               <div className="space-y-4">
@@ -121,10 +129,10 @@ export default function FAQ() {
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ delay: idx * 0.04 }}
                       viewport={{ once: true }}
-                      className={`border-2 rounded-xl px-6 py-5 cursor-pointer transition-all
+                      className={`border rounded-lg px-6 py-5 cursor-pointer transition-colors bg-kitabi-night-soft
                         ${open
-                          ? 'border-[#C8964D] bg-[#FFF7EB] shadow-md'
-                          : 'border-gray-200 hover:border-[#C8964D] hover:bg-[#FFF7EB]'}`}
+                          ? 'border-gilt'
+                          : 'border-seam hover:border-gilt'}`}
                       onClick={() => setOpenIndex(open ? null : key)}
                       role="button"
                       tabIndex={0}
@@ -137,11 +145,11 @@ export default function FAQ() {
                       }}
                     >
                       <div className="flex justify-between items-center gap-4 select-none">
-                        <span className="font-bold text-base sm:text-lg text-[#1A1A1A]">{item.q}</span>
+                        <span className="font-medium text-base sm:text-lg text-kitabi-ivory">{item.q}</span>
                         <motion.span
                           animate={{ rotate: open ? 180 : 0 }}
                           transition={{ duration: 0.3 }}
-                          className="text-[#C8964D] text-xl flex-shrink-0"
+                          className="text-kitabi-gold text-lg flex-shrink-0"
                           aria-hidden="true"
                         >
                           ↓
@@ -156,7 +164,7 @@ export default function FAQ() {
                             transition={{ duration: 0.25, ease: 'easeInOut' }}
                             className="overflow-hidden"
                           >
-                            <p className="text-gray-700 mt-4 text-sm sm:text-base leading-relaxed">
+                            <p className="text-kitabi-stone mt-4 text-sm sm:text-base leading-relaxed">
                               {item.a}
                             </p>
                           </motion.div>
@@ -177,45 +185,42 @@ export default function FAQ() {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-br from-[#FFF7EB] via-white to-[#FFE4B8]/40 rounded-3xl p-10 sm:p-16 border-2 border-[#C8964D]/30 text-center"
+            className="bg-kitabi-night-soft rounded-lg p-10 sm:p-16 border border-seam text-center"
           >
-            <h3 className="font-serif text-3xl sm:text-4xl font-medium mb-4 text-[#1A1A1A]">
+            <h3 className="font-display text-3xl sm:text-4xl font-medium mb-4 text-kitabi-ivory">
               Still have questions?
             </h3>
-            <p className="text-base sm:text-lg text-gray-600 mb-7">
+            <p className="text-base sm:text-lg text-kitabi-stone mb-7">
               Email us. We respond within 24 hours.
             </p>
-            <motion.a
+            <a
               href="mailto:support@kitabi.app"
-              whileHover={{ scale: 1.05 }}
-              className="inline-block text-[#C8964D] hover:text-[#b88340] font-bold text-lg sm:text-xl"
+              className="inline-block text-kitabi-gold hover:text-kitabi-ivory font-semibold text-lg transition-colors"
             >
               support@kitabi.app →
-            </motion.a>
+            </a>
           </motion.div>
         </section>
 
         {/* CTA */}
         <section className="px-6 sm:px-12 lg:px-24 py-20 lg:py-32 text-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-medium mb-7 text-[#1A1A1A]">
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-medium mb-7 text-kitabi-ivory">
               Ready to start?
             </h2>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="inline-block">
-              <Link
-                to="/"
-                className="inline-block bg-[#C8964D] text-white px-12 sm:px-16 py-4 sm:py-5
-                           rounded-xl font-bold text-base sm:text-xl hover:bg-[#b88340]
-                           hover:shadow-2xl transition-all"
-              >
-                Begin Writing →
-              </Link>
-            </motion.div>
+            <Link
+              to="/"
+              className="inline-block bg-kitabi-gold text-kitabi-night px-12 py-4
+                         rounded-md font-semibold text-base sm:text-lg hover:bg-kitabi-gold-deep hover:text-kitabi-paper
+                         transition-colors"
+            >
+              Begin writing →
+            </Link>
           </motion.div>
         </section>
       </div>

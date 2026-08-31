@@ -40,7 +40,7 @@ export default function Welcome() {
   }, [exp, setMode, setGenre]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FBF7EE] via-white to-[#FFF7EB] py-16 px-6 sm:px-10 overflow-x-hidden">
+    <div className="min-h-screen bg-kitabi-night py-16 px-6 sm:px-10 overflow-x-hidden">
       <div className="max-w-4xl mx-auto">
         {/* Eyebrow + welcome line */}
         <motion.div
@@ -49,17 +49,17 @@ export default function Welcome() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12 sm:mb-16"
         >
-          <p className="text-[11px] uppercase tracking-[0.2em] text-[#C8964D] mb-3">
+          <p className="eyebrow mb-3">
             {answers ? 'Personalised for you' : 'Ready to start'}
           </p>
           {/* BUG-M1: text-balance + serif glyphs with terminal punctuation can clip
               the trailing period at the right edge on some viewports. pr-2 keeps
               descender/punctuation glyphs inside the rendered box. */}
-          <h1 className="font-serif text-3xl sm:text-5xl font-medium leading-tight text-[#1A1A1A] mb-4 text-balance px-2">
+          <h1 className="font-display text-3xl sm:text-5xl font-medium leading-tight text-kitabi-ivory mb-4 text-balance px-2">
             {exp.welcomeMessage}
           </h1>
           {answers && (
-            <p className="text-base sm:text-lg text-gray-600 max-w-xl mx-auto">
+            <p className="text-base sm:text-lg text-kitabi-stone max-w-xl mx-auto">
               We've tuned Kitabi to match your goals. You can change any of this later in settings.
             </p>
           )}
@@ -96,7 +96,7 @@ export default function Welcome() {
             transition={{ delay: 0.4 }}
             className="mb-12 sm:mb-16"
           >
-            <h2 className="font-serif text-2xl sm:text-3xl font-medium text-[#1A1A1A] mb-6">
+            <h2 className="font-display text-2xl sm:text-3xl font-medium text-kitabi-ivory mb-6">
               Tools we'll prioritise for you
             </h2>
             <div className="space-y-3">
@@ -106,17 +106,17 @@ export default function Welcome() {
                   initial={{ opacity: 0, x: -16 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5 + idx * 0.08 }}
-                  className="p-5 bg-white rounded-xl border border-gray-200 hover:border-[#C8964D]
-                             hover:shadow-md transition-all flex items-center gap-4"
+                  className="p-5 bg-kitabi-night-soft rounded-lg border border-seam hover:border-gilt
+                             transition-colors flex items-center gap-4"
                 >
-                  <span className="font-display text-2xl font-medium text-[#C8964D]" aria-hidden="true">
+                  <span className="font-display text-2xl font-medium text-kitabi-gold" aria-hidden="true">
                     {String(idx + 1).padStart(2, '0')}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-[#1A1A1A]">{feature.name}</p>
-                    <p className="text-sm text-gray-600">{feature.description}</p>
+                    <p className="font-semibold text-kitabi-ivory">{feature.name}</p>
+                    <p className="text-sm text-kitabi-stone">{feature.description}</p>
                   </div>
-                  <span className="text-[#C8964D] flex-shrink-0" aria-hidden="true">→</span>
+                  <span className="text-kitabi-gold flex-shrink-0" aria-hidden="true">→</span>
                 </motion.div>
               ))}
             </div>
@@ -131,15 +131,15 @@ export default function Welcome() {
             transition={{ delay: 0.55 }}
             className="mb-12 sm:mb-16"
           >
-            <h2 className="font-serif text-xl sm:text-2xl font-medium text-[#1A1A1A] mb-4">
+            <h2 className="font-display text-xl sm:text-2xl font-medium text-kitabi-ivory mb-4">
               Suggested genres for your book
             </h2>
             <div className="flex flex-wrap gap-2">
               {exp.suggestedGenres.map((g) => (
                 <span
                   key={g}
-                  className="px-4 py-1.5 rounded-full text-sm border border-[#C8964D]/40
-                             bg-[#FFF7EB] text-[#8b6a2f]"
+                  className="px-4 py-1.5 rounded-full text-sm border border-gilt
+                             bg-[rgba(201,162,92,0.08)] text-kitabi-gold"
                 >
                   {GENRE_LABELS[g] || g}
                 </span>
@@ -157,13 +157,12 @@ export default function Welcome() {
         >
           <button
             onClick={() => navigate('/chat')}
-            className="px-10 py-3.5 bg-[#C8964D] hover:bg-[#b88340] text-white font-bold
-                       text-base sm:text-lg rounded-xl transition-all shadow-md hover:shadow-xl
-                       hover:-translate-y-0.5"
+            className="px-10 py-3.5 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold
+                       text-base sm:text-lg rounded-md transition-colors"
           >
             Start writing Chapter 1 →
           </button>
-          <p className="mt-3 text-sm text-gray-500">
+          <p className="mt-3 text-sm text-kitabi-faded">
             We'll guide you through the first chapter, step by step.
           </p>
         </motion.div>
@@ -183,15 +182,15 @@ function StatCard({ label, value, unit, delay = 0, small = false }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
       whileHover={{ y: -4 }}
-      className="min-w-0 p-7 bg-white rounded-2xl border-2 border-gray-100 hover:border-[#C8964D]/40
-                 shadow-sm hover:shadow-md transition-all"
+      className="min-w-0 p-7 bg-kitabi-night-soft rounded-lg border border-seam hover:border-gilt
+                 transition-colors"
     >
-      <p className="text-[11px] uppercase tracking-[0.18em] text-gray-500 mb-3">{label}</p>
-      <p className={`font-display font-medium text-[#C8964D] mb-1.5 leading-none capitalize break-words
+      <p className="text-[11px] uppercase tracking-[0.18em] text-kitabi-faded mb-3">{label}</p>
+      <p className={`font-display font-medium text-kitabi-gold mb-1.5 leading-none capitalize break-words
         ${small ? 'text-2xl sm:text-3xl' : 'text-4xl sm:text-5xl'}`}>
         {value}
       </p>
-      <p className="text-sm text-gray-600 break-words">{unit}</p>
+      <p className="text-sm text-kitabi-stone break-words">{unit}</p>
     </motion.div>
   );
 }

@@ -17,7 +17,7 @@ export default function KitabiLogo({ variant = 'default', as: Tag = 'a', href = 
       {...rest}
     >
       <span
-        className={`font-display font-medium text-kitabi-saffron tracking-[0.09em]
+        className={`font-display font-medium text-kitabi-gold tracking-[0.09em]
           ${isMini ? 'text-[22px]' : 'text-[26px]'}`}
       >
         kitabi
@@ -26,7 +26,7 @@ export default function KitabiLogo({ variant = 'default', as: Tag = 'a', href = 
         dir="rtl"
         className={`font-arabic font-normal -translate-y-[1px]
           ${isMini ? 'text-[10px]' : 'text-[12px]'}`}
-        style={{ color: 'rgba(200, 150, 77, 0.65)' }}
+        style={{ color: 'rgba(201, 162, 92, 0.65)' }}
       >
         كتابي
       </span>

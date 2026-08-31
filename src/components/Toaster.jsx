@@ -31,7 +31,7 @@ export default function Toaster() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -16, scale: 0.96 }}
               transition={{ duration: 0.25 }}
-              className="pointer-events-auto bg-white border border-gray-200 rounded-lg shadow-xl
+              className="pointer-events-auto bg-kitabi-night-raise border border-seam rounded-md shadow-raise
                          flex items-stretch overflow-hidden w-full"
             >
               <div className={`w-1 ${style.bar} flex-shrink-0`} aria-hidden="true" />
@@ -40,13 +40,13 @@ export default function Toaster() {
                   {style.icon}
                 </span>
                 <span className="sr-only">{style.label}: </span>
-                <span className="text-sm text-[#1A1A1A] flex-1 leading-snug break-words min-w-0">
+                <span className="text-sm text-kitabi-ivory flex-1 leading-snug break-words min-w-0">
                   {t.msg}
                 </span>
                 <button
                   onClick={() => dismiss(t.id)}
                   aria-label="Dismiss notification"
-                  className="text-gray-400 hover:text-[#1A1A1A] text-xs ml-2 flex-shrink-0"
+                  className="text-kitabi-faded hover:text-kitabi-ivory text-xs ml-2 flex-shrink-0"
                 >
                   <span aria-hidden="true">✕</span>
                 </button>

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { hasCompletedOnboarding } from '../lib/personalization';
 import { useSession } from '../store/session';
 import { useAuth } from '../lib/auth';
+import KitabiLogo from './KitabiLogo';
 
 // Real auth backed by Supabase Auth (Google OAuth). Anonymous users see only
 // public nav items; signed-in users get the gated routes (Dashboard, Write,
@@ -15,11 +16,11 @@ function useIsLoggedIn() {
 }
 
 const NAV = [
-  { id: 'home',      label: 'Home',      href: '/',          color: 'from-amber-400 to-amber-600' },
-  { id: 'dashboard', label: 'Dashboard', href: '/dashboard', color: 'from-amber-500 to-amber-700', requiresAuth: true },
-  { id: 'write',     label: 'Write',     href: '/chat',      color: 'from-amber-600 to-amber-800', requiresAuth: true },
+  { id: 'home',      label: 'Home',      href: '/' },
+  { id: 'dashboard', label: 'Dashboard', href: '/dashboard', requiresAuth: true },
+  { id: 'write',     label: 'Write',     href: '/chat',      requiresAuth: true },
   {
-    id: 'library', label: 'My Library', color: 'from-blue-500 to-blue-700', requiresAuth: true,
+    id: 'library', label: 'My Library', requiresAuth: true,
     children: [
       { id: 'chats',    label: 'My Chats',          href: '/my-chats'         },
       { id: 'chapters', label: 'My Chapters',       href: '/my-chapters'      },
@@ -28,7 +29,7 @@ const NAV = [
     ],
   },
   {
-    id: 'learn', label: 'Learn', color: 'from-purple-500 to-purple-700',
+    id: 'learn', label: 'Learn',
     children: [
       { id: 'how-it-works', label: 'How It Works', href: '/how-it-works' },
       { id: 'compare',      label: 'Compare',      href: '/compare'      },
@@ -36,13 +37,13 @@ const NAV = [
     ],
   },
   {
-    id: 'plans', label: 'Plans', color: 'from-gray-500 to-gray-700',
+    id: 'plans', label: 'Plans',
     children: [
       { id: 'pricing', label: 'Pricing', href: '/pricing' },
       { id: 'about',   label: 'About',   href: '/about'   },
     ],
   },
-  { id: 'settings',  label: 'Settings',  href: '/settings',  color: 'from-slate-500 to-slate-700', requiresAuth: true },
+  { id: 'settings',  label: 'Settings',  href: '/settings',  requiresAuth: true },
 ];
 
 function NavItem({ item, active, onClick }) {
@@ -51,17 +52,17 @@ function NavItem({ item, active, onClick }) {
       to={item.href}
       onClick={onClick}
       aria-current={active ? 'page' : undefined}
-      className={`group flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors duration-200
-        ${active ? 'bg-[#FFF7EB]' : 'hover:bg-gray-50'}`}
+      className={`group flex items-center gap-3 px-3 py-2.5 rounded-md transition-colors duration-200
+        ${active ? 'bg-[rgba(201,162,92,0.08)]' : 'hover:bg-[rgba(237,228,211,0.04)]'}`}
     >
       <span
-        className={`w-[3px] h-9 rounded-sm bg-gradient-to-b ${item.color} flex-shrink-0
-          ${active ? 'shadow-[0_0_0_1px_rgba(200,150,77,0.4)]' : ''}`}
+        className={`w-[2px] h-8 rounded-sm flex-shrink-0 transition-colors duration-200
+          ${active ? 'bg-kitabi-gold' : 'bg-[rgba(237,228,211,0.12)] group-hover:bg-[rgba(201,162,92,0.45)]'}`}
         aria-hidden="true"
       />
       <span
         className={`flex-1 text-sm tracking-[0.01em] transition-colors duration-200
-          ${active ? 'text-[#C8964D] font-semibold' : 'text-gray-700 group-hover:text-[#1A1A1A] font-medium'}`}
+          ${active ? 'text-kitabi-gold font-medium' : 'text-kitabi-stone group-hover:text-kitabi-ivory font-normal'}`}
       >
         {item.label}
       </span>
@@ -75,24 +76,24 @@ function ParentItem({ item, expanded, hasActiveChild, onToggle }) {
     <button
       onClick={onToggle}
       aria-expanded={expanded}
-      className={`group w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors duration-200
-        ${active ? 'bg-[#FFF7EB]' : 'hover:bg-gray-50'}`}
+      className={`group w-full flex items-center gap-3 px-3 py-2.5 rounded-md transition-colors duration-200
+        ${active ? 'bg-[rgba(201,162,92,0.08)]' : 'hover:bg-[rgba(237,228,211,0.04)]'}`}
     >
       <span
-        className={`w-[3px] h-9 rounded-sm bg-gradient-to-b ${item.color} flex-shrink-0
-          ${active ? 'shadow-[0_0_0_1px_rgba(200,150,77,0.4)]' : ''}`}
+        className={`w-[2px] h-8 rounded-sm flex-shrink-0 transition-colors duration-200
+          ${active ? 'bg-kitabi-gold' : 'bg-[rgba(237,228,211,0.12)] group-hover:bg-[rgba(201,162,92,0.45)]'}`}
         aria-hidden="true"
       />
       <span
         className={`flex-1 text-left text-sm tracking-[0.01em] transition-colors duration-200
-          ${active ? 'text-[#C8964D] font-semibold' : 'text-gray-700 group-hover:text-[#1A1A1A] font-medium'}`}
+          ${active ? 'text-kitabi-gold font-medium' : 'text-kitabi-stone group-hover:text-kitabi-ivory font-normal'}`}
       >
         {item.label}
       </span>
       <motion.span
         animate={{ rotate: expanded ? 180 : 0 }}
         transition={{ duration: 0.2 }}
-        className="text-gray-400 text-xs"
+        className="text-kitabi-faded text-xs"
         aria-hidden="true"
       >
         ▾
@@ -109,8 +110,8 @@ function ChildItem({ child, active, onClick }) {
       aria-current={active ? 'page' : undefined}
       className={`block px-3 py-1.5 rounded text-sm transition-colors duration-150
         ${active
-          ? 'text-[#C8964D] font-semibold bg-[#FFF7EB]'
-          : 'text-gray-600 hover:text-[#1A1A1A] hover:bg-gray-50'}`}
+          ? 'text-kitabi-gold font-medium bg-[rgba(201,162,92,0.08)]'
+          : 'text-kitabi-stone hover:text-kitabi-ivory hover:bg-[rgba(237,228,211,0.04)]'}`}
     >
       {child.label}
     </Link>
@@ -121,18 +122,18 @@ function AuthBlock({ onItemClick }) {
   const { user, loading, signInWithGoogle, signOut } = useAuth();
 
   if (loading) {
-    return <div className="h-9 mb-3 rounded bg-gray-100 animate-pulse" aria-hidden="true" />;
+    return <div className="h-9 mb-3 rounded bg-[rgba(237,228,211,0.06)] animate-pulse" aria-hidden="true" />;
   }
 
   if (user) {
     const display = user.user_metadata?.name || user.email || 'Signed in';
     return (
       <div className="mb-3 px-1">
-        <p className="text-[11px] uppercase tracking-[0.18em] text-gray-400 mb-1">Signed in</p>
-        <p className="text-xs text-[#1A1A1A] font-medium truncate" title={user.email}>{display}</p>
+        <p className="text-[10px] uppercase tracking-[0.2em] text-kitabi-faded mb-1">Signed in</p>
+        <p className="text-xs text-kitabi-ivory font-medium truncate" title={user.email}>{display}</p>
         <button
           onClick={() => { signOut(); onItemClick?.(); }}
-          className="mt-1.5 text-xs text-gray-500 hover:text-[#C8964D] transition"
+          className="mt-1.5 text-xs text-kitabi-stone hover:text-kitabi-gold transition"
         >
           Sign out
         </button>
@@ -144,8 +145,8 @@ function AuthBlock({ onItemClick }) {
     <button
       onClick={() => signInWithGoogle()}
       className="mb-3 w-full flex items-center justify-center gap-2 px-3 py-2.5
-                 bg-white border border-gray-300 hover:border-[#C8964D] hover:bg-gray-50
-                 rounded-lg text-sm font-medium text-[#1A1A1A] transition"
+                 bg-[rgba(237,228,211,0.04)] border border-seam hover:border-gilt
+                 rounded-md text-sm font-medium text-kitabi-ivory transition-colors"
       aria-label="Sign in with Google"
     >
       {/* Inline Google "G" mark — keeps the dependency tree clean (no svg import). */}
@@ -198,14 +199,13 @@ function SidebarBody({ pathname, onItemClick }) {
   return (
     <div className="flex flex-col h-full p-6">
       {/* Wordmark + tagline */}
-      <button
+      <KitabiLogo
+        as="button"
         onClick={() => { navigate('/'); onItemClick?.(); }}
         aria-label="Kitabi — go to home"
-        className="font-display text-3xl tracking-[0.06em] font-medium text-[#C8964D] block mb-1 text-left"
-      >
-        kitabi
-      </button>
-      <p className="text-[11px] uppercase tracking-[0.2em] text-gray-400 mb-9">
+        className="mb-2 text-left"
+      />
+      <p className="text-[10px] uppercase tracking-[0.24em] text-kitabi-faded mb-9">
         Finish your book
       </p>
 
@@ -235,7 +235,7 @@ function SidebarBody({ pathname, onItemClick }) {
                       transition={{ duration: 0.2, ease: 'easeOut' }}
                       className="overflow-hidden"
                     >
-                      <div className="ml-7 mt-1 mb-1 space-y-0.5 border-l border-gray-200 pl-3">
+                      <div className="ml-6 mt-1 mb-1 space-y-0.5 border-l border-seam pl-3">
                         {visibleChildren.map((child) => (
                           <ChildItem
                             key={child.id}
@@ -263,14 +263,14 @@ function SidebarBody({ pathname, onItemClick }) {
       </nav>
 
       {/* Auth + bottom CTA */}
-      <div className="border-t border-gray-200 pt-5 mt-4">
+      <div className="border-t border-seam pt-5 mt-4">
         <AuthBlock onItemClick={onItemClick} />
         <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          whileHover={{ scale: 1.01 }}
+          whileTap={{ scale: 0.99 }}
           onClick={() => { navigate(ctaHref); onItemClick?.(); }}
-          className="w-full bg-[#C8964D] hover:bg-[#b88340] text-white font-semibold
-                     py-3 rounded-lg transition-shadow shadow-sm hover:shadow-md text-sm"
+          className="w-full bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night font-semibold
+                     py-3 rounded-md transition-colors text-sm tracking-[0.02em]"
         >
           {ctaLabel}
         </motion.button>
@@ -298,25 +298,24 @@ export default function Sidebar() {
       {/* Desktop sidebar */}
       <aside
         aria-label="Site navigation"
-        className="hidden lg:block fixed left-0 top-0 h-screen w-72 bg-white border-r border-gray-200 z-40"
+        className="hidden lg:block fixed left-0 top-0 h-screen w-72 bg-kitabi-night-soft border-r border-seam z-40"
       >
         <SidebarBody pathname={pathname} />
       </aside>
 
       {/* Mobile top bar */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
-        <button
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-kitabi-night-soft/95 backdrop-blur-sm border-b border-seam px-4 py-3 flex items-center justify-between">
+        <KitabiLogo
+          variant="mini"
+          as="button"
           onClick={() => navigate('/')}
-          className="font-display text-2xl tracking-[0.06em] font-medium text-[#C8964D]"
           aria-label="Kitabi — home"
-        >
-          kitabi
-        </button>
+        />
         <button
           onClick={() => setDrawerOpen(true)}
           aria-label="Open navigation menu"
           aria-expanded={drawerOpen}
-          className="flex flex-col gap-[5px] p-2 bg-transparent border-0 cursor-pointer text-[#1A1A1A]"
+          className="flex flex-col gap-[5px] p-2 bg-transparent border-0 cursor-pointer text-kitabi-ivory"
         >
           <span className="block w-[22px] h-px bg-current" aria-hidden="true" />
           <span className="block w-[16px] h-px bg-current" aria-hidden="true" />
@@ -332,7 +331,7 @@ export default function Sidebar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setDrawerOpen(false)}
-              className="lg:hidden fixed inset-0 z-40 bg-black/30 backdrop-blur-sm"
+              className="lg:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
               aria-hidden="true"
             />
             <motion.aside
@@ -340,7 +339,7 @@ export default function Sidebar() {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'tween', duration: 0.25, ease: 'easeOut' }}
-              className="lg:hidden fixed top-0 left-0 bottom-0 z-50 w-72 bg-white shadow-2xl"
+              className="lg:hidden fixed top-0 left-0 bottom-0 z-50 w-72 bg-kitabi-night-soft border-r border-seam shadow-2xl"
               role="dialog"
               aria-modal="true"
               aria-label="Navigation menu"
@@ -348,7 +347,7 @@ export default function Sidebar() {
               <button
                 onClick={() => setDrawerOpen(false)}
                 aria-label="Close navigation menu"
-                className="absolute top-4 right-4 text-3xl text-gray-400 hover:text-[#1A1A1A] transition w-10 h-10 flex items-center justify-center"
+                className="absolute top-4 right-4 text-3xl text-kitabi-faded hover:text-kitabi-ivory transition w-10 h-10 flex items-center justify-center"
               >
                 <span aria-hidden="true">×</span>
               </button>

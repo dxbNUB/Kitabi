@@ -243,7 +243,7 @@ export default function ChapterDisplay({ onRegenerate, onContinue, onNewStory })
       >
         {/* Title above the paper — click to edit */}
         <div className="text-center mb-5">
-          <p className="text-[11px] text-gray-500 uppercase tracking-[0.2em] mb-1.5">{genre || 'Fiction'} · Chapter One</p>
+          <p className="eyebrow mb-1.5">{genre || 'Fiction'} · Chapter One</p>
           {editingTitle ? (
             <input
               type="text"
@@ -261,27 +261,27 @@ export default function ChapterDisplay({ onRegenerate, onContinue, onNewStory })
               }}
               autoFocus
               aria-label="Edit chapter title"
-              className="font-serif text-3xl sm:text-4xl text-[#1A1A1A] leading-tight bg-transparent
-                         text-center w-full max-w-2xl mx-auto border-b-2 border-[#C8964D]
+              className="font-display text-3xl sm:text-4xl text-kitabi-ivory leading-tight bg-transparent
+                         text-center w-full max-w-2xl mx-auto border-b-2 border-kitabi-gold
                          focus:outline-none px-2"
             />
           ) : (
             <button
               onClick={() => { setTitleDraft(title); setEditingTitle(true); }}
               title="Click to rename"
-              className="group inline-flex items-baseline gap-2 font-serif text-3xl sm:text-4xl text-[#1A1A1A] leading-tight
-                         hover:text-[#C8964D] transition rounded px-2 hover:bg-[#FFF7EB]/60"
+              className="group inline-flex items-baseline gap-2 font-display text-3xl sm:text-4xl text-kitabi-ivory leading-tight
+                         hover:text-kitabi-gold transition rounded px-2"
             >
               <span>{title}</span>
-              <span className="text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition" aria-hidden="true">
+              <span className="text-xs text-kitabi-faded opacity-0 group-hover:opacity-100 transition" aria-hidden="true">
                 ✎
               </span>
             </button>
           )}
         </div>
 
-        {/* Paper-like chapter display */}
-        <div className="paper rounded-xl shadow-md border border-gray-200 p-8 sm:p-12">
+        {/* Paper-like chapter display — the one bright object on the desk */}
+        <div className="paper rounded-md shadow-sheet p-8 sm:p-12">
           <div
             className="chapter-prose font-serif text-lg leading-[1.85] text-[#2C2416] drop-cap whitespace-pre-wrap"
             style={{ textAlign: 'justify' }}
@@ -290,7 +290,7 @@ export default function ChapterDisplay({ onRegenerate, onContinue, onNewStory })
         </div>
 
         {/* Word count */}
-        <p className="text-center text-sm text-gray-500 mt-4">
+        <p className="text-center text-sm text-kitabi-faded mt-4">
           {wc.toLocaleString()} words · ~{readMinutes} min read
         </p>
 
@@ -298,11 +298,11 @@ export default function ChapterDisplay({ onRegenerate, onContinue, onNewStory })
         <div
           role="note"
           aria-label="Pre-publish disclaimer"
-          className="mt-6 px-4 py-3 rounded-lg bg-[#FFF7EB] border border-[#C8964D]/30 flex items-start gap-3 text-[13px] text-[#5C4A2A]"
+          className="mt-6 px-4 py-3 rounded-md bg-[rgba(201,162,92,0.06)] border border-gilt flex items-start gap-3 text-[13px] text-kitabi-stone"
         >
-          <span aria-hidden="true" className="text-[#C8964D] font-semibold mt-0.5">⚠</span>
+          <span aria-hidden="true" className="text-kitabi-gold font-semibold mt-0.5">⚠</span>
           <p className="leading-snug">
-            <strong className="text-[#1A1A1A]">Before publishing:</strong>{' '}
+            <strong className="text-kitabi-ivory">Before publishing:</strong>{' '}
             verify all facts, obtain permissions, and ensure legal compliance in your jurisdiction.
             Kitabi is not responsible for the accuracy or legality of your content.
           </p>
@@ -312,16 +312,16 @@ export default function ChapterDisplay({ onRegenerate, onContinue, onNewStory })
         {notesHtml && (
           <section
             aria-labelledby="writers-notes-title"
-            className="mt-8 pt-6 border-t border-gray-200"
+            className="mt-8 pt-6 border-t border-seam"
           >
             <h2
               id="writers-notes-title"
-              className="text-[11px] text-gray-500 uppercase tracking-[0.2em] mb-3"
+              className="eyebrow mb-3"
             >
               Writer's Notes
             </h2>
             <div
-              className="chat-prose font-serif text-[15px] leading-[1.7] text-gray-700"
+              className="chat-prose font-serif text-[15px] leading-[1.7] text-kitabi-stone"
               dangerouslySetInnerHTML={{ __html: notesHtml }}
             />
           </section>
@@ -350,8 +350,8 @@ export default function ChapterDisplay({ onRegenerate, onContinue, onNewStory })
       <div
         role="toolbar"
         aria-label="Chapter actions"
-        className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t-2 border-[#C8964D]/20
-                   px-3 sm:px-6 py-3 shadow-[0_-8px_24px_rgba(0,0,0,0.08)]
+        className="fixed bottom-0 left-0 right-0 z-30 bg-kitabi-night-soft border-t border-seam
+                   px-3 sm:px-6 py-3 shadow-[0_-8px_24px_rgba(0,0,0,0.35)]
                    pb-[max(env(safe-area-inset-bottom),0.75rem)]"
       >
         <div className="max-w-3xl mx-auto grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-2.5">
@@ -359,8 +359,8 @@ export default function ChapterDisplay({ onRegenerate, onContinue, onNewStory })
           <button
             onClick={() => navigate('/editor')}
             aria-label="Edit chapter in the editor"
-            className="col-span-2 sm:col-span-1 px-2 sm:px-4 py-3 bg-[#C8964D] hover:bg-[#b88340]
-                       text-white font-semibold rounded-lg transition shadow-sm
+            className="col-span-2 sm:col-span-1 px-2 sm:px-4 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep
+                       text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md transition-colors
                        text-xs sm:text-sm flex items-center justify-center gap-1.5"
           >
             <span aria-hidden="true">✎</span>
@@ -375,9 +375,9 @@ export default function ChapterDisplay({ onRegenerate, onContinue, onNewStory })
               aria-label="Download chapter"
               aria-haspopup="menu"
               aria-expanded={downloadOpen}
-              className="w-full px-2 sm:px-4 py-3 bg-gray-100 hover:bg-gray-200 text-[#1A1A1A]
-                         font-medium rounded-lg transition disabled:opacity-60
-                         text-xs sm:text-sm flex items-center justify-center gap-1.5 border border-transparent"
+              className="w-full px-2 sm:px-4 py-3 bg-[rgba(237,228,211,0.06)] hover:bg-[rgba(237,228,211,0.1)] text-kitabi-ivory
+                         font-medium rounded-md transition-colors disabled:opacity-60
+                         text-xs sm:text-sm flex items-center justify-center gap-1.5 border border-seam"
             >
               <span aria-hidden="true">⬇</span>
               <span>{downloading ? '...' : 'Download'}</span>
@@ -393,7 +393,7 @@ export default function ChapterDisplay({ onRegenerate, onContinue, onNewStory })
                   exit={{ opacity: 0, y: 6, scale: 0.96 }}
                   transition={{ duration: 0.15 }}
                   className="absolute bottom-full mb-2 left-0 right-0 sm:right-auto sm:min-w-[200px] z-50
-                             bg-white border border-gray-200 rounded-lg shadow-xl overflow-hidden"
+                             bg-kitabi-night-raise border border-seam rounded-md shadow-raise overflow-hidden"
                 >
                   {[
                     { label: '.txt — Plain text',   onClick: downloadTxt,  locked: false       },
@@ -404,12 +404,12 @@ export default function ChapterDisplay({ onRegenerate, onContinue, onNewStory })
                       key={item.label}
                       role="menuitem"
                       onClick={() => { setDownloadOpen(false); item.onClick(); }}
-                      className="flex w-full justify-between items-center text-left px-4 py-2.5 text-sm text-[#1A1A1A]
-                                 hover:bg-gray-50 hover:text-[#C8964D] transition"
+                      className="flex w-full justify-between items-center text-left px-4 py-2.5 text-sm text-kitabi-ivory
+                                 hover:bg-[rgba(237,228,211,0.05)] hover:text-kitabi-gold transition"
                     >
                       <span>{item.label}</span>
                       {item.locked && (
-                        <span className="text-[10px] text-[#C8964D] font-semibold flex items-center gap-1">
+                        <span className="text-[10px] text-kitabi-gold font-semibold flex items-center gap-1">
                           <span aria-hidden="true">🔒</span> Author
                         </span>
                       )}
@@ -425,9 +425,9 @@ export default function ChapterDisplay({ onRegenerate, onContinue, onNewStory })
             onClick={handleRegenerate}
             aria-label="Rewrite Chapter 1"
             title="Rewrite Chapter 1"
-            className="px-2 sm:px-4 py-3 bg-gray-100 hover:bg-gray-200 text-[#1A1A1A]
-                       rounded-lg transition text-xs sm:text-sm font-medium
-                       flex items-center justify-center gap-1.5 border border-transparent"
+            className="px-2 sm:px-4 py-3 bg-[rgba(237,228,211,0.06)] hover:bg-[rgba(237,228,211,0.1)] text-kitabi-ivory
+                       rounded-md transition-colors text-xs sm:text-sm font-medium
+                       flex items-center justify-center gap-1.5 border border-seam"
           >
             <span aria-hidden="true">↻</span>
             <span>Rewrite</span>
@@ -438,14 +438,14 @@ export default function ChapterDisplay({ onRegenerate, onContinue, onNewStory })
             onClick={runAnalysis}
             disabled={analyzing}
             aria-label={analyzing ? 'Analysis in progress' : (isStarter ? 'Analyze chapter — Author plan required' : 'Analyze this chapter')}
-            className="relative px-2 sm:px-4 py-3 bg-gray-100 hover:bg-gray-200 text-[#1A1A1A]
-                       rounded-lg transition disabled:opacity-60 text-xs sm:text-sm font-medium
-                       flex items-center justify-center gap-1.5 border border-transparent"
+            className="relative px-2 sm:px-4 py-3 bg-[rgba(237,228,211,0.06)] hover:bg-[rgba(237,228,211,0.1)] text-kitabi-ivory
+                       rounded-md transition-colors disabled:opacity-60 text-xs sm:text-sm font-medium
+                       flex items-center justify-center gap-1.5 border border-seam"
           >
             <span aria-hidden="true">{analyzing ? '⟳' : '◎'}</span>
             <span>{analyzing ? 'Analyzing' : 'Analyze'}</span>
             {isStarter && (
-              <span className="absolute -top-1.5 -right-1.5 text-[9px] bg-[#C8964D] text-white rounded-full px-1.5 py-px font-bold">
+              <span className="absolute -top-1.5 -right-1.5 text-[9px] bg-kitabi-gold text-kitabi-night rounded-full px-1.5 py-px font-bold">
                 <span aria-hidden="true">🔒</span>
               </span>
             )}
@@ -455,9 +455,9 @@ export default function ChapterDisplay({ onRegenerate, onContinue, onNewStory })
           <button
             onClick={onNewStory}
             aria-label="Start a new book (clears chapter and conversation)"
-            className="px-2 sm:px-4 py-3 bg-gray-100 hover:bg-gray-200 text-[#1A1A1A]
-                       rounded-lg transition text-xs sm:text-sm font-medium
-                       flex items-center justify-center gap-1.5 border border-transparent"
+            className="px-2 sm:px-4 py-3 bg-[rgba(237,228,211,0.06)] hover:bg-[rgba(237,228,211,0.1)] text-kitabi-ivory
+                       rounded-md transition-colors text-xs sm:text-sm font-medium
+                       flex items-center justify-center gap-1.5 border border-seam"
           >
             <span aria-hidden="true">＋</span>
             <span>New Book</span>

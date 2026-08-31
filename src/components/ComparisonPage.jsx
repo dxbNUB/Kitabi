@@ -102,15 +102,15 @@ export default function ComparisonPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-12 pb-20">
         <button
           onClick={() => navigate('/')}
-          className="text-gray-500 hover:text-[#C8964D] transition text-sm mb-8 inline-flex items-center gap-1.5"
+          className="text-kitabi-stone hover:text-kitabi-gold transition text-sm mb-8 inline-flex items-center gap-1.5"
         >
           <span aria-hidden="true">←</span> Back to home
         </button>
 
-        <h1 className="font-serif text-3xl sm:text-4xl text-[#1A1A1A] mb-2 leading-tight">
-          Generic AI vs. <span className="text-[#C8964D] italic">Kitabi</span>
+        <h1 className="font-display text-3xl sm:text-5xl text-kitabi-ivory mb-2 leading-tight">
+          Generic AI vs. <em className="text-kitabi-gold italic">Kitabi</em>
         </h1>
-        <p className="text-gray-600 mb-8">Same prompt. Very different conversation.</p>
+        <p className="text-kitabi-stone mb-8">Same prompt. Very different conversation.</p>
 
         {/* Genre tabs */}
         <div className="flex gap-2 mb-8 overflow-x-auto scrollbar-hide pb-1" role="tablist" aria-label="Comparison genres">
@@ -124,8 +124,8 @@ export default function ComparisonPage() {
                 aria-selected={active}
                 className={`px-4 py-2 rounded-full text-sm whitespace-nowrap transition flex-shrink-0 ${
                   active
-                    ? 'bg-[#C8964D] text-white font-medium shadow-sm'
-                    : 'border border-gray-300 text-gray-600 hover:border-[#C8964D] hover:text-[#1A1A1A] bg-white'
+                    ? 'bg-kitabi-gold text-kitabi-night font-medium'
+                    : 'border border-seam text-kitabi-stone hover:border-gilt hover:text-kitabi-ivory bg-transparent'
                 }`}
               >
                 {c.genre}
@@ -135,43 +135,44 @@ export default function ComparisonPage() {
         </div>
 
         {/* Prompt */}
-        <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 mb-6">
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-2">Prompt</p>
-          <p className="text-[#1A1A1A] italic font-serif">"{item.prompt}"</p>
+        <div className="bg-kitabi-night-soft border border-seam rounded-lg p-5 mb-6">
+          <p className="eyebrow mb-2">Prompt</p>
+          <p className="text-kitabi-ivory italic font-serif">"{item.prompt}"</p>
         </div>
 
         {/* Two columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Generic answer: flat dark card. Kitabi's answer: written on paper. */}
           <motion.div
             key={`generic-${tab}`}
-            className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm"
+            className="bg-kitabi-night-soft border border-seam rounded-lg p-6"
             initial={{ opacity: 0, x: -8 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <p className="text-xs text-blue-700 uppercase tracking-wider mb-4 font-medium">Generic AI</p>
-            <p className="text-gray-700 text-sm leading-relaxed whitespace-pre-line">{item.generic}</p>
+            <p className="text-xs text-kitabi-faded uppercase tracking-[0.18em] mb-4 font-medium">Generic AI</p>
+            <p className="text-kitabi-stone text-sm leading-relaxed whitespace-pre-line">{item.generic}</p>
           </motion.div>
 
           <motion.div
             key={`kitabi-${tab}`}
-            className="bg-[#FFF7EB] border border-[#C8964D]/30 rounded-xl p-6 shadow-sm"
+            className="sheet p-6"
             initial={{ opacity: 0, x: 8 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <p className="text-xs text-[#C8964D] uppercase tracking-wider mb-4 font-medium">Kitabi</p>
-            <p className="text-[#1A1A1A] text-sm leading-relaxed font-serif whitespace-pre-line">{item.kitabi}</p>
+            <p className="text-xs text-[#A67C3B] uppercase tracking-[0.18em] mb-4 font-medium">Kitabi</p>
+            <p className="text-[#2C2416] text-sm leading-relaxed font-serif whitespace-pre-line">{item.kitabi}</p>
           </motion.div>
         </div>
 
         <div className="text-center mt-10">
           <button
             onClick={() => navigate('/')}
-            className="px-8 py-3 bg-[#C8964D] hover:bg-[#b88340] text-white font-semibold rounded-xl
-                       transition shadow-sm"
+            className="px-8 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md
+                       transition-colors"
           >
-            Begin Writing →
+            Begin writing →
           </button>
         </div>
       </div>

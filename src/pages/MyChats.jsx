@@ -76,14 +76,14 @@ export default function MyChats() {
 
   return (
     <PageLayout>
-      <div className="bg-white">
+      <div className="bg-kitabi-night">
         {/* Hero */}
-        <section className="px-6 sm:px-12 lg:px-24 pt-14 lg:pt-20 pb-10 border-b border-gray-200">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-gray-500 mb-3">My library</p>
-          <h1 className="font-serif text-4xl sm:text-5xl font-medium text-[#1A1A1A] leading-[1.05] mb-4">
+        <section className="px-6 sm:px-12 lg:px-24 pt-14 lg:pt-20 pb-10 border-b border-seam">
+          <p className="eyebrow mb-3">My library</p>
+          <h1 className="font-display text-4xl sm:text-5xl font-medium text-kitabi-ivory leading-[1.05] mb-4">
             Your chats.
           </h1>
-          <p className="text-sm text-gray-600 max-w-xl">
+          <p className="text-sm text-kitabi-stone max-w-xl">
             Every conversation auto-saves to your account. Pick any chat to resume — your messages,
             context, and the chapter you generated come back exactly as you left them.
           </p>
@@ -92,18 +92,18 @@ export default function MyChats() {
         {/* Body */}
         <section className="px-6 sm:px-12 lg:px-24 py-12">
           {chats === null ? (
-            <div className="text-sm text-gray-500">Loading your chats…</div>
+            <div className="text-sm text-kitabi-faded">Loading your chats…</div>
           ) : error ? (
-            <div className="text-sm text-red-600">{error}</div>
+            <div className="text-sm text-red-400">{error}</div>
           ) : chats.length === 0 ? (
             <div className="max-w-md py-10">
-              <p className="font-serif text-xl text-[#1A1A1A] mb-3">No chats yet.</p>
-              <p className="text-gray-600 mb-7 leading-relaxed">
+              <p className="font-display text-2xl text-kitabi-ivory mb-3">No chats yet.</p>
+              <p className="text-kitabi-stone mb-7 leading-relaxed">
                 Once you start a conversation with Kitabi, it'll show up here automatically.
               </p>
               <button
                 onClick={() => navigate('/')}
-                className="px-6 py-3 bg-[#C8964D] hover:bg-[#b88340] text-white font-semibold rounded-lg transition shadow-sm"
+                className="px-6 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md transition-colors"
               >
                 Start your first chat →
               </button>
@@ -120,14 +120,14 @@ export default function MyChats() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, delay: idx * 0.04 }}
                     whileHover={{ y: -2 }}
-                    className="relative group p-5 bg-white border border-gray-200 hover:border-[#C8964D] hover:shadow-md rounded-xl transition-all"
+                    className="relative group p-5 bg-kitabi-night-soft border border-seam hover:border-gilt rounded-lg transition-colors"
                   >
                     {/* Delete (trash) button — fades in on hover so it doesn't compete with the card click target */}
                     <button
                       onClick={(e) => handleDelete(chat.id, e)}
                       title="Move to Recently Deleted"
                       aria-label="Delete chat"
-                      className="absolute top-3 right-3 w-7 h-7 rounded-md flex items-center justify-center text-gray-400 hover:text-red-600 hover:bg-red-50 opacity-0 group-hover:opacity-100 focus:opacity-100 transition"
+                      className="absolute top-3 right-3 w-7 h-7 rounded-md flex items-center justify-center text-kitabi-faded hover:text-red-400 hover:bg-[rgba(176,92,66,0.1)] opacity-0 group-hover:opacity-100 focus:opacity-100 transition"
                     >
                       <span aria-hidden="true">🗑</span>
                     </button>
@@ -138,22 +138,22 @@ export default function MyChats() {
                       className="text-left w-full disabled:opacity-60"
                     >
                       <div className="flex items-baseline justify-between gap-2 mb-2 pr-8">
-                        <span className="text-[10px] uppercase tracking-[0.18em] text-[#C8964D] font-semibold truncate">
+                        <span className="text-[10px] uppercase tracking-[0.18em] text-kitabi-gold font-semibold truncate">
                           {chat.genre || 'Conversation'}
                         </span>
-                        <span className="text-[10px] text-gray-400 whitespace-nowrap">
+                        <span className="text-[10px] text-kitabi-faded whitespace-nowrap">
                           {new Date(chat.updated_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                         </span>
                       </div>
-                      <h3 className="font-serif text-lg text-[#1A1A1A] mb-2 line-clamp-2">
+                      <h3 className="font-display text-lg text-kitabi-ivory mb-2 line-clamp-2">
                         {chat.title || 'Untitled chat'}
                       </h3>
                       {lastUser?.content && (
-                        <p className="text-xs text-gray-600 mb-3 line-clamp-2 italic">
+                        <p className="text-xs text-kitabi-stone mb-3 line-clamp-2 italic">
                           "{lastUser.content.slice(0, 140)}{lastUser.content.length > 140 ? '…' : ''}"
                         </p>
                       )}
-                      <p className="text-[11px] text-gray-500">
+                      <p className="text-[11px] text-kitabi-faded">
                         {messageCount} {messageCount === 1 ? 'message' : 'messages'}
                         {loadingId === chat.id && ' · Loading…'}
                       </p>

@@ -19,7 +19,7 @@ const pageVariants = {
  */
 export default function PageLayout({ children }) {
   return (
-    <div className="min-h-screen bg-white text-[#1A1A1A] flex">
+    <div className="min-h-screen bg-kitabi-night text-kitabi-ivory flex">
       <Sidebar />
 
       <motion.main

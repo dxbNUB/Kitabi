@@ -44,7 +44,7 @@ function parseAnalysis(text) {
 function ScoreRing({ label, score }) {
   const clipped = Math.min(10, Math.max(0, score || 0));
   const pct     = (clipped / 10) * 100;
-  const color   = clipped >= 8 ? '#50C878' : clipped >= 6.5 ? '#F5A623' : '#E05A4E';
+  const color   = clipped >= 8 ? '#7FB88A' : clipped >= 6.5 ? '#C9A25C' : '#D08A73';
   const r = 15.9;
   const circ = 2 * Math.PI * r;
   const dash = (pct / 100) * circ;
@@ -53,7 +53,7 @@ function ScoreRing({ label, score }) {
     <div className="flex flex-col items-center gap-1.5">
       <div className="relative w-14 h-14">
         <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
-          <circle cx="18" cy="18" r={r} fill="none" stroke="#2a2a2a" strokeWidth="3" />
+          <circle cx="18" cy="18" r={r} fill="none" stroke="rgba(237,228,211,0.12)" strokeWidth="3" />
           <motion.circle
             cx="18" cy="18" r={r} fill="none"
             stroke={color} strokeWidth="3" strokeLinecap="round"
@@ -68,7 +68,7 @@ function ScoreRing({ label, score }) {
           {clipped % 1 === 0 ? clipped : clipped.toFixed(1)}
         </span>
       </div>
-      <span className="text-[11px] text-gray-500 text-center leading-tight">{label}</span>
+      <span className="text-[11px] text-kitabi-faded text-center leading-tight">{label}</span>
     </div>
   );
 }
@@ -92,7 +92,7 @@ function LoadingBook({ stage }) {
         {/* Book spine */}
         <motion.div
           className="absolute left-1/2 top-0 -translate-x-1/2 w-3 h-full rounded-sm"
-          style={{ background: 'linear-gradient(180deg, #F5A623, #e8961a)' }}
+          style={{ background: 'linear-gradient(180deg, #C9A25C, #A67C3B)' }}
         />
         {/* Left page */}
         <motion.div
@@ -123,7 +123,7 @@ function LoadingBook({ stage }) {
       <AnimatePresence mode="wait">
         <motion.p
           key={stage}
-          className="text-gray-400 text-sm text-center"
+          className="text-kitabi-stone text-sm text-center"
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -4 }}
@@ -134,7 +134,7 @@ function LoadingBook({ stage }) {
       </AnimatePresence>
       <div className="flex gap-1.5">
         {[0, 1, 2].map(i => (
-          <motion.div key={i} className="w-1.5 h-1.5 rounded-full bg-amber-400"
+          <motion.div key={i} className="w-1.5 h-1.5 rounded-full bg-kitabi-gold"
             animate={{ opacity: [0.3, 1, 0.3] }}
             transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.2 }} />
         ))}
@@ -156,20 +156,22 @@ const SECTION_META = {
   'FINAL ASSESSMENT':             { icon: '★',  color: 'green' },
 };
 
+// One material, one accent — section identity comes from the label, not a
+// rainbow of card colors. Working/priority sections get the gilt border.
 const COLOR_CLASSES = {
-  blue:   'border-blue-200 bg-blue-50',
-  green:  'border-emerald-200 bg-emerald-50',
-  amber:  'border-[#C8964D]/30 bg-[#FFF7EB]',
-  purple: 'border-purple-200 bg-purple-50',
-  gray:   'border-gray-200 bg-gray-50',
+  blue:   'border-seam bg-kitabi-night-soft',
+  green:  'border-gilt bg-[rgba(201,162,92,0.05)]',
+  amber:  'border-gilt bg-[rgba(201,162,92,0.05)]',
+  purple: 'border-seam bg-kitabi-night-soft',
+  gray:   'border-seam bg-kitabi-night-soft',
 };
 
 const LABEL_CLASSES = {
-  blue:   'text-blue-700',
-  green:  'text-emerald-700',
-  amber:  'text-[#C8964D]',
-  purple: 'text-purple-700',
-  gray:   'text-gray-700',
+  blue:   'text-kitabi-stone',
+  green:  'text-kitabi-gold',
+  amber:  'text-kitabi-gold',
+  purple: 'text-kitabi-stone',
+  gray:   'text-kitabi-stone',
 };
 
 function findMeta(title) {
@@ -188,7 +190,7 @@ function SectionCard({ section, index, actions, completedActions, toggleAction }
 
   return (
     <motion.div
-      className={`border rounded-xl p-5 sm:p-6 ${colorClass}`}
+      className={`border rounded-lg p-5 sm:p-6 ${colorClass}`}
       initial={{ opacity: 0, x: 20 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: '-60px' }}
@@ -214,11 +216,11 @@ function SectionCard({ section, index, actions, completedActions, toggleAction }
             />
           ))}
           {!actions.length && (
-            <p className="text-[#1A1A1A] text-sm leading-relaxed whitespace-pre-wrap">{section.content}</p>
+            <p className="text-kitabi-ivory text-sm leading-relaxed whitespace-pre-wrap">{section.content}</p>
           )}
         </div>
       ) : (
-        <div className="text-[#1A1A1A] text-sm leading-relaxed whitespace-pre-wrap">{section.content}</div>
+        <div className="text-kitabi-ivory text-sm leading-relaxed whitespace-pre-wrap">{section.content}</div>
       )}
     </motion.div>
   );
@@ -227,23 +229,23 @@ function SectionCard({ section, index, actions, completedActions, toggleAction }
 // ─── Action Item ─────────────────────────────────────────────────────────────
 
 function ActionItem({ action, checked, onToggle }) {
-  const impactColor = action.impact?.toLowerCase().includes('high') ? 'text-emerald-400' : 'text-amber-400';
+  const impactColor = action.impact?.toLowerCase().includes('high') ? 'text-[#7FB88A]' : 'text-kitabi-gold';
 
   return (
     <motion.button
       onClick={onToggle}
-      className="w-full flex items-start gap-3 p-3 rounded-lg hover:bg-white transition text-left group"
+      className="w-full flex items-start gap-3 p-3 rounded-md hover:bg-[rgba(237,228,211,0.04)] transition text-left group"
       whileTap={{ scale: 0.98 }}
     >
       <motion.div
         className={`mt-0.5 w-5 h-5 rounded flex-shrink-0 border-2 flex items-center justify-center transition
-          ${checked ? 'bg-emerald-500 border-emerald-500' : 'border-gray-300 group-hover:border-gray-500'}`}
+          ${checked ? 'bg-kitabi-gold border-kitabi-gold' : 'border-[rgba(237,228,211,0.25)] group-hover:border-gilt'}`}
         animate={checked ? { scale: [1, 1.2, 1] } : {}}
         transition={{ duration: 0.3 }}
       >
         {checked && (
           <motion.svg
-            className="w-3 h-3 text-white"
+            className="w-3 h-3 text-kitabi-night"
             viewBox="0 0 12 12" fill="none"
             initial={{ pathLength: 0 }}
             animate={{ pathLength: 1 }}
@@ -257,11 +259,11 @@ function ActionItem({ action, checked, onToggle }) {
         )}
       </motion.div>
       <div className="flex-1 min-w-0">
-        <p className={`text-sm ${checked ? 'line-through text-gray-400' : 'text-[#1A1A1A]'} transition`}>
+        <p className={`text-sm ${checked ? 'line-through text-kitabi-faded' : 'text-kitabi-ivory'} transition`}>
           {action.text}
         </p>
         <div className="flex gap-3 mt-1">
-          <span className="text-xs text-gray-500">⏱ {action.effort}</span>
+          <span className="text-xs text-kitabi-faded">⏱ {action.effort}</span>
           <span className={`text-xs font-medium ${impactColor}`}>{action.impact} impact</span>
         </div>
       </div>
@@ -316,28 +318,28 @@ export default function AnalysisReport({ analysisText, analyzing, onClose }) {
       {/* Header */}
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h2 className="text-lg font-semibold text-[#1A1A1A] tracking-wide">Literary Analysis</h2>
+          <h2 className="text-lg font-semibold text-kitabi-ivory tracking-wide">Literary Analysis</h2>
           {!analyzing && parsed?.scores && (
-            <p className="text-xs text-gray-500 mt-0.5">Expert-level craft feedback</p>
+            <p className="text-xs text-kitabi-faded mt-0.5">Expert-level craft feedback</p>
           )}
         </div>
         <button onClick={onClose}
           aria-label="Close analysis report"
-          className="text-gray-500 hover:text-[#1A1A1A] text-sm transition px-2 py-1 rounded hover:bg-gray-100">
+          className="text-kitabi-stone hover:text-kitabi-ivory text-sm transition px-2 py-1 rounded hover:bg-[rgba(237,228,211,0.05)]">
           Close <span aria-hidden="true">✕</span>
         </button>
       </div>
 
       {/* Loading state */}
       {(analyzing || (!parsed && !analysisText)) && (
-        <div className="bg-white border border-gray-200 rounded-xl shadow-sm">
+        <div className="bg-kitabi-night-soft border border-seam rounded-lg">
           {analysisText ? (
             <div className="p-6 sm:p-8">
-              <p className="text-gray-500 text-xs uppercase tracking-wider mb-3">Generating analysis…</p>
-              <div className="text-gray-600 text-sm leading-relaxed whitespace-pre-wrap font-mono max-h-48 overflow-hidden opacity-70">
+              <p className="text-kitabi-faded text-xs uppercase tracking-wider mb-3">Generating analysis…</p>
+              <div className="text-kitabi-stone text-sm leading-relaxed whitespace-pre-wrap font-mono max-h-48 overflow-hidden opacity-70">
                 {analysisText.slice(-400)}
               </div>
-              <span className="inline-block w-2 h-3 bg-[#C8964D] animate-pulse ml-1 mt-2 align-middle" />
+              <span className="inline-block w-2 h-3 bg-kitabi-gold animate-pulse ml-1 mt-2 align-middle" />
             </div>
           ) : (
             <LoadingBook stage={STAGES[currentStage]} />
@@ -351,18 +353,18 @@ export default function AnalysisReport({ analysisText, analyzing, onClose }) {
           {/* Score grid */}
           {parsed.scores && (
             <motion.div
-              className="bg-white border border-gray-200 rounded-xl p-5 sm:p-6 shadow-sm"
+              className="bg-kitabi-night-soft border border-seam rounded-lg p-5 sm:p-6"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
             >
-              <p className="text-xs text-gray-500 uppercase tracking-wider mb-4">Quality Scores</p>
+              <p className="eyebrow mb-4">Quality Scores</p>
               <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
                 {scoreLabels.map(([key, label]) => (
                   <ScoreRing key={key} label={label} score={parsed.scores[key]} />
                 ))}
               </div>
-              <p className="text-[11px] text-gray-500 mt-4 text-center">
+              <p className="text-[11px] text-kitabi-faded mt-4 text-center">
                 8-10 = stronger than most published books · 6-7.5 = solid with specific gaps · &lt;6 = needs significant work
               </p>
             </motion.div>
@@ -385,19 +387,19 @@ export default function AnalysisReport({ analysisText, analyzing, onClose }) {
           {/* Progress footer */}
           {parsed.actions.length > 0 && (
             <motion.div
-              className="bg-white border border-gray-200 rounded-xl px-5 py-4 flex items-center justify-between shadow-sm"
+              className="bg-kitabi-night-soft border border-seam rounded-lg px-5 py-4 flex items-center justify-between"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              <span className="text-xs text-gray-500">
+              <span className="text-xs text-kitabi-faded">
                 {completedActions.size} of {parsed.actions.length} actions completed
               </span>
               <div className="flex gap-1">
                 {parsed.actions.map((_, i) => (
                   <div key={i}
                     className={`w-6 h-1.5 rounded-full transition-colors duration-300
-                      ${completedActions.has(i) ? 'bg-emerald-500' : 'bg-gray-200'}`}
+                      ${completedActions.has(i) ? 'bg-kitabi-gold' : 'bg-[rgba(237,228,211,0.12)]'}`}
                   />
                 ))}
               </div>

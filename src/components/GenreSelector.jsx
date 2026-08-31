@@ -28,10 +28,10 @@ export default function GenreSelector({ variant = 'pills', onSelect }) {
               key={g.id}
               onClick={() => handleSelect(g.id)}
               aria-pressed={active}
-              className={`px-4 py-1.5 rounded-full text-sm border transition-all ${
+              className={`px-4 py-1.5 rounded-full text-sm border transition-colors ${
                 active
-                  ? 'border-[#C8964D] bg-[#C8964D]/10 text-[#C8964D] font-medium'
-                  : 'border-gray-300 text-gray-600 hover:border-[#C8964D]/60 hover:text-[#1A1A1A] bg-white'
+                  ? 'border-kitabi-gold bg-[rgba(201,162,92,0.12)] text-kitabi-gold font-medium'
+                  : 'border-seam text-kitabi-stone hover:border-gilt hover:text-kitabi-ivory bg-transparent'
               }`}
             >
               {g.label}
@@ -51,17 +51,17 @@ export default function GenreSelector({ variant = 'pills', onSelect }) {
             key={g.id}
             onClick={() => handleSelect(g.id)}
             aria-pressed={active}
-            className={`p-5 rounded-xl border text-left transition-all duration-150 bg-white ${
+            className={`p-5 rounded-lg border text-left transition-all duration-150 ${
               active
-                ? 'border-[#C8964D] bg-[#FFF7EB] shadow-sm scale-[1.02]'
-                : 'border-gray-200 hover:border-[#C8964D]/60 hover:scale-[1.01]'
+                ? 'border-kitabi-gold bg-[rgba(201,162,92,0.08)] shadow-raise scale-[1.02]'
+                : 'border-seam bg-kitabi-night-soft hover:border-gilt hover:scale-[1.01]'
             }`}
           >
             <div className="text-2xl mb-2">{g.icon}</div>
-            <div className={`font-semibold mb-1 ${active ? 'text-[#C8964D]' : 'text-[#1A1A1A]'}`}>
+            <div className={`font-semibold mb-1 ${active ? 'text-kitabi-gold' : 'text-kitabi-ivory'}`}>
               {g.label}
             </div>
-            <div className="text-sm text-gray-600">{g.desc}</div>
+            <div className="text-sm text-kitabi-stone">{g.desc}</div>
           </button>
         );
       })}

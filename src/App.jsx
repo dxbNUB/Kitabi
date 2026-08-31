@@ -49,19 +49,19 @@ function ChapterRoute() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-[#1A1A1A]">
-      <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3 border-b border-gray-200 bg-white overflow-visible">
+    <div className="min-h-screen bg-kitabi-night text-kitabi-ivory">
+      <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3 border-b border-seam bg-kitabi-night-soft overflow-visible">
         <button
           onClick={() => navigate('/')}
-          className="font-display text-[#C8964D] text-xl tracking-[0.09em] font-medium flex-shrink-0 whitespace-nowrap"
+          className="font-display text-kitabi-gold text-xl tracking-[0.09em] font-medium flex-shrink-0 whitespace-nowrap"
           aria-label="Kitabi — go to home"
         >
           kitabi
         </button>
         <button
           onClick={() => navigate('/chat')}
-          className="flex-shrink-0 whitespace-nowrap text-sm text-gray-600 hover:text-[#C8964D] transition
-                     flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-gray-50"
+          className="flex-shrink-0 whitespace-nowrap text-sm text-kitabi-stone hover:text-kitabi-gold transition
+                     flex items-center gap-1.5 px-3 py-1.5 rounded-md hover:bg-[rgba(237,228,211,0.04)]"
         >
           <span aria-hidden="true">←</span> Back to chat
         </button>
@@ -122,7 +122,7 @@ export default function App() {
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[200]
-                   focus:px-4 focus:py-2 focus:bg-[#C8964D] focus:text-white focus:rounded-lg focus:shadow-lg
+                   focus:px-4 focus:py-2 focus:bg-kitabi-gold focus:text-kitabi-night focus:rounded-md focus:shadow-lg
                    focus:outline-none focus:font-semibold"
       >
         Skip to main content

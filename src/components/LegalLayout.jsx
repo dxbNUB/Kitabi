@@ -9,14 +9,14 @@ import PageLayout from './PageLayout';
 export default function LegalLayout({ eyebrow, title, intro, lastUpdated, children }) {
   return (
     <PageLayout>
-      <div className="bg-white">
+      <div className="bg-kitabi-night">
         {/* Hero */}
-        <section className="px-6 sm:px-12 lg:px-24 pt-16 lg:pt-24 pb-10 border-b border-gray-200">
+        <section className="px-6 sm:px-12 lg:px-24 pt-16 lg:pt-24 pb-10 border-b border-seam">
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4 }}
-            className="text-[11px] uppercase tracking-[0.2em] text-gray-500 mb-3"
+            className="eyebrow mb-3"
           >
             {eyebrow}
           </motion.p>
@@ -24,7 +24,7 @@ export default function LegalLayout({ eyebrow, title, intro, lastUpdated, childr
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="font-serif text-4xl sm:text-5xl lg:text-6xl font-medium mb-5 text-[#1A1A1A] leading-[1.05]"
+            className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium mb-5 text-kitabi-ivory leading-[1.05]"
           >
             {title}
           </motion.h1>
@@ -33,14 +33,14 @@ export default function LegalLayout({ eyebrow, title, intro, lastUpdated, childr
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-base sm:text-lg text-gray-600 max-w-2xl"
+              className="text-base sm:text-lg text-kitabi-stone max-w-2xl"
             >
               {intro}
             </motion.p>
           )}
           {lastUpdated && (
-            <p className="text-xs text-gray-500 mt-6">
-              Last updated: <span className="text-[#1A1A1A]">{lastUpdated}</span>
+            <p className="text-xs text-kitabi-faded mt-6">
+              Last updated: <span className="text-kitabi-ivory">{lastUpdated}</span>
             </p>
           )}
         </section>

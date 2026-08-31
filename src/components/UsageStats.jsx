@@ -30,23 +30,23 @@ export default function UsageStats({ refreshKey = 0 }) {
   const nearLimit      = chapterPercent >= 80;
 
   const chapterBarColor =
-    chapterPercent >= 100 ? 'bg-red-500' :
-    chapterPercent >= 80  ? 'bg-amber-500' :
-                            'bg-[#C8964D]';
+    chapterPercent >= 100 ? 'bg-red-400' :
+    chapterPercent >= 80  ? 'bg-[#D8B36A]' :
+                            'bg-kitabi-gold';
 
   return (
-    <div className="rounded-lg bg-white border border-gray-200 p-4">
-      <p className="text-[10px] uppercase tracking-[0.2em] text-gray-500 mb-3">Your usage</p>
+    <div className="rounded-lg bg-[rgba(237,228,211,0.03)] border border-seam p-4">
+      <p className="text-[10px] uppercase tracking-[0.2em] text-kitabi-faded mb-3">Your usage</p>
 
       {/* Chapters this month */}
       <div className="mb-3.5">
         <div className="flex justify-between text-xs mb-1.5">
-          <span className="text-gray-600">Chapters this month</span>
-          <span className="font-semibold text-[#1A1A1A]">
+          <span className="text-kitabi-stone">Chapters this month</span>
+          <span className="font-semibold text-kitabi-ivory">
             {chapters.used} / {chapters.max}
           </span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
+        <div className="w-full bg-[rgba(237,228,211,0.1)] rounded-full h-1.5 overflow-hidden">
           <div
             className={`h-full rounded-full transition-all duration-500 ${chapterBarColor}`}
             style={{ width: `${chapterPercent}%` }}
@@ -61,14 +61,14 @@ export default function UsageStats({ refreshKey = 0 }) {
       {/* Words this month */}
       <div className="mb-3">
         <div className="flex justify-between text-xs mb-1.5">
-          <span className="text-gray-600">Words this month</span>
-          <span className="font-semibold text-[#1A1A1A]">
+          <span className="text-kitabi-stone">Words this month</span>
+          <span className="font-semibold text-kitabi-ivory">
             {words.used.toLocaleString()} / {words.max.toLocaleString()}
           </span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
+        <div className="w-full bg-[rgba(237,228,211,0.1)] rounded-full h-1.5 overflow-hidden">
           <div
-            className="h-full rounded-full bg-blue-500 transition-all duration-500"
+            className="h-full rounded-full bg-[rgba(201,162,92,0.5)] transition-all duration-500"
             style={{ width: `${wordPercent}%` }}
             role="progressbar"
             aria-valuenow={words.used}
@@ -78,22 +78,22 @@ export default function UsageStats({ refreshKey = 0 }) {
         </div>
       </div>
 
-      <p className="text-[11px] text-gray-500">
+      <p className="text-[11px] text-kitabi-faded">
         Each chapter: 1,500–2,500 words
       </p>
 
       {/* Approaching-limit upsell */}
       {nearLimit && (
-        <div className="mt-3 pt-3 border-t border-gray-100">
-          <p className="text-[11px] font-semibold text-[#1A1A1A] mb-1">
+        <div className="mt-3 pt-3 border-t border-seam">
+          <p className="text-[11px] font-semibold text-kitabi-ivory mb-1">
             {chapterPercent >= 100 ? 'Monthly limit reached' : 'Almost at your limit'}
           </p>
-          <p className="text-[11px] text-gray-600 mb-2 leading-snug">
+          <p className="text-[11px] text-kitabi-stone mb-2 leading-snug">
             Upgrade to Author for 25 chapters / 62,500 words per month.
           </p>
           <Link
             to="/pricing"
-            className="text-[11px] font-semibold text-[#C8964D] hover:text-[#b88340]"
+            className="text-[11px] font-semibold text-kitabi-gold hover:text-kitabi-ivory"
           >
             See plans →
           </Link>

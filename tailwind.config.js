@@ -34,16 +34,41 @@ export default {
         parchment: '#FDFAF5',
         ink: '#1a1a1a',
         'ink-muted': '#6B5E4E',
-        // Kitabi design tokens
+        // Kitabi design tokens — "writing room after dark"
         kitabi: {
+          // Dark ground: warm espresso-black, never pure black
+          night:        '#16120C',
+          'night-soft': '#1E1812',
+          'night-raise': '#262017',
+          // Text on dark
+          ivory:  '#EDE4D3',
+          stone:  '#A79B85',
+          faded:  '#6E6350',
+          // Gilt accent
+          gold:        '#C9A25C',
+          'gold-deep': '#A67C3B',
+          'gold-soft': 'rgba(201, 162, 92, 0.65)',
+          // Paper surfaces (the bright objects on the desk)
+          paper:  '#FDFAF5',
+          // Legacy keys — still referenced by older classes
           ink:      '#111111',
           'ink-soft': '#1a1a1a',
           cream:    '#F5EFE2',
           'cream-soft': '#efe7d4',
-          saffron:  '#C8964D',
-          'saffron-muted': 'rgba(200, 150, 77, 0.65)',
+          saffron:  '#C9A25C',
+          'saffron-muted': 'rgba(201, 162, 92, 0.65)',
           indigo:   '#1B2A4E',
         },
+      },
+      borderColor: {
+        // Gilt hairline + quiet structural line for dark surfaces
+        gilt:  'rgba(201, 162, 92, 0.28)',
+        seam:  'rgba(237, 228, 211, 0.09)',
+      },
+      boxShadow: {
+        // Warm, soft lift for the paper sheet on the dark desk
+        sheet: '0 1px 2px rgba(0,0,0,0.35), 0 12px 40px -8px rgba(0,0,0,0.55), 0 0 80px -20px rgba(201,162,92,0.18)',
+        raise: '0 1px 0 rgba(237,228,211,0.05) inset, 0 8px 24px -12px rgba(0,0,0,0.6)',
       },
       animation: {
         'quill':   'quill 2s ease-in-out infinite',

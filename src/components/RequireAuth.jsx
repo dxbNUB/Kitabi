@@ -17,7 +17,7 @@ export default function RequireAuth({ children }) {
   if (loading) {
     return (
       <div
-        className="min-h-screen flex items-center justify-center bg-white text-sm text-gray-500"
+        className="min-h-screen flex items-center justify-center bg-kitabi-night text-sm text-kitabi-stone"
         role="status"
         aria-live="polite"
       >

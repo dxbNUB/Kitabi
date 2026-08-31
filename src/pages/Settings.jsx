@@ -19,22 +19,22 @@ export default function Settings() {
 
   return (
     <PageLayout>
-      <div className="bg-white">
+      <div className="bg-kitabi-night">
         {/* Hero */}
-        <section className="px-6 sm:px-12 lg:px-24 pt-16 lg:pt-24 pb-10 border-b border-gray-200">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-gray-500 mb-3">Settings</p>
-          <h1 className="font-serif text-4xl sm:text-5xl font-medium text-[#1A1A1A] leading-[1.05] mb-4">
+        <section className="px-6 sm:px-12 lg:px-24 pt-16 lg:pt-24 pb-10 border-b border-seam">
+          <p className="eyebrow mb-3">Settings</p>
+          <h1 className="font-display text-4xl sm:text-5xl font-medium text-kitabi-ivory leading-[1.05] mb-4">
             Make Kitabi yours.
           </h1>
-          <p className="text-base sm:text-lg text-gray-600 max-w-xl">
+          <p className="text-base sm:text-lg text-kitabi-stone max-w-xl">
             These preferences shape every chapter we write for you. Changes save automatically.
           </p>
         </section>
 
         {/* LANGUAGE */}
         <section className="px-6 sm:px-12 lg:px-24 pt-12 pb-8">
-          <h2 className="font-serif text-2xl sm:text-3xl text-[#1A1A1A] mb-2">Language</h2>
-          <p className="text-gray-600 mb-7 max-w-xl">
+          <h2 className="font-display text-2xl sm:text-3xl text-kitabi-ivory mb-2">Language</h2>
+          <p className="text-kitabi-stone mb-7 max-w-xl">
             Choose how Kitabi spells words and uses grammar. Affects every generated chapter.
           </p>
 
@@ -48,23 +48,23 @@ export default function Settings() {
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.99 }}
                   aria-pressed={active}
-                  className={`p-5 sm:p-6 border-2 rounded-xl text-left transition-shadow
+                  className={`p-5 sm:p-6 border rounded-lg text-left transition-colors bg-kitabi-night-soft
                     ${active
-                      ? 'border-[#C8964D] bg-[#FFF7EB] shadow-md'
-                      : 'border-gray-200 hover:border-[#C8964D] hover:shadow-md'}`}
+                      ? 'border-gilt bg-[rgba(201,162,92,0.06)]'
+                      : 'border-seam hover:border-gilt'}`}
                 >
                   <div className="flex items-center gap-3 mb-3">
-                    <span className="font-serif text-lg font-semibold text-[#1A1A1A]">
+                    <span className="font-serif text-lg font-semibold text-kitabi-ivory">
                       {info.label}
                     </span>
                     {active && (
-                      <span className="text-[10px] uppercase tracking-[0.18em] text-[#C8964D] font-semibold">
+                      <span className="text-[10px] uppercase tracking-[0.18em] text-kitabi-gold font-semibold">
                         Selected
                       </span>
                     )}
                   </div>
-                  <p className="font-serif text-sm text-gray-700 mb-1.5">{info.examples}</p>
-                  <p className="text-xs text-gray-500">Used in: {info.regions}</p>
+                  <p className="font-serif text-sm text-kitabi-stone mb-1.5">{info.examples}</p>
+                  <p className="text-xs text-kitabi-faded">Used in: {info.regions}</p>
                 </motion.button>
               );
             })}
@@ -73,8 +73,8 @@ export default function Settings() {
 
         {/* BOOK TYPE */}
         <section className="px-6 sm:px-12 lg:px-24 pt-8 pb-12">
-          <h2 className="font-serif text-2xl sm:text-3xl text-[#1A1A1A] mb-2">Book type</h2>
-          <p className="text-gray-600 mb-7 max-w-xl">
+          <h2 className="font-display text-2xl sm:text-3xl text-kitabi-ivory mb-2">Book type</h2>
+          <p className="text-kitabi-stone mb-7 max-w-xl">
             What kind of book are you writing? This affects pacing, structure, and chapter length.
           </p>
 
@@ -88,24 +88,24 @@ export default function Settings() {
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.99 }}
                   aria-pressed={active}
-                  className={`p-5 sm:p-6 border-2 rounded-xl text-left transition-shadow
+                  className={`p-5 sm:p-6 border rounded-lg text-left transition-colors bg-kitabi-night-soft
                     ${active
-                      ? 'border-[#C8964D] bg-[#FFF7EB] shadow-md'
-                      : 'border-gray-200 hover:border-[#C8964D] hover:shadow-md'}`}
+                      ? 'border-gilt bg-[rgba(201,162,92,0.06)]'
+                      : 'border-seam hover:border-gilt'}`}
                 >
                   <div className="flex items-baseline justify-between gap-2 mb-2">
-                    <span className="font-serif text-lg font-semibold text-[#1A1A1A]">
+                    <span className="font-serif text-lg font-semibold text-kitabi-ivory">
                       {info.label}
                     </span>
                     {active && (
-                      <span className="text-[10px] uppercase tracking-[0.18em] text-[#C8964D] font-semibold">
+                      <span className="text-[10px] uppercase tracking-[0.18em] text-kitabi-gold font-semibold">
                         Selected
                       </span>
                     )}
                   </div>
-                  <p className="text-sm text-[#C8964D] font-semibold mb-1">{info.wordCount}</p>
-                  <p className="text-xs text-gray-500 mb-2.5">{info.chapterRange}</p>
-                  <p className="text-sm text-gray-700 leading-snug">{info.blurb}</p>
+                  <p className="text-sm text-kitabi-gold font-semibold mb-1">{info.wordCount}</p>
+                  <p className="text-xs text-kitabi-faded mb-2.5">{info.chapterRange}</p>
+                  <p className="text-sm text-kitabi-stone leading-snug">{info.blurb}</p>
                 </motion.button>
               );
             })}
@@ -122,8 +122,8 @@ export default function Settings() {
               exit={{ opacity: 0, y: 12 }}
               transition={{ duration: 0.25 }}
               className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50
-                         bg-emerald-50 border border-emerald-200 text-emerald-800
-                         px-4 py-2 rounded-lg shadow-md text-sm font-medium flex items-center gap-2"
+                         bg-kitabi-night-raise border border-gilt text-kitabi-gold
+                         px-4 py-2 rounded-md shadow-raise text-sm font-medium flex items-center gap-2"
               role="status"
               aria-live="polite"
             >

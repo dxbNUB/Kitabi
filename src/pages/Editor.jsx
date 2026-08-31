@@ -114,7 +114,7 @@ export default function Editor() {
 
   if (!editor) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 text-gray-500">
+      <div className="min-h-screen flex items-center justify-center bg-kitabi-night text-kitabi-stone">
         Loading editor…
       </div>
     );
@@ -208,25 +208,25 @@ export default function Editor() {
 
   // ─── Render ──────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className="min-h-screen bg-kitabi-night flex flex-col">
       {/* TOP BAR */}
-      <header className="bg-white border-b border-gray-200 px-4 sm:px-6 py-3 flex items-center justify-between gap-3 flex-wrap">
+      <header className="bg-kitabi-night-soft border-b border-seam px-4 sm:px-6 py-3 flex items-center justify-between gap-3 flex-wrap">
         <div className="flex items-center gap-3 sm:gap-4 min-w-0">
           <button
             onClick={() => navigate('/chapter')}
-            className="text-sm text-gray-600 hover:text-[#1A1A1A] transition flex-shrink-0 whitespace-nowrap"
+            className="text-sm text-kitabi-stone hover:text-kitabi-ivory transition flex-shrink-0 whitespace-nowrap"
           >
             <span aria-hidden="true">←</span> Back
           </button>
-          <div className="h-6 w-px bg-gray-300 hidden sm:block" />
-          <h1 className="font-serif text-lg text-[#1A1A1A] truncate">{title}</h1>
+          <div className="h-6 w-px bg-[rgba(237,228,211,0.15)] hidden sm:block" />
+          <h1 className="font-serif text-lg text-kitabi-ivory truncate">{title}</h1>
         </div>
 
         <div className="flex items-center gap-3 flex-shrink-0">
           <SaveBadge status={saveStatus} />
           <button
             onClick={manualSave}
-            className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition"
+            className="px-3 py-1.5 text-sm bg-[rgba(237,228,211,0.06)] hover:bg-[rgba(237,228,211,0.1)] text-kitabi-ivory rounded-md font-medium transition-colors"
             title="Save (Cmd/Ctrl+S)"
           >
             Save
@@ -252,30 +252,30 @@ export default function Editor() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="bg-[#FFF7EB] border-b border-[#C8964D]/30 overflow-hidden"
+            className="bg-kitabi-night-raise border-b border-gilt overflow-hidden"
           >
             <div className="px-4 sm:px-6 py-3 flex items-center gap-2 flex-wrap">
               <input
                 type="text" autoFocus value={findText}
                 onChange={(e) => setFindText(e.target.value)}
                 placeholder="Find…"
-                className="px-3 py-1.5 border border-gray-300 rounded text-sm flex-1 min-w-[120px] max-w-xs"
+                className="px-3 py-1.5 bg-[rgba(237,228,211,0.04)] border border-seam text-kitabi-ivory rounded text-sm flex-1 min-w-[120px] max-w-xs"
               />
               <input
                 type="text" value={replaceText}
                 onChange={(e) => setReplaceText(e.target.value)}
                 placeholder="Replace with…"
-                className="px-3 py-1.5 border border-gray-300 rounded text-sm flex-1 min-w-[120px] max-w-xs"
+                className="px-3 py-1.5 bg-[rgba(237,228,211,0.04)] border border-seam text-kitabi-ivory rounded text-sm flex-1 min-w-[120px] max-w-xs"
               />
               <button
                 onClick={handleFindReplace}
-                className="px-4 py-1.5 bg-[#C8964D] text-white rounded text-sm font-medium hover:bg-[#b88340] transition"
+                className="px-4 py-1.5 bg-kitabi-gold text-kitabi-night rounded text-sm font-medium hover:bg-kitabi-gold-deep hover:text-kitabi-paper transition-colors"
               >
                 Replace All
               </button>
               <button
                 onClick={() => setShowFindReplace(false)}
-                className="text-gray-500 hover:text-[#1A1A1A] px-2"
+                className="text-kitabi-stone hover:text-kitabi-ivory px-2"
                 aria-label="Close find and replace"
               >
                 <span aria-hidden="true">✕</span>
@@ -288,21 +288,22 @@ export default function Editor() {
       {/* MAIN — document + sidebar */}
       <div className="flex-1 flex">
         <main className="flex-1 flex justify-center py-6 px-4 overflow-y-auto">
-          <div className="w-full max-w-3xl bg-white shadow-sm rounded border border-gray-200 my-2">
+          {/* The page: a lit sheet of paper on the dark desk */}
+          <div className="w-full max-w-3xl bg-kitabi-paper shadow-sheet rounded-md my-2">
             <EditorContent editor={editor} />
           </div>
         </main>
 
-        <aside className="hidden lg:flex flex-col w-72 bg-white border-l border-gray-200 p-6 overflow-y-auto">
-          <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-500 mb-4">Document info</h3>
+        <aside className="hidden lg:flex flex-col w-72 bg-kitabi-night-soft border-l border-seam p-6 overflow-y-auto">
+          <h3 className="text-[10px] uppercase tracking-[0.2em] text-kitabi-faded mb-4">Document info</h3>
           <dl className="space-y-3.5 mb-8">
             <Stat label="Words"        value={wordCount.toLocaleString()} />
             <Stat label="Characters"   value={charCount.toLocaleString()} />
             <Stat label="Reading time" value={`${readMinutes} min`} />
           </dl>
 
-          <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-500 mb-3 mt-2">Shortcuts</h3>
-          <ul className="text-xs text-gray-600 space-y-1.5 mb-8">
+          <h3 className="text-[10px] uppercase tracking-[0.2em] text-kitabi-faded mb-3 mt-2">Shortcuts</h3>
+          <ul className="text-xs text-kitabi-stone space-y-1.5 mb-8">
             <li><kbd className="kbd">⌘B</kbd> Bold</li>
             <li><kbd className="kbd">⌘I</kbd> Italic</li>
             <li><kbd className="kbd">⌘U</kbd> Underline</li>
@@ -312,8 +313,8 @@ export default function Editor() {
             <li><kbd className="kbd">⌘S</kbd> Save</li>
           </ul>
 
-          <h3 className="text-[10px] uppercase tracking-[0.2em] text-gray-500 mb-3">Tips</h3>
-          <p className="text-xs text-gray-600 leading-snug">
+          <h3 className="text-[10px] uppercase tracking-[0.2em] text-kitabi-faded mb-3">Tips</h3>
+          <p className="text-xs text-kitabi-stone leading-snug">
             Select a passage and use the AI tools above the document to rewrite, expand, or condense it.
             Your edits autosave every {Math.round(AUTOSAVE_DELAY_MS / 1000)} seconds.
           </p>
@@ -321,14 +322,14 @@ export default function Editor() {
       </div>
 
       {/* STATUS BAR */}
-      <footer className="bg-[#1A1A1A] text-gray-300 px-4 sm:px-6 py-1.5 flex items-center justify-between text-[11px]">
+      <footer className="bg-kitabi-night-soft border-t border-seam text-kitabi-stone px-4 sm:px-6 py-1.5 flex items-center justify-between text-[11px]">
         <div className="flex gap-4">
           <span>{wordCount.toLocaleString()} words</span>
           <span className="hidden sm:inline">{charCount.toLocaleString()} characters</span>
           <span className="hidden sm:inline">{readMinutes} min read</span>
         </div>
         <div className="flex gap-3 items-center">
-          <span className="text-gray-500">Autosave: every {Math.round(AUTOSAVE_DELAY_MS / 1000)}s</span>
+          <span className="text-kitabi-faded">Autosave: every {Math.round(AUTOSAVE_DELAY_MS / 1000)}s</span>
         </div>
       </footer>
 
@@ -352,10 +353,10 @@ export default function Editor() {
 
 function SaveBadge({ status }) {
   const cfg = {
-    saved:  { text: '✓ Saved',     color: 'text-emerald-600' },
-    saving: { text: '⟳ Saving…',   color: 'text-amber-600 animate-pulse' },
-    dirty:  { text: '· Unsaved',   color: 'text-gray-500' },
-    error:  { text: '! Error',     color: 'text-red-600' },
+    saved:  { text: '✓ Saved',     color: 'text-[#7FB88A]' },
+    saving: { text: '⟳ Saving…',   color: 'text-kitabi-gold animate-pulse' },
+    dirty:  { text: '· Unsaved',   color: 'text-kitabi-faded' },
+    error:  { text: '! Error',     color: 'text-red-400' },
   }[status] || { text: '', color: '' };
   return <span className={`text-xs font-medium ${cfg.color}`}>{cfg.text}</span>;
 }
@@ -366,12 +367,12 @@ function ExportMenu({ onTxt, onDocx, onPdf }) {
     <div className="relative" onMouseLeave={() => setOpen(false)}>
       <button
         onClick={() => setOpen((v) => !v)}
-        className="px-3 py-1.5 text-sm bg-[#C8964D] hover:bg-[#b88340] text-white rounded-lg font-medium transition flex items-center gap-1.5"
+        className="px-3 py-1.5 text-sm bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper rounded-md font-medium transition-colors flex items-center gap-1.5"
       >
         Export <span className="text-[10px] opacity-80" aria-hidden="true">▾</span>
       </button>
       {open && (
-        <div role="menu" className="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-xl py-1 z-50 min-w-[180px]">
+        <div role="menu" className="absolute right-0 top-full mt-1 bg-kitabi-night-raise border border-seam rounded-md shadow-raise py-1 z-50 min-w-[180px]">
           <MenuItem onClick={() => { setOpen(false); onTxt();  }}>.txt — Plain text</MenuItem>
           <MenuItem onClick={() => { setOpen(false); onDocx(); }}>.docx — Word doc</MenuItem>
           <MenuItem onClick={() => { setOpen(false); onPdf();  }}>.pdf — Print-ready</MenuItem>
@@ -386,7 +387,7 @@ function MenuItem({ onClick, children }) {
     <button
       role="menuitem"
       onClick={onClick}
-      className="block w-full text-left px-4 py-2 text-sm text-[#1A1A1A] hover:bg-gray-50 hover:text-[#C8964D] transition"
+      className="block w-full text-left px-4 py-2 text-sm text-kitabi-ivory hover:bg-[rgba(237,228,211,0.05)] hover:text-kitabi-gold transition"
     >
       {children}
     </button>
@@ -396,8 +397,8 @@ function MenuItem({ onClick, children }) {
 function Stat({ label, value }) {
   return (
     <div>
-      <dt className="text-[11px] text-gray-500 mb-0.5">{label}</dt>
-      <dd className="font-display text-2xl font-medium text-[#1A1A1A]">{value}</dd>
+      <dt className="text-[11px] text-kitabi-faded mb-0.5">{label}</dt>
+      <dd className="font-display text-2xl font-medium text-kitabi-ivory">{value}</dd>
     </div>
   );
 }
@@ -407,11 +408,11 @@ function Stat({ label, value }) {
 function Toolbar({ editor, onFindToggle, onAi, aiBusy, isStarter }) {
   const btn = (active, extra = '') =>
     `p-2 rounded transition text-sm flex items-center justify-center min-w-[32px] ${
-      active ? 'bg-gray-200 text-[#1A1A1A]' : 'text-gray-700 hover:bg-gray-100'
+      active ? 'bg-[rgba(201,162,92,0.15)] text-kitabi-gold' : 'text-kitabi-stone hover:bg-[rgba(237,228,211,0.06)] hover:text-kitabi-ivory'
     } ${extra}`;
 
   return (
-    <div className="bg-white border-b border-gray-200 px-3 sm:px-6 py-2 flex items-center gap-1 overflow-x-auto whitespace-nowrap scrollbar-hide">
+    <div className="bg-kitabi-night-soft border-b border-seam px-3 sm:px-6 py-2 flex items-center gap-1 overflow-x-auto whitespace-nowrap scrollbar-hide">
       {/* Undo / Redo */}
       <Group>
         <button onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().undo()} className={btn(false, 'disabled:opacity-30 disabled:cursor-not-allowed')} title="Undo (Cmd+Z)">↶</button>
@@ -425,7 +426,7 @@ function Toolbar({ editor, onFindToggle, onAi, aiBusy, isStarter }) {
           if (v === 'p') editor.chain().focus().setParagraph().run();
           else editor.chain().focus().toggleHeading({ level: parseInt(v) }).run();
         }}
-        className="px-2 py-1 border border-gray-300 rounded text-sm mr-1 bg-white flex-shrink-0"
+        className="px-2 py-1 border border-seam rounded text-sm mr-1 bg-kitabi-night-raise text-kitabi-ivory flex-shrink-0"
         value={
           editor.isActive('heading', { level: 1 }) ? '1' :
           editor.isActive('heading', { level: 2 }) ? '2' :
@@ -451,7 +452,7 @@ function Toolbar({ editor, onFindToggle, onAi, aiBusy, isStarter }) {
         <input
           type="color"
           onChange={(e) => editor.chain().focus().setColor(e.target.value).run()}
-          className="w-8 h-7 cursor-pointer rounded border border-gray-200"
+          className="w-8 h-7 cursor-pointer rounded border border-seam bg-transparent"
           title="Text color"
         />
         <button
@@ -459,7 +460,7 @@ function Toolbar({ editor, onFindToggle, onAi, aiBusy, isStarter }) {
           className={btn(editor.isActive('highlight'))}
           title="Highlight"
         >
-          <span aria-hidden="true" className="bg-[#FFF7EB] px-1 border border-[#C8964D]/30 rounded">H</span>
+          <span aria-hidden="true" className="bg-[#FFF7EB] text-[#8b6a2f] px-1 border border-[#C8964D]/30 rounded">H</span>
         </button>
       </Group>
 
@@ -504,8 +505,8 @@ function Toolbar({ editor, onFindToggle, onAi, aiBusy, isStarter }) {
 
       {/* AI tools — push to right (flex-shrink-0 so they survive horizontal scroll) */}
       <div className="ml-auto flex gap-1.5 items-center flex-shrink-0">
-        {aiBusy && <span className="text-xs text-[#C8964D] animate-pulse mr-1">AI working…</span>}
-        {isStarter && <span className="text-[10px] text-[#C8964D] font-semibold mr-1" aria-hidden="true">🔒 Author</span>}
+        {aiBusy && <span className="text-xs text-kitabi-gold animate-pulse mr-1">AI working…</span>}
+        {isStarter && <span className="text-[10px] text-kitabi-gold font-semibold mr-1" aria-hidden="true">🔒 Author</span>}
         <AiBtn onClick={() => onAi('rewrite')}  disabled={aiBusy}>✎ Rewrite</AiBtn>
         <AiBtn onClick={() => onAi('expand')}   disabled={aiBusy}>↗ Expand</AiBtn>
         <AiBtn onClick={() => onAi('condense')} disabled={aiBusy}>↙ Condense</AiBtn>
@@ -516,15 +517,15 @@ function Toolbar({ editor, onFindToggle, onAi, aiBusy, isStarter }) {
 }
 
 function Group({ children }) {
-  return <div className="flex gap-0.5 mr-2 pr-2 border-r border-gray-200 last:border-0 last:pr-0 last:mr-0 flex-shrink-0">{children}</div>;
+  return <div className="flex gap-0.5 mr-2 pr-2 border-r border-seam last:border-0 last:pr-0 last:mr-0 flex-shrink-0">{children}</div>;
 }
 
 function AiBtn({ onClick, disabled, children }) {
   return (
     <button
       onClick={onClick} disabled={disabled}
-      className="px-2.5 py-1.5 bg-[#FFF7EB] text-[#8b6a2f] hover:bg-[#C8964D] hover:text-white
-                 rounded text-xs font-medium transition disabled:opacity-50 disabled:cursor-wait whitespace-nowrap"
+      className="px-2.5 py-1.5 bg-[rgba(201,162,92,0.12)] text-kitabi-gold hover:bg-kitabi-gold hover:text-kitabi-night
+                 rounded text-xs font-medium transition-colors disabled:opacity-50 disabled:cursor-wait whitespace-nowrap"
     >
       {children}
     </button>

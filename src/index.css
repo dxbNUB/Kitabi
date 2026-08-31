@@ -11,9 +11,11 @@
     font-variation-settings: normal;
   }
 
+  /* The writing room: warm espresso-black ground, ivory text.
+     Bright surfaces (.paper, .sheet) are deliberate objects on this desk. */
   html {
-    background: #ffffff;
-    color: #1A1A1A;
+    background: #16120C;
+    color: #EDE4D3;
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -21,19 +23,61 @@
 
   body {
     margin: 0;
-    background: #ffffff;
-    color: #1A1A1A;
+    background: #16120C;
+    color: #EDE4D3;
   }
 
   #root {
     min-height: 100vh;
-    background: #ffffff;
+    background: #16120C;
   }
 
+  ::selection {
+    background: rgba(201, 162, 92, 0.35);
+    color: #FDFAF5;
+  }
+
+  /* Quiet dark scrollbars — bright default scrollbars break the finish */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(167, 155, 133, 0.25) transparent;
+  }
+  *::-webkit-scrollbar { width: 10px; height: 10px; }
+  *::-webkit-scrollbar-track { background: transparent; }
+  *::-webkit-scrollbar-thumb {
+    background: rgba(167, 155, 133, 0.25);
+    border-radius: 5px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  *::-webkit-scrollbar-thumb:hover { background-color: rgba(167, 155, 133, 0.4); }
+
+  /* Parchment reading surface — chapter display, PDF-adjacent views */
   .paper {
     background-color: #FDFAF5;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
     color: #2C2416;
+  }
+
+  /* The sheet: a piece of cream paper on the dark desk. The one bright
+     object on any dark screen — carries the same grain as .paper, sits
+     under a warm shadow, and opens with a gilt top edge. */
+  .sheet {
+    position: relative;
+    background-color: #FDFAF5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    color: #2C2416;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.35), 0 12px 40px -8px rgba(0,0,0,0.55), 0 0 80px -20px rgba(201,162,92,0.18);
+  }
+  .sheet::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: 6px 6px 0 0;
+    background: linear-gradient(90deg, rgba(201,162,92,0) 0%, rgba(201,162,92,0.9) 18%, rgba(201,162,92,0.9) 82%, rgba(201,162,92,0) 100%);
+    pointer-events: none;
   }
 
   .drop-cap::first-letter {
@@ -43,7 +87,7 @@
     line-height: 0.8;
     margin: 0.1em 0.1em 0 0;
     font-weight: 700;
-    color: #C8964D;
+    color: #A67C3B;
   }
 
   /* Keyboard focus ring */
@@ -55,12 +99,13 @@
   select:focus-visible,
   [role="button"]:focus-visible,
   [tabindex]:focus-visible {
-    outline: 2px solid #C8964D;
+    outline: 2px solid #C9A25C;
     outline-offset: 2px;
     border-radius: 4px;
   }
 
-  ::placeholder { color: #9CA3AF; opacity: 1; }
+  ::placeholder { color: #6E6350; opacity: 1; }
+  .sheet ::placeholder, .paper ::placeholder { color: #9C917D; opacity: 1; }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -73,17 +118,26 @@
 }
 
 @layer components {
+  /* Small-caps gilt eyebrow — section labels across the site */
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: #C9A25C;
+  }
+
   /* Chapter prose (light parchment background) */
   .chapter-prose strong { font-weight: 700; color: #1a1208; }
   .chapter-prose em     { font-style: italic; }
   .chapter-prose code   { font-family: ui-monospace, monospace; font-size: 0.92em; background: rgba(0,0,0,0.05); padding: 0 4px; border-radius: 3px; }
 
-  /* Chat AI message prose (light gray cards) */
-  .chat-prose strong    { font-weight: 600; color: #1A1A1A; }
-  .chat-prose em        { font-style: italic; color: #5C4A2A; }
-  .chat-prose code      { font-family: ui-monospace, monospace; font-size: 0.9em; background: rgba(0,0,0,0.06); padding: 0 4px; border-radius: 3px; }
+  /* Chat AI message prose (dark raised cards) */
+  .chat-prose strong    { font-weight: 600; color: #FDFAF5; }
+  .chat-prose em        { font-style: italic; color: #C9A25C; }
+  .chat-prose code      { font-family: ui-monospace, monospace; font-size: 0.9em; background: rgba(237,228,211,0.08); padding: 0 4px; border-radius: 3px; }
 
-  /* TipTap editor body — Google Docs–style page on white card */
+  /* TipTap editor body — light page on the dark desk */
   .editor-prose                      { font-family: 'Crimson Pro', Georgia, serif; font-size: 18px; line-height: 1.7; color: #1A1A1A; }
   .editor-prose h1                   { font-family: 'Crimson Pro', Georgia, serif; font-size: 1.8em; font-weight: 600; margin: 1.2em 0 0.5em; color: #1A1A1A; }
   .editor-prose h2                   { font-family: 'Crimson Pro', Georgia, serif; font-size: 1.45em; font-weight: 600; margin: 1.1em 0 0.4em; color: #1A1A1A; }
@@ -96,30 +150,30 @@
   .editor-prose ul                   { list-style: disc; padding-left: 1.6em; margin: 0.6em 0; }
   .editor-prose ol                   { list-style: decimal; padding-left: 1.6em; margin: 0.6em 0; }
   .editor-prose li                   { margin: 0.2em 0; }
-  .editor-prose blockquote           { border-left: 3px solid #C8964D; padding-left: 1em; margin: 0.8em 0; font-style: italic; color: #555; }
+  .editor-prose blockquote           { border-left: 3px solid #C9A25C; padding-left: 1em; margin: 0.8em 0; font-style: italic; color: #555; }
   .editor-prose hr                   { border: none; border-top: 1px solid #E5E7EB; margin: 1.5em 0; }
   .editor-prose mark                 { padding: 0 0.15em; border-radius: 2px; }
   .editor-prose img                  { max-width: 100%; height: auto; border-radius: 4px; margin: 0.5em 0; }
-  .editor-prose a                    { color: #C8964D; text-decoration: underline; text-underline-offset: 3px; }
+  .editor-prose a                    { color: #A67C3B; text-decoration: underline; text-underline-offset: 3px; }
   .editor-prose [data-placeholder]:not(.is-empty)::before { content: none; }
   .editor-prose .is-empty:first-child::before {
     content: attr(data-placeholder); color: #9CA3AF; pointer-events: none; float: left; height: 0;
   }
 
   /* Keyboard hint */
-  .kbd { font-family: ui-monospace, monospace; font-size: 11px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 3px; padding: 0 5px; margin-right: 4px; }
+  .kbd { font-family: ui-monospace, monospace; font-size: 11px; background: rgba(237,228,211,0.07); border: 1px solid rgba(237,228,211,0.15); border-radius: 3px; padding: 0 5px; margin-right: 4px; color: #A79B85; }
 
-  /* Legal page body (Terms, Privacy, AUP, etc.) */
-  .legal-prose h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.5rem; font-weight: 500; color: #1A1A1A; margin: 2.5rem 0 0.75rem; line-height: 1.25; }
-  .legal-prose h3 { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; color: #6B7280; margin: 1.75rem 0 0.5rem; }
-  .legal-prose p  { color: #374151; line-height: 1.7; margin: 0.5rem 0 1rem; }
-  .legal-prose ul { color: #374151; margin: 0.5rem 0 1rem; padding-left: 1.25rem; }
+  /* Legal page body (Terms, Privacy, AUP, etc.) — dark surface */
+  .legal-prose h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.6rem; font-weight: 500; color: #EDE4D3; margin: 2.5rem 0 0.75rem; line-height: 1.25; }
+  .legal-prose h3 { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; color: #A79B85; margin: 1.75rem 0 0.5rem; }
+  .legal-prose p  { color: #A79B85; line-height: 1.7; margin: 0.5rem 0 1rem; }
+  .legal-prose ul { color: #A79B85; margin: 0.5rem 0 1rem; padding-left: 1.25rem; }
   .legal-prose li { line-height: 1.7; margin: 0.25rem 0; }
-  .legal-prose li::marker { color: #C8964D; }
-  .legal-prose strong { color: #1A1A1A; font-weight: 600; }
-  .legal-prose a { color: #C8964D; text-decoration: underline; text-decoration-color: rgba(200,150,77,0.4); text-underline-offset: 3px; }
-  .legal-prose a:hover { text-decoration-color: #C8964D; }
-  .legal-prose hr { border: none; border-top: 1px solid #E5E7EB; margin: 2rem 0; }
+  .legal-prose li::marker { color: #C9A25C; }
+  .legal-prose strong { color: #EDE4D3; font-weight: 600; }
+  .legal-prose a { color: #C9A25C; text-decoration: underline; text-decoration-color: rgba(201,162,92,0.4); text-underline-offset: 3px; }
+  .legal-prose a:hover { text-decoration-color: #C9A25C; }
+  .legal-prose hr { border: none; border-top: 1px solid rgba(237,228,211,0.09); margin: 2rem 0; }
 }
 
 @layer utilities {

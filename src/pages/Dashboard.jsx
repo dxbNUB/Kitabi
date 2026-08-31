@@ -31,20 +31,20 @@ export default function Dashboard() {
 
   return (
     <PageLayout>
-      <div className="bg-white">
+      <div className="bg-kitabi-night">
         {/* HERO — streak + greeting */}
-        <section className="px-6 sm:px-12 lg:px-24 pt-14 lg:pt-20 pb-10 border-b border-gray-200">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-gray-500 mb-3">
+        <section className="px-6 sm:px-12 lg:px-24 pt-14 lg:pt-20 pb-10 border-b border-seam">
+          <p className="eyebrow mb-3">
             {wroteToday ? "Today's progress" : 'Welcome back'}
           </p>
-          <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-medium text-[#1A1A1A] leading-[1.05] mb-5 text-balance">
+          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium text-kitabi-ivory leading-[1.05] mb-5 text-balance">
             {chaptersWritten === 0
-              ? <>Your book is <span className="italic text-[#C8964D]">waiting</span>.</>
+              ? <>Your book is <em className="italic text-kitabi-gold">waiting</em>.</>
               : currentStreak >= 2
-                ? <><span className="italic text-[#C8964D]">{currentStreak}</span> days in a row.</>
-                : <>Pick up where you <span className="italic text-[#C8964D]">left off</span>.</>}
+                ? <><em className="italic text-kitabi-gold">{currentStreak}</em> days in a row.</>
+                : <>Pick up where you <em className="italic text-kitabi-gold">left off</em>.</>}
           </h1>
-          <p className="text-base sm:text-lg text-gray-600 max-w-xl">
+          <p className="text-base sm:text-lg text-kitabi-stone max-w-xl">
             {motivation}
           </p>
         </section>
@@ -70,12 +70,12 @@ export default function Dashboard() {
 
         {/* NEXT ACTION — biggest CTA on the page */}
         <section className="px-6 sm:px-12 lg:px-24 pb-10">
-          <div className="max-w-4xl bg-gradient-to-br from-[#FFF7EB] via-white to-[#FFE4B8]/40 border-2 border-[#C8964D]/30 rounded-2xl p-8 sm:p-10">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-[#C8964D] mb-2">Next action</p>
+          <div className="max-w-4xl bg-kitabi-night-soft border border-gilt rounded-lg p-8 sm:p-10 shadow-raise">
+            <p className="eyebrow mb-2">Next action</p>
 
             {hasActiveBook ? (
               <>
-                <h2 className="font-serif text-2xl sm:text-3xl text-[#1A1A1A] mb-2 leading-tight">
+                <h2 className="font-display text-2xl sm:text-3xl text-kitabi-ivory mb-2 leading-tight">
                   {chapterGenerated
                     ? 'Continue where you left off.'
                     : project?.premise
@@ -83,20 +83,20 @@ export default function Dashboard() {
                       : 'Welcome back. Start your next chapter.'}
                 </h2>
                 {project?.premise && (
-                  <p className="text-sm text-gray-600 italic mb-6 line-clamp-2 max-w-2xl">
+                  <p className="text-sm text-kitabi-stone italic mb-6 line-clamp-2 max-w-2xl">
                     "{project.premise}"
                   </p>
                 )}
                 <div className="flex flex-wrap gap-3">
                   <button
                     onClick={() => navigate(chapterGenerated ? '/chapter' : '/chat')}
-                    className="px-7 py-3 bg-[#C8964D] hover:bg-[#b88340] text-white font-semibold rounded-lg shadow-sm transition"
+                    className="px-7 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md transition-colors"
                   >
                     {chapterGenerated ? 'Open chapter →' : 'Continue writing →'}
                   </button>
                   <button
                     onClick={() => navigate('/')}
-                    className="px-7 py-3 border border-gray-300 hover:border-[#C8964D] text-[#1A1A1A] font-semibold rounded-lg transition"
+                    className="px-7 py-3 border border-seam hover:border-gilt text-kitabi-ivory font-semibold rounded-md transition-colors"
                   >
                     Start a new book
                   </button>
@@ -104,17 +104,17 @@ export default function Dashboard() {
               </>
             ) : (
               <>
-                <h2 className="font-serif text-2xl sm:text-3xl text-[#1A1A1A] mb-2 leading-tight">
+                <h2 className="font-display text-2xl sm:text-3xl text-kitabi-ivory mb-2 leading-tight">
                   Start your book today.
                 </h2>
-                <p className="text-sm text-gray-600 mb-6 max-w-xl">
+                <p className="text-sm text-kitabi-stone mb-6 max-w-xl">
                   One chapter is all you need to begin. Most people never write theirs. Don't be most people.
                 </p>
                 <button
                   onClick={() => navigate('/')}
-                  className="px-7 py-3 bg-[#C8964D] hover:bg-[#b88340] text-white font-semibold rounded-lg shadow-sm transition"
+                  className="px-7 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md transition-colors"
                 >
-                  Begin Writing →
+                  Begin writing →
                 </button>
               </>
             )}
@@ -123,25 +123,25 @@ export default function Dashboard() {
 
         {/* MILESTONE PROGRESS */}
         <section className="px-6 sm:px-12 lg:px-24 pb-10">
-          <h2 className="font-serif text-2xl sm:text-3xl text-[#1A1A1A] mb-2">Milestones</h2>
-          <p className="text-gray-600 mb-7 max-w-xl">
+          <h2 className="font-display text-2xl sm:text-3xl text-kitabi-ivory mb-2">Milestones</h2>
+          <p className="text-kitabi-stone mb-7 max-w-xl">
             Most people quit before Chapter 5. The further you get, the rarer it becomes.
           </p>
 
           {nextMilestone && (
             <div className="mb-6 max-w-2xl">
               <div className="flex justify-between text-xs mb-1.5">
-                <span className="text-gray-600">Next: {nextMilestone.title}</span>
-                <span className="text-[#1A1A1A] font-semibold">
+                <span className="text-kitabi-stone">Next: {nextMilestone.title}</span>
+                <span className="text-kitabi-ivory font-semibold">
                   {chaptersWritten} / {nextMilestone.chapters}
                 </span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+              <div className="w-full bg-[rgba(237,228,211,0.1)] rounded-full h-2 overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${progressToNext}%` }}
                   transition={{ duration: 0.6, ease: 'easeOut' }}
-                  className="h-full bg-[#C8964D] rounded-full"
+                  className="h-full bg-kitabi-gold rounded-full"
                 />
               </div>
             </div>
@@ -153,20 +153,20 @@ export default function Dashboard() {
               return (
                 <div
                   key={m.id}
-                  className={`p-4 rounded-xl border transition
+                  className={`p-4 rounded-lg border transition
                     ${earned
-                      ? 'bg-[#FFF7EB] border-[#C8964D]/40'
-                      : 'bg-white border-gray-200 opacity-70'}`}
+                      ? 'bg-[rgba(201,162,92,0.07)] border-gilt'
+                      : 'bg-kitabi-night-soft border-seam opacity-70'}`}
                 >
                   <div className="flex items-baseline justify-between mb-1.5">
-                    <span className={`font-serif text-base ${earned ? 'text-[#1A1A1A]' : 'text-gray-500'}`}>
+                    <span className={`font-serif text-base ${earned ? 'text-kitabi-ivory' : 'text-kitabi-stone'}`}>
                       {m.title}
                     </span>
                     {earned && (
-                      <span className="text-[10px] uppercase tracking-[0.18em] text-[#C8964D] font-semibold">Earned</span>
+                      <span className="text-[10px] uppercase tracking-[0.18em] text-kitabi-gold font-semibold">Earned</span>
                     )}
                   </div>
-                  <p className={`text-xs leading-snug ${earned ? 'text-gray-700' : 'text-gray-400'}`}>
+                  <p className={`text-xs leading-snug ${earned ? 'text-kitabi-stone' : 'text-kitabi-faded'}`}>
                     {earned ? m.message : `Reach ${m.chapters} chapter${m.chapters === 1 ? '' : 's'}.`}
                   </p>
                 </div>
@@ -177,12 +177,12 @@ export default function Dashboard() {
 
         {/* QUIET FOOTER STATS */}
         <section className="px-6 sm:px-12 lg:px-24 pb-16">
-          <div className="text-xs text-gray-500 max-w-3xl">
+          <div className="text-xs text-kitabi-faded max-w-3xl">
             {daysWritten.length > 0 && (
               <p>
-                You've written on <span className="text-[#1A1A1A] font-semibold">{daysWritten.length}</span>{' '}
+                You've written on <span className="text-kitabi-ivory font-semibold">{daysWritten.length}</span>{' '}
                 {daysWritten.length === 1 ? 'day' : 'days'}.
-                {booksStarted > 0 && <> You've started <span className="text-[#1A1A1A] font-semibold">{booksStarted}</span> {booksStarted === 1 ? 'book' : 'books'}.</>}
+                {booksStarted > 0 && <> You've started <span className="text-kitabi-ivory font-semibold">{booksStarted}</span> {booksStarted === 1 ? 'book' : 'books'}.</>}
               </p>
             )}
           </div>
@@ -194,12 +194,12 @@ export default function Dashboard() {
 
 function Stat({ label, value, suffix, accent = false }) {
   return (
-    <div className={`p-5 rounded-xl border ${accent ? 'border-[#C8964D]/40 bg-[#FFF7EB]' : 'border-gray-200 bg-white'}`}>
-      <p className="text-[10px] uppercase tracking-[0.2em] text-gray-500 mb-2">{label}</p>
-      <p className={`font-display text-3xl sm:text-4xl font-medium leading-none ${accent ? 'text-[#C8964D]' : 'text-[#1A1A1A]'}`}>
+    <div className={`p-5 rounded-lg border ${accent ? 'border-gilt bg-[rgba(201,162,92,0.07)]' : 'border-seam bg-kitabi-night-soft'}`}>
+      <p className="text-[10px] uppercase tracking-[0.2em] text-kitabi-faded mb-2">{label}</p>
+      <p className={`font-display text-3xl sm:text-4xl font-medium leading-none ${accent ? 'text-kitabi-gold' : 'text-kitabi-ivory'}`}>
         {value}
       </p>
-      {suffix && <p className="text-xs text-gray-500 mt-1.5">{suffix}</p>}
+      {suffix && <p className="text-xs text-kitabi-faded mt-1.5">{suffix}</p>}
     </div>
   );
 }

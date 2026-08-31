@@ -30,7 +30,7 @@ export function ChatLoading() {
         {[0, 1, 2].map((i) => (
           <motion.span
             key={i}
-            className="w-2 h-2 bg-amber-400 rounded-full block"
+            className="w-2 h-2 bg-kitabi-gold rounded-full block"
             animate={{ y: [0, -6, 0] }}
             transition={{ duration: 0.8, repeat: Infinity, delay: i * 0.15 }}
           />
@@ -39,7 +39,7 @@ export function ChatLoading() {
       <AnimatePresence mode="wait">
         <motion.span
           key={idx}
-          className="text-sm text-gray-500 italic"
+          className="text-sm text-kitabi-stone italic"
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -4 }}
@@ -74,7 +74,7 @@ export function GenerationLoading({ wordCount = 0, onCancel = null }) {
 
   return (
     <motion.div
-      className="h-full w-full flex flex-col items-center justify-center gap-7 p-8 bg-[#FAFAF7]"
+      className="h-full w-full flex flex-col items-center justify-center gap-7 p-8 bg-kitabi-night"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
@@ -87,11 +87,11 @@ export function GenerationLoading({ wordCount = 0, onCancel = null }) {
       </motion.div>
 
       <div className="text-center max-w-sm">
-        <p className="text-xs text-gray-500 uppercase tracking-widest mb-3">Writing Chapter 1 of your book</p>
+        <p className="eyebrow mb-3">Writing Chapter 1 of your book</p>
         <AnimatePresence mode="wait">
           <motion.p
             key={stageIdx}
-            className="text-lg text-[#1A1A1A] font-serif"
+            className="text-lg text-kitabi-ivory font-serif"
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
@@ -103,27 +103,27 @@ export function GenerationLoading({ wordCount = 0, onCancel = null }) {
       </div>
 
       <div className="w-56 sm:w-64">
-        <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+        <div className="h-1.5 bg-[rgba(237,228,211,0.1)] rounded-full overflow-hidden">
           <motion.div
-            className="h-full bg-[#C8964D] rounded-full"
+            className="h-full bg-kitabi-gold rounded-full"
             initial={{ width: '0%' }}
             animate={{ width: `${percent}%` }}
             transition={{ duration: 0.5 }}
           />
         </div>
-        <div className="flex justify-between mt-2 text-[11px] text-gray-500">
+        <div className="flex justify-between mt-2 text-[11px] text-kitabi-faded">
           <span>{wordCount > 0 ? `${wordCount.toLocaleString()} words` : 'Starting…'}</span>
           <span>{elapsed}s</span>
         </div>
       </div>
 
-      <p className="text-[11px] text-gray-500 max-w-xs text-center mt-2">
+      <p className="text-[11px] text-kitabi-faded max-w-xs text-center mt-2">
         Generating your chapter — usually 90-120 seconds. Grab a coffee.
       </p>
 
       {/* Slow-response warning past 60s */}
       {elapsed > 60 && (
-        <p className="text-[11px] text-[#C8964D] max-w-xs text-center font-medium">
+        <p className="text-[11px] text-kitabi-gold max-w-xs text-center font-medium">
           Taking longer than usual. Hang tight or cancel below.
         </p>
       )}
@@ -132,7 +132,7 @@ export function GenerationLoading({ wordCount = 0, onCancel = null }) {
       {onCancel && (
         <button
           onClick={onCancel}
-          className="text-xs text-gray-500 hover:text-[#1A1A1A] underline underline-offset-4 mt-1"
+          className="text-xs text-kitabi-stone hover:text-kitabi-ivory underline underline-offset-4 mt-1"
         >
           Cancel
         </button>

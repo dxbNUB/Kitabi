@@ -71,15 +71,15 @@ export default function WaitlistPrompt({ variant = 0 }) {
 
   if (status === 'success') {
     return (
-      <div className="p-4 rounded-lg border border-[#C8964D]/40 bg-[#FFF7EB] text-center">
-        <p className="text-[#8b6a2f] font-medium">{message}</p>
+      <div className="p-4 rounded-md border border-gilt bg-[rgba(201,162,92,0.08)] text-center">
+        <p className="text-kitabi-gold font-medium">{message}</p>
       </div>
     );
   }
 
   return (
     <div className="text-left">
-      <p className="text-gray-700 text-sm mb-3 text-center">
+      <p className="text-kitabi-stone text-sm mb-3 text-center">
         {COPY_VARIANTS[variant % COPY_VARIANTS.length]}
       </p>
       <form onSubmit={submit} className="flex flex-col sm:flex-row gap-2">
@@ -91,20 +91,20 @@ export default function WaitlistPrompt({ variant = 0 }) {
           onChange={e => setEmail(e.target.value)}
           placeholder="your@email.com"
           required
-          className="flex-1 px-3 py-2.5 rounded-lg bg-white border border-gray-300 text-[#1A1A1A] text-sm
-                     placeholder:text-gray-400 focus:border-[#C8964D] transition shadow-sm"
+          className="flex-1 px-3 py-2.5 rounded-md bg-[rgba(237,228,211,0.04)] border border-seam
+                     text-kitabi-ivory text-sm focus:border-gilt transition-colors"
         />
         <button
           type="submit"
           disabled={status === 'loading'}
-          className="px-5 py-2.5 bg-[#C8964D] text-white font-semibold text-sm rounded-lg
-                     hover:bg-[#b88340] transition disabled:opacity-60 shadow-sm"
+          className="px-5 py-2.5 bg-kitabi-gold text-kitabi-night font-semibold text-sm rounded-md
+                     hover:bg-kitabi-gold-deep hover:text-kitabi-paper transition-colors disabled:opacity-60"
         >
           {status === 'loading' ? '...' : 'Notify Me →'}
         </button>
       </form>
       {status === 'error' && (
-        <p className="text-red-600 text-xs mt-2 text-center">{message}</p>
+        <p className="text-red-400 text-xs mt-2 text-center">{message}</p>
       )}
     </div>
   );

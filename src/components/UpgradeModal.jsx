@@ -45,25 +45,25 @@ export default function UpgradeModal({
             exit={{ scale: 0.96, opacity: 0, y: 8 }}
             transition={{ duration: 0.2 }}
             onClick={(e) => e.stopPropagation()}
-            className="bg-white rounded-2xl p-7 sm:p-8 max-w-md w-full shadow-2xl"
+            className="bg-kitabi-night-raise border border-seam rounded-lg p-7 sm:p-8 max-w-md w-full shadow-raise"
           >
             <div className="text-center mb-6">
-              <div className="w-14 h-14 bg-[#FFF7EB] border border-[#C8964D]/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl text-[#C8964D]" aria-hidden="true">✦</span>
+              <div className="w-14 h-14 bg-[rgba(201,162,92,0.08)] border border-gilt rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl text-kitabi-gold" aria-hidden="true">✦</span>
               </div>
-              <h2 id="upgrade-modal-title" className="font-serif text-2xl font-medium text-[#1A1A1A] mb-2">
+              <h2 id="upgrade-modal-title" className="font-display text-2xl font-medium text-kitabi-ivory mb-2">
                 {feature}
               </h2>
               {description && (
-                <p className="text-gray-600 text-sm sm:text-base">{description}</p>
+                <p className="text-kitabi-stone text-sm sm:text-base">{description}</p>
               )}
             </div>
 
             {benefits.length > 0 && (
-              <ul className="space-y-2 mb-6 bg-gray-50 rounded-lg p-4">
+              <ul className="space-y-2 mb-6 bg-[rgba(237,228,211,0.04)] border border-seam rounded-md p-4">
                 {benefits.map((b) => (
-                  <li key={b} className="flex items-start gap-2.5 text-sm text-[#1A1A1A]">
-                    <span className="text-[#C8964D] font-bold mt-0.5" aria-hidden="true">✓</span>
+                  <li key={b} className="flex items-start gap-2.5 text-sm text-kitabi-ivory">
+                    <span className="text-kitabi-gold font-bold mt-0.5" aria-hidden="true">✓</span>
                     <span>{b}</span>
                   </li>
                 ))}
@@ -73,14 +73,14 @@ export default function UpgradeModal({
             <div className="space-y-2">
               <button
                 onClick={() => { onClose?.(); navigate('/pricing'); }}
-                className="w-full px-6 py-3 bg-[#C8964D] hover:bg-[#b88340] text-white rounded-lg
-                           font-semibold transition shadow-sm"
+                className="w-full px-6 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper rounded-md
+                           font-semibold transition-colors"
               >
                 {cta}
               </button>
               <button
                 onClick={onClose}
-                className="w-full px-6 py-2.5 text-gray-600 hover:text-[#1A1A1A] rounded-lg font-medium transition text-sm"
+                className="w-full px-6 py-2.5 text-kitabi-stone hover:text-kitabi-ivory rounded-md font-medium transition text-sm"
               >
                 Maybe later
               </button>

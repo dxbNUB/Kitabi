@@ -92,15 +92,15 @@ export default function RecentlyDeleted() {
 
   return (
     <PageLayout>
-      <div className="bg-white">
+      <div className="bg-kitabi-night">
         {/* Hero */}
-        <section className="px-6 sm:px-12 lg:px-24 pt-14 lg:pt-20 pb-10 border-b border-gray-200">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-gray-500 mb-3">My library</p>
-          <h1 className="font-serif text-4xl sm:text-5xl font-medium text-[#1A1A1A] leading-[1.05] mb-4">
+        <section className="px-6 sm:px-12 lg:px-24 pt-14 lg:pt-20 pb-10 border-b border-seam">
+          <p className="eyebrow mb-3">My library</p>
+          <h1 className="font-display text-4xl sm:text-5xl font-medium text-kitabi-ivory leading-[1.05] mb-4">
             Recently deleted.
           </h1>
-          <p className="text-sm text-gray-600 max-w-2xl leading-relaxed">
-            Items you delete are kept here for <strong>90 days</strong> in case you change your mind.
+          <p className="text-sm text-kitabi-stone max-w-2xl leading-relaxed">
+            Items you delete are kept here for <strong className="text-kitabi-ivory">90 days</strong> in case you change your mind.
             After that, they're permanently removed. Restore anything you didn't mean to delete,
             or remove it permanently right now.
           </p>
@@ -109,17 +109,17 @@ export default function RecentlyDeleted() {
         {/* Body */}
         <section className="px-6 sm:px-12 lg:px-24 py-12 space-y-12">
           {data === null ? (
-            <div className="text-sm text-gray-500">Loading…</div>
+            <div className="text-sm text-kitabi-faded">Loading…</div>
           ) : isEmpty ? (
             <div className="max-w-md py-10">
-              <p className="font-serif text-xl text-[#1A1A1A] mb-3">Nothing in the trash.</p>
-              <p className="text-gray-600 mb-7 leading-relaxed">
+              <p className="font-display text-2xl text-kitabi-ivory mb-3">Nothing in the trash.</p>
+              <p className="text-kitabi-stone mb-7 leading-relaxed">
                 When you delete a chat or chapter, it'll show up here for 90 days
                 before being permanently removed.
               </p>
               <button
                 onClick={() => navigate('/my-chapters')}
-                className="px-6 py-3 bg-[#C8964D] hover:bg-[#b88340] text-white font-semibold rounded-lg transition shadow-sm"
+                className="px-6 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md transition-colors"
               >
                 Back to My Chapters →
               </button>
@@ -129,7 +129,7 @@ export default function RecentlyDeleted() {
               {/* CHATS */}
               {data.chats.length > 0 && (
                 <div>
-                  <h2 className="font-serif text-2xl text-[#1A1A1A] mb-5">Deleted chats ({data.chats.length})</h2>
+                  <h2 className="font-display text-2xl text-kitabi-ivory mb-5">Deleted chats ({data.chats.length})</h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     {data.chats.map((c) => {
                       const days = daysUntilPurge(c.deleted_at);
@@ -138,20 +138,20 @@ export default function RecentlyDeleted() {
                           key={c.id}
                           initial={{ opacity: 0, y: 6 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="p-5 bg-white border border-gray-200 rounded-xl"
+                          className="p-5 bg-kitabi-night-soft border border-seam rounded-lg"
                         >
                           <div className="flex items-baseline justify-between mb-2">
-                            <span className="text-[10px] uppercase tracking-[0.18em] text-[#C8964D] font-semibold">
+                            <span className="text-[10px] uppercase tracking-[0.18em] text-kitabi-gold font-semibold">
                               {c.genre || 'Conversation'}
                             </span>
-                            <span className="text-[10px] text-gray-500">
+                            <span className="text-[10px] text-kitabi-faded">
                               {days} {days === 1 ? 'day' : 'days'} left
                             </span>
                           </div>
-                          <h3 className="font-serif text-base text-[#1A1A1A] mb-3 line-clamp-2">
+                          <h3 className="font-serif text-base text-kitabi-ivory mb-3 line-clamp-2">
                             {c.title || 'Untitled chat'}
                           </h3>
-                          <p className="text-[11px] text-gray-500 mb-4">
+                          <p className="text-[11px] text-kitabi-faded mb-4">
                             {(c.messages || []).length} messages · deleted{' '}
                             {new Date(c.deleted_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                           </p>
@@ -159,14 +159,14 @@ export default function RecentlyDeleted() {
                             <button
                               onClick={() => handleRestoreChat(c.id)}
                               disabled={busyId === c.id}
-                              className="flex-1 px-3 py-2 text-xs font-medium bg-[#C8964D] hover:bg-[#b88340] text-white rounded-lg transition disabled:opacity-60"
+                              className="flex-1 px-3 py-2 text-xs font-medium bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper rounded-md transition-colors disabled:opacity-60"
                             >
                               Restore
                             </button>
                             <button
                               onClick={() => handlePermanentChat(c.id)}
                               disabled={busyId === c.id}
-                              className="flex-1 px-3 py-2 text-xs font-medium border border-red-300 hover:border-red-500 hover:bg-red-50 text-red-700 rounded-lg transition disabled:opacity-60"
+                              className="flex-1 px-3 py-2 text-xs font-medium border border-[rgba(176,92,66,0.4)] hover:border-[#B05C42] hover:bg-[rgba(176,92,66,0.1)] text-[#D08A73] rounded-md transition-colors disabled:opacity-60"
                             >
                               Delete forever
                             </button>
@@ -181,7 +181,7 @@ export default function RecentlyDeleted() {
               {/* CHAPTERS */}
               {data.chapters.length > 0 && (
                 <div>
-                  <h2 className="font-serif text-2xl text-[#1A1A1A] mb-5">Deleted chapters ({data.chapters.length})</h2>
+                  <h2 className="font-display text-2xl text-kitabi-ivory mb-5">Deleted chapters ({data.chapters.length})</h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     {data.chapters.map((c) => {
                       const days = daysUntilPurge(c.deleted_at);
@@ -190,23 +190,23 @@ export default function RecentlyDeleted() {
                           key={c.id}
                           initial={{ opacity: 0, y: 6 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="p-5 bg-white border border-gray-200 rounded-xl"
+                          className="p-5 bg-kitabi-night-soft border border-seam rounded-lg"
                         >
                           <div className="flex items-baseline justify-between mb-2">
-                            <span className="text-[10px] uppercase tracking-[0.18em] text-[#C8964D] font-semibold">
+                            <span className="text-[10px] uppercase tracking-[0.18em] text-kitabi-gold font-semibold">
                               {c.genre || 'Chapter'}
                             </span>
-                            <span className="text-[10px] text-gray-500">
+                            <span className="text-[10px] text-kitabi-faded">
                               {days} {days === 1 ? 'day' : 'days'} left
                             </span>
                           </div>
-                          <h3 className="font-serif text-base text-[#1A1A1A] mb-3 line-clamp-2">
+                          <h3 className="font-serif text-base text-kitabi-ivory mb-3 line-clamp-2">
                             {c.title || 'Untitled chapter'}
                             {c.version_number > 1 && (
-                              <span className="text-xs text-gray-500 ml-2">v{c.version_number}</span>
+                              <span className="text-xs text-kitabi-faded ml-2">v{c.version_number}</span>
                             )}
                           </h3>
-                          <p className="text-[11px] text-gray-500 mb-4">
+                          <p className="text-[11px] text-kitabi-faded mb-4">
                             {(c.word_count || 0).toLocaleString()} words · deleted{' '}
                             {new Date(c.deleted_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                           </p>
@@ -214,14 +214,14 @@ export default function RecentlyDeleted() {
                             <button
                               onClick={() => handleRestoreChapter(c.id)}
                               disabled={busyId === c.id}
-                              className="flex-1 px-3 py-2 text-xs font-medium bg-[#C8964D] hover:bg-[#b88340] text-white rounded-lg transition disabled:opacity-60"
+                              className="flex-1 px-3 py-2 text-xs font-medium bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper rounded-md transition-colors disabled:opacity-60"
                             >
                               Restore
                             </button>
                             <button
                               onClick={() => handlePermanentChapter(c.id)}
                               disabled={busyId === c.id}
-                              className="flex-1 px-3 py-2 text-xs font-medium border border-red-300 hover:border-red-500 hover:bg-red-50 text-red-700 rounded-lg transition disabled:opacity-60"
+                              className="flex-1 px-3 py-2 text-xs font-medium border border-[rgba(176,92,66,0.4)] hover:border-[#B05C42] hover:bg-[rgba(176,92,66,0.1)] text-[#D08A73] rounded-md transition-colors disabled:opacity-60"
                             >
                               Delete forever
                             </button>

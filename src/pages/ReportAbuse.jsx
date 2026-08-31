@@ -79,10 +79,10 @@ export default function ReportAbuse() {
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-6 rounded-xl border border-emerald-300 bg-emerald-50"
+          className="p-6 rounded-lg border border-gilt bg-[rgba(201,162,92,0.07)]"
         >
           <h2 style={{ marginTop: 0 }}>Report received</h2>
-          <p className="text-emerald-900">
+          <p className="text-kitabi-stone">
             Thank you. Our trust & safety team will review your report and take action within 48 hours.
             For illegal content, we will preserve evidence and may cooperate with UAE law-enforcement.
           </p>
@@ -90,8 +90,8 @@ export default function ReportAbuse() {
       ) : (
         <form onSubmit={submit} className="space-y-5 not-prose">
           <div>
-            <label htmlFor="reporterEmail" className="block text-sm font-medium text-[#1A1A1A] mb-1.5">
-              Your email <span className="text-gray-400 font-normal">(optional)</span>
+            <label htmlFor="reporterEmail" className="block text-sm font-medium text-kitabi-ivory mb-1.5">
+              Your email <span className="text-kitabi-faded font-normal">(optional)</span>
             </label>
             <input
               id="reporterEmail"
@@ -99,14 +99,14 @@ export default function ReportAbuse() {
               value={form.reporterEmail}
               onChange={update('reporterEmail')}
               placeholder="you@example.com"
-              className="w-full px-3 py-2.5 rounded-lg bg-white border border-gray-300 text-[#1A1A1A]
-                         placeholder:text-gray-400 focus:border-[#C8964D] transition shadow-sm"
+              className="w-full px-3 py-2.5 rounded-md bg-[rgba(237,228,211,0.04)] border border-seam text-kitabi-ivory
+                         focus:border-gilt transition-colors"
             />
-            <p className="text-xs text-gray-500 mt-1">We may contact you if we need more detail.</p>
+            <p className="text-xs text-kitabi-faded mt-1">We may contact you if we need more detail.</p>
           </div>
 
           <div>
-            <label htmlFor="targetUrl" className="block text-sm font-medium text-[#1A1A1A] mb-1.5">
+            <label htmlFor="targetUrl" className="block text-sm font-medium text-kitabi-ivory mb-1.5">
               Where did you see it?
             </label>
             <input
@@ -115,21 +115,21 @@ export default function ReportAbuse() {
               value={form.targetUrl}
               onChange={update('targetUrl')}
               placeholder="URL, account name, or page where you encountered the content"
-              className="w-full px-3 py-2.5 rounded-lg bg-white border border-gray-300 text-[#1A1A1A]
-                         placeholder:text-gray-400 focus:border-[#C8964D] transition shadow-sm"
+              className="w-full px-3 py-2.5 rounded-md bg-[rgba(237,228,211,0.04)] border border-seam text-kitabi-ivory
+                         focus:border-gilt transition-colors"
             />
           </div>
 
           <div>
-            <label htmlFor="category" className="block text-sm font-medium text-[#1A1A1A] mb-1.5">
+            <label htmlFor="category" className="block text-sm font-medium text-kitabi-ivory mb-1.5">
               What kind of issue?
             </label>
             <select
               id="category"
               value={form.category}
               onChange={update('category')}
-              className="w-full px-3 py-2.5 rounded-lg bg-white border border-gray-300 text-[#1A1A1A]
-                         focus:border-[#C8964D] transition shadow-sm"
+              className="w-full px-3 py-2.5 rounded-md bg-kitabi-night-raise border border-seam text-kitabi-ivory
+                         focus:border-gilt transition-colors"
             >
               <option value="illegal">Illegal content (UAE law)</option>
               <option value="hate">Hate speech / discrimination</option>
@@ -144,8 +144,8 @@ export default function ReportAbuse() {
           </div>
 
           <div>
-            <label htmlFor="description" className="block text-sm font-medium text-[#1A1A1A] mb-1.5">
-              Describe what you saw <span className="text-red-500">*</span>
+            <label htmlFor="description" className="block text-sm font-medium text-kitabi-ivory mb-1.5">
+              Describe what you saw <span className="text-red-400">*</span>
             </label>
             <textarea
               id="description"
@@ -154,8 +154,8 @@ export default function ReportAbuse() {
               rows={5}
               required
               placeholder="What was the content? Why does it violate our terms or UAE law? Include quotes or screenshots if you can."
-              className="w-full px-3 py-2.5 rounded-lg bg-white border border-gray-300 text-[#1A1A1A]
-                         placeholder:text-gray-400 focus:border-[#C8964D] transition shadow-sm resize-y"
+              className="w-full px-3 py-2.5 rounded-md bg-[rgba(237,228,211,0.04)] border border-seam text-kitabi-ivory
+                         focus:border-gilt transition-colors resize-y"
             />
           </div>
 
@@ -163,13 +163,13 @@ export default function ReportAbuse() {
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="px-6 py-2.5 bg-[#C8964D] hover:bg-[#b88340] text-white font-semibold rounded-lg
-                         transition disabled:opacity-60 shadow-sm"
+              className="px-6 py-2.5 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md
+                         transition-colors disabled:opacity-60"
             >
               {status === 'loading' ? 'Sending…' : 'Submit report'}
             </button>
-            <p className="text-xs text-gray-500">
-              Or email <a href={`mailto:${ABUSE_EMAIL}`} className="text-[#C8964D]">{ABUSE_EMAIL}</a> directly.
+            <p className="text-xs text-kitabi-faded">
+              Or email <a href={`mailto:${ABUSE_EMAIL}`} className="text-kitabi-gold">{ABUSE_EMAIL}</a> directly.
             </p>
           </div>
         </form>

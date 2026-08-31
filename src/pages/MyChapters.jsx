@@ -92,14 +92,14 @@ export default function MyChapters() {
 
   return (
     <PageLayout>
-      <div className="bg-white">
+      <div className="bg-kitabi-night">
         {/* Hero */}
-        <section className="px-6 sm:px-12 lg:px-24 pt-14 lg:pt-20 pb-10 border-b border-gray-200">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-gray-500 mb-3">My library</p>
-          <h1 className="font-serif text-4xl sm:text-5xl font-medium text-[#1A1A1A] leading-[1.05] mb-4">
+        <section className="px-6 sm:px-12 lg:px-24 pt-14 lg:pt-20 pb-10 border-b border-seam">
+          <p className="eyebrow mb-3">My library</p>
+          <h1 className="font-display text-4xl sm:text-5xl font-medium text-kitabi-ivory leading-[1.05] mb-4">
             Your chapters.
           </h1>
-          <p className="text-sm text-gray-600 max-w-xl">
+          <p className="text-sm text-kitabi-stone max-w-xl">
             Every chapter — and every version of every rewrite — auto-saves to your account.
             Nothing is lost when you close the tab.
           </p>
@@ -114,33 +114,33 @@ export default function MyChapters() {
               transition={{ duration: 0.3 }}
               className="max-w-3xl mb-10"
             >
-              <div className="border-2 border-[#C8964D]/40 bg-[#FFF7EB] rounded-2xl p-6 sm:p-8">
+              <div className="border border-gilt bg-kitabi-night-soft rounded-lg p-6 sm:p-8 shadow-raise">
                 <div className="flex items-baseline gap-3 mb-3">
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-[#C8964D] font-semibold">In progress</span>
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500">{genre || 'Fiction'} · Chapter One</span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-kitabi-gold font-semibold">In progress</span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-kitabi-faded">{genre || 'Fiction'} · Chapter One</span>
                 </div>
-                <h2 className="font-serif text-2xl sm:text-3xl text-[#1A1A1A] mb-3">
+                <h2 className="font-display text-2xl sm:text-3xl text-kitabi-ivory mb-3">
                   {project?.title || 'Your Book — Chapter 1'}
                 </h2>
                 {project?.premise && (
-                  <p className="text-sm text-gray-600 italic mb-5 line-clamp-2 max-w-2xl">
+                  <p className="text-sm text-kitabi-stone italic mb-5 line-clamp-2 max-w-2xl">
                     "{project.premise}"
                   </p>
                 )}
-                <p className="text-xs text-gray-500 mb-5">
+                <p className="text-xs text-kitabi-faded mb-5">
                   {currentSessionWordCount.toLocaleString()} words ·{' '}
                   ~{Math.max(1, Math.ceil(currentSessionWordCount / 250))} min read
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <button
                     onClick={() => navigate('/chapter')}
-                    className="px-5 py-2.5 bg-[#C8964D] hover:bg-[#b88340] text-white font-semibold rounded-lg text-sm transition shadow-sm"
+                    className="px-5 py-2.5 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md text-sm transition-colors"
                   >
                     Open chapter →
                   </button>
                   <button
                     onClick={() => navigate('/editor')}
-                    className="px-5 py-2.5 border border-gray-300 hover:border-[#C8964D] text-[#1A1A1A] font-medium rounded-lg text-sm transition"
+                    className="px-5 py-2.5 border border-seam hover:border-gilt text-kitabi-ivory font-medium rounded-md text-sm transition-colors"
                   >
                     Edit
                   </button>
@@ -150,19 +150,19 @@ export default function MyChapters() {
           )}
 
           {chapters === null ? (
-            <div className="text-sm text-gray-500">Loading your chapters…</div>
+            <div className="text-sm text-kitabi-faded">Loading your chapters…</div>
           ) : error ? (
-            <div className="text-sm text-red-600">{error}</div>
+            <div className="text-sm text-red-400">{error}</div>
           ) : chapters.length === 0 && !chapterGenerated ? (
             <div className="max-w-md py-10">
-              <p className="font-serif text-xl text-[#1A1A1A] mb-3">No chapters yet.</p>
-              <p className="text-gray-600 mb-7 leading-relaxed">
+              <p className="font-display text-2xl text-kitabi-ivory mb-3">No chapters yet.</p>
+              <p className="text-kitabi-stone mb-7 leading-relaxed">
                 Your written chapters will appear here. Most people quit before Chapter 1 —
                 don't be most people.
               </p>
               <button
                 onClick={() => navigate('/')}
-                className="px-6 py-3 bg-[#C8964D] hover:bg-[#b88340] text-white font-semibold rounded-lg transition shadow-sm"
+                className="px-6 py-3 bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper font-semibold rounded-md transition-colors"
               >
                 Write Chapter 1 →
               </button>
@@ -178,7 +178,7 @@ export default function MyChapters() {
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="relative group border border-gray-200 rounded-2xl bg-white hover:border-[#C8964D]/40 hover:shadow-md transition-all p-6 sm:p-8"
+                    className="relative group border border-seam rounded-lg bg-kitabi-night-soft hover:border-gilt transition-colors p-6 sm:p-8"
                   >
                     {/* Delete (trash) — fades in on hover. Acts on the LATEST version
                         (the visually-prominent one). Older versions remain in trash separately. */}
@@ -186,28 +186,28 @@ export default function MyChapters() {
                       onClick={(e) => handleDelete(latest.id, e)}
                       title="Move to Recently Deleted"
                       aria-label="Delete chapter"
-                      className="absolute top-3 right-3 w-8 h-8 rounded-md flex items-center justify-center text-gray-400 hover:text-red-600 hover:bg-red-50 opacity-0 group-hover:opacity-100 focus:opacity-100 transition"
+                      className="absolute top-3 right-3 w-8 h-8 rounded-md flex items-center justify-center text-kitabi-faded hover:text-red-400 hover:bg-[rgba(176,92,66,0.1)] opacity-0 group-hover:opacity-100 focus:opacity-100 transition"
                     >
                       <span aria-hidden="true">🗑</span>
                     </button>
 
                     <div className="flex items-baseline gap-3 mb-3 flex-wrap pr-10">
-                      <span className="text-[10px] uppercase tracking-[0.2em] text-[#C8964D] font-semibold">
+                      <span className="text-[10px] uppercase tracking-[0.2em] text-kitabi-gold font-semibold">
                         {latest.genre || 'Fiction'}
                       </span>
                       {hasMultiple && (
-                        <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500">
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-kitabi-faded">
                           {versions.length} versions
                         </span>
                       )}
-                      <span className="text-[10px] text-gray-400 ml-auto">
+                      <span className="text-[10px] text-kitabi-faded ml-auto">
                         {new Date(latest.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                       </span>
                     </div>
-                    <h2 className="font-serif text-xl sm:text-2xl text-[#1A1A1A] mb-2">
+                    <h2 className="font-display text-xl sm:text-2xl text-kitabi-ivory mb-2">
                       {latest.title || 'Untitled chapter'}
                     </h2>
-                    <p className="text-xs text-gray-500 mb-5">
+                    <p className="text-xs text-kitabi-faded mb-5">
                       {(latest.word_count || 0).toLocaleString()} words ·{' '}
                       ~{Math.max(1, Math.ceil((latest.word_count || 0) / 250))} min read
                     </p>
@@ -217,10 +217,10 @@ export default function MyChapters() {
                           key={v.id}
                           onClick={() => handleOpen(v.id)}
                           disabled={openingId === v.id}
-                          className={`px-4 py-2 rounded-lg text-xs font-medium transition disabled:opacity-60 ${
+                          className={`px-4 py-2 rounded-md text-xs font-medium transition-colors disabled:opacity-60 ${
                             idx === versions.length - 1
-                              ? 'bg-[#C8964D] hover:bg-[#b88340] text-white'
-                              : 'border border-gray-300 hover:border-[#C8964D] text-[#1A1A1A]'
+                              ? 'bg-kitabi-gold hover:bg-kitabi-gold-deep text-kitabi-night hover:text-kitabi-paper'
+                              : 'border border-seam hover:border-gilt text-kitabi-ivory'
                           }`}
                         >
                           {idx === versions.length - 1 ? 'Latest' : `v${v.version_number || idx + 1}`}

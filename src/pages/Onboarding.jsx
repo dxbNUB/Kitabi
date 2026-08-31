@@ -136,19 +136,19 @@ export default function Onboarding() {
   const handleSkip = () => finish({});
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FBF7EE] via-white to-[#FFF7EB] flex flex-col">
+    <div className="min-h-screen bg-kitabi-night flex flex-col">
       {/* Top bar with brand + skip */}
-      <header className="px-6 sm:px-10 py-5 flex items-center justify-between border-b border-gray-200/70 bg-white/60 backdrop-blur">
+      <header className="px-6 sm:px-10 py-5 flex items-center justify-between border-b border-seam bg-kitabi-night-soft/70 backdrop-blur">
         <button
           onClick={() => navigate('/')}
-          className="font-display text-2xl tracking-[0.06em] font-medium text-[#C8964D]"
+          className="font-display text-2xl tracking-[0.06em] font-medium text-kitabi-gold"
           aria-label="Kitabi — home"
         >
           kitabi
         </button>
         <button
           onClick={handleSkip}
-          className="text-sm text-gray-500 hover:text-[#1A1A1A] transition whitespace-nowrap flex-shrink-0"
+          className="text-sm text-kitabi-stone hover:text-kitabi-ivory transition whitespace-nowrap flex-shrink-0"
         >
           Skip personalisation
         </button>
@@ -159,12 +159,12 @@ export default function Onboarding() {
         <div className="max-w-2xl w-full">
           {/* Progress */}
           <div className="mb-10">
-            <div className="flex justify-between text-xs text-gray-500 mb-2.5">
+            <div className="flex justify-between text-xs text-kitabi-faded mb-2.5">
               <span className="font-medium tracking-wide">Question {step + 1} of {QUESTIONS.length}</span>
               <span>{Math.round(progress)}% complete</span>
             </div>
             <div
-              className="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden"
+              className="w-full bg-[rgba(237,228,211,0.1)] rounded-full h-1.5 overflow-hidden"
               role="progressbar"
               aria-valuenow={Math.round(progress)}
               aria-valuemin={0}
@@ -172,7 +172,7 @@ export default function Onboarding() {
               aria-label={`Onboarding progress: question ${step + 1} of ${QUESTIONS.length}`}
             >
               <motion.div
-                className="bg-[#C8964D] h-1.5 rounded-full"
+                className="bg-kitabi-gold h-1.5 rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.4, ease: 'easeOut' }}
@@ -191,10 +191,10 @@ export default function Onboarding() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
             >
               <div className="text-center mb-8">
-                <h1 className="font-serif text-3xl sm:text-4xl text-[#1A1A1A] leading-tight mb-3 text-balance">
+                <h1 className="font-display text-3xl sm:text-4xl text-kitabi-ivory leading-tight mb-3 text-balance">
                   {current.question}
                 </h1>
-                <p className="text-sm sm:text-base text-gray-600 max-w-md mx-auto">
+                <p className="text-sm sm:text-base text-kitabi-stone max-w-md mx-auto">
                   {current.subtitle}
                 </p>
               </div>
@@ -213,23 +213,23 @@ export default function Onboarding() {
                       whileTap={{ scale: 0.99 }}
                       aria-pressed={selected}
                       aria-label={option.label}
-                      className={`group w-full text-left px-5 py-4 bg-white rounded-xl border-2
-                        flex items-center gap-4 transition-shadow
+                      className={`group w-full text-left px-5 py-4 bg-kitabi-night-soft rounded-lg border
+                        flex items-center gap-4 transition-colors
                         ${selected
-                          ? 'border-[#C8964D] bg-[#FFF7EB] shadow-sm'
-                          : 'border-gray-200 hover:border-[#C8964D] hover:shadow-md'}
+                          ? 'border-gilt bg-[rgba(201,162,92,0.07)]'
+                          : 'border-seam hover:border-gilt'}
                       `}
                     >
                       <span className={`font-display text-base font-medium tracking-wider w-7
-                        ${selected ? 'text-[#C8964D]' : 'text-gray-400 group-hover:text-[#C8964D]'}
+                        ${selected ? 'text-kitabi-gold' : 'text-kitabi-faded group-hover:text-kitabi-gold'}
                         transition-colors`}>
                         {String(idx + 1).padStart(2, '0')}
                       </span>
                       <span className={`flex-1 text-base leading-snug
-                        ${selected ? 'text-[#1A1A1A] font-medium' : 'text-gray-700'}`}>
+                        ${selected ? 'text-kitabi-ivory font-medium' : 'text-kitabi-stone'}`}>
                         {option.label}
                       </span>
-                      <span className={`text-[#C8964D] transition-opacity
+                      <span className={`text-kitabi-gold transition-opacity
                         ${selected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
                         aria-hidden="true">
                         →
@@ -246,11 +246,11 @@ export default function Onboarding() {
             <button
               onClick={handleBack}
               aria-label={step === 0 ? 'Back to homepage' : `Back to question ${step}`}
-              className="text-sm text-gray-500 hover:text-[#1A1A1A] transition flex items-center gap-1.5"
+              className="text-sm text-kitabi-stone hover:text-kitabi-ivory transition flex items-center gap-1.5"
             >
               <span aria-hidden="true">←</span> Back
             </button>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-kitabi-faded">
               Your answers stay private until you create an account.
             </p>
           </div>
